@@ -2,7 +2,6 @@
 
 namespace nrv\core\services\soiree;
 
-interface SoireeServiceInterface
-{
+interface SoireeServiceInterface{
     public function getSoireeById($id);
 }

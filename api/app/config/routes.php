@@ -19,5 +19,25 @@ return function( App $app): App {
 
     $app->get('/', HomeAction::class);
 
+    // spectacle
+
+    $app->get('/spectacles[/]', HomeAction::class);
+
+    $app->get('/spectacles/soiree/{ID-SPECTACLES}', HomeAction::class);
+
+    // soiree
+
+    $app->get('/soirees/{ID-SOIREE}[/]', HomeAction::class);
+
+    // user
+
+    $app->get('/users/signin[/]', HomeAction::class);
+
+    $app->get('/users/signup[/]', HomeAction::class);
+
+    // billet
+
+    $app->get('/billets[/]', HomeAction::class);
+
     return $app;
 };
