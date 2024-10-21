@@ -29,7 +29,7 @@ return function( App $app): App {
 
     // soiree
 
-    $app->get('/soirees/{ID-SOIREE}[/]', HomeAction::class);
+    $app->get('/soirees/{ID-SOIREE}[/]', GetSoireeByIdAction::class);
 
     // user
 
