@@ -53,4 +53,7 @@ services:
     image: 'adminer:latest'
     ports:
       - '35613:8080'
+    networks:
+      - nrv.net
     restart: unless-stopped
+
