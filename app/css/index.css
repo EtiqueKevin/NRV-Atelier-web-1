@@ -1,0 +1,15 @@
+/************************************************
+                    CONFIG
+ ************************************************/
+body, html {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: "Ubuntu", sans-serif;
+}
+@font-face {
+  font-family: "Ubuntu";
+  src: url(../fonts/Ubuntu-Medium.ttf) format("truetype");
+}
+
+/*# sourceMappingURL=index.css.map */
