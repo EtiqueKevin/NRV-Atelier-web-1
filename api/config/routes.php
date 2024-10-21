@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use nrv\application\actions\GetSoireeBySpectacleAction;
+use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\middlewares\Cors;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -23,7 +25,7 @@ return function( App $app): App {
 
     $app->get('/spectacles[/]', GetSpectaclesAction::class);
 
-    $app->get('/spectacles/soiree/{ID-SPECTACLES}', HomeAction::class);
+    $app->get('/spectacles/{ID-SPECTACLE}/soiree', GetSoireeBySpectacleAction::class);
 
     // soiree
 
