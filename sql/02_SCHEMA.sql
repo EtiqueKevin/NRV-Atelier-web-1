@@ -13,7 +13,7 @@ CREATE TABLE spectacles (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     titre text NOT NULL,
     description text NOT NULL,
-    heure TIMESTAMP NOT NULL,
+    heure TIME NOT NULL,
     url_video text NOT NULL
 );
 
@@ -28,13 +28,12 @@ CREATE TABLE soirees (
     FOREIGN KEY (id_lieu) REFERENCES lieux(id)
 );
 
-
-CREATE TABLE soirees_lieux (
+CREATE TABLE soirees_spectacles (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     id_soiree uuid NOT NULL,
-    id_lieu uuid NOT NULL,
+    id_spectacle uuid NOT NULL,
     FOREIGN KEY (id_soiree) REFERENCES soirees(id),
-    FOREIGN KEY (id_lieu) REFERENCES lieux(id)
+    FOREIGN KEY (id_spectacle) REFERENCES spectacles(id)
 );
 
 CREATE TABLE img_spectacles (
