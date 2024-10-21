@@ -17,13 +17,21 @@ class GetSpectaclesAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $spectacles = $this->spectacleService->getAllSpectacles();
-        $res = [
-            'type' => 'ressource',
-            'spectacles' => $spectacles
-        ];
+        try {
+            $spectacles = $this->spectacleService->getAllSpectacles();
+            $res = [
+                'type' => 'ressource',
+                'spectacles' => $spectacles
+            ];
+        }catch (\Exception $e){
+            $res = [
+                'type' => 'erreur',
+                'message' => $e->getMessage()
+            ];
+        }
 
-        $rs->getBody()->write(json_encode($spectacles));
+
+        $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
     }
 }

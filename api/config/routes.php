@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSoireeBySpectacleAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\HomeAction;

@@ -24,7 +24,7 @@ class SpectacleService implements SpectacleServiceInterface
             }
             return $tabDTO;
         }catch (\Exception $e) {
-            throw new spectacleException("erreur lors de la récupération des spectacles");
+            throw new spectacleException($e->getMessage());
         }
     }
 
