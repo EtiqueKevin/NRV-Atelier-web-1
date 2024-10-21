@@ -67,7 +67,7 @@ CREATE TABLE utilisateurs (
     prenom text NOT NULL,
     email text NOT NULL,
     mdp text NOT NULL,
-    admin boolean NOT NULL
+    admin INTEGER DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE billets (

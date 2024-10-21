@@ -256,12 +256,10 @@ INSERT INTO soirees_spectacles (id_soiree, id_spectacle) VALUES
 ('72835cd3-4461-4f88-8d79-63414be33f1a', '88a005ae-c11f-4c45-8414-ff8a8f7cd0c7'),
 ('72835cd3-4461-4f88-8d79-63414be33f1a', '7ed62eed-29e2-472f-96d3-7e94e5f9d37e'),
 ('13bc65ab-8e91-4e1b-a3cf-8be91e2e7f4f', '05f93d8e-b63c-4c9e-80c5-2bc26bde2496'),
-('13bc65ab-8e91-4e1b-a3cf-8be91e2e7f4f', '05f93d8e-b63c-4c9e-80c5-2bc26bde2496'),
 ('13bc65ab-8e91-4e1b-a3cf-8be91e2e7f4f', 'e875e08c-42ef-4f5d-85c6-3b1e93c71bb1'),
 ('f2f2e0e8-b29e-4e4e-947f-bfa4ebc17e6e', 'd6e057f4-3314-4b5d-bb9d-0c86a5e6e35f'),
 ('f2f2e0e8-b29e-4e4e-947f-bfa4ebc17e6e', 'ff2d1c9c-1e5b-4678-bbe5-112d39a1e324'),
 ('f2f2e0e8-b29e-4e4e-947f-bfa4ebc17e6e', '893c1845-1df3-4d6f-b5b1-0df28c93f580'),
-('e2bc84d8-46ae-407e-9e60-b5b9dc8e3df7', '3f98b54f-8be3-4179-a9d7-d8afc9fbb885'),
 ('e2bc84d8-46ae-407e-9e60-b5b9dc8e3df7', '8edc4aa7-9d4a-44c6-bb92-b60cb5f1839f');
 
 
