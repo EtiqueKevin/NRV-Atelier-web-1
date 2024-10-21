@@ -22,13 +22,17 @@ class GetSoireeBySpectacleAction extends AbstractAction
         $idSpectacle = $args['ID-SPECTACLE'];
         try {
             $soirees = $this->soireeService->getSoireeBySpectacle($idSpectacle);
+            $res = [
+                'type' => 'ressource',
+                'soirees' => $soirees
+            ];
         } catch (\Exception $e) {
-            throw new SoireeException("erreur lors de la récupération de la soirée");
+            $res = [
+                'type' => 'erreur',
+                'message' => $e->getMessage()
+            ];
         }
-        $res = [
-            'type' => 'ressource',
-            'soirees' => $soirees
-        ];
+
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');

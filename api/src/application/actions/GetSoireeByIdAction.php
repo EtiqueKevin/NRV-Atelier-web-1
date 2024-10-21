@@ -22,13 +22,17 @@ class GetSoireeByIdAction extends AbstractAction
         $idSoiree = $args['ID-SOIREE'];
         try {
             $soiree = $this->soireeService->getSoireeById($idSoiree);
+            $res = [
+                'type' => 'ressource',
+                'soiree' => $soiree
+            ];
         } catch (\Exception $e) {
-            throw new SoireeException("erreur lors de la récupération de la soirée");
+            $res = [
+                'type' => 'erreur',
+                'message' => $e->getMessage()
+            ];
         }
-        $res = [
-            'type' => 'ressource',
-            'soiree' => $soiree
-        ];
+
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
