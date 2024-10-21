@@ -2,6 +2,7 @@
 
 namespace nrv\infrastructure\repositories;
 
+use DateTime;
 use nrv\core\domain\entities\soiree\Lieu;
 use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\domain\entities\spectacle\Spectacle;
@@ -47,7 +48,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     public function getLieuById($id): Lieu{
         try{
-            $stmt = $this->pdo->prepare('SELECT * FROM lieu WHERE id = ?');
+            $stmt = $this->pdo->prepare('SELECT * FROM lieux WHERE id = ?');
             $stmt->bindParam(1,$id, PDO::PARAM_STR);
             $stmt->execute();
             $lieuRes = $stmt->fetch();
@@ -58,7 +59,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $lieuEntity->setID($lieuRes['id']);
             return $lieuEntity;
         }catch (\Exception $e){
-            throw new RepositoryException('erreur lors du chargement des lieux');
+            throw new RepositoryException('erreur lors du chargement des lieux ' . $e->getMessage());
         }
     }
 
@@ -72,11 +73,11 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
                 throw new RepositoryEntityNotFoundException('pas de soiree trouvé');
             }
             $lieuEntity = $this->getLieuById($soireeRes['id_lieu']);
-            $soireeEntity = new Soiree($soireeRes['nom'],$soireeRes['thematique'],$soireeRes['date'],$lieuEntity,$soireeRes['tarif_normal'],$soireeRes['tarif_reduit']);
+            $soireeEntity = new Soiree($soireeRes['nom'],$soireeRes['thematique'], DateTime::createFromFormat('Y-m-d H:i:s', $soireeRes['date']),$lieuEntity,$soireeRes['tarif_normal'],$soireeRes['tarif_reduit']);
             $soireeEntity->setID($soireeRes['id']);
             return $soireeEntity;
         }catch (Exception $e){
-            throw new RepositoryException('erreur lors du chargement d une soirée');
+            throw new RepositoryException('erreur lors du chargement d une soirée ' . $e->getMessage());
         }
     }
 }

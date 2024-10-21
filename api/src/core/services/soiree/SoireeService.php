@@ -20,7 +20,7 @@ class SoireeService implements SoireeServiceInterface
             $soiree = $this->soireeRepository->getSoireeById($id);
             return new SoireeDTO($soiree);
         }catch (\Exception $e) {
-            throw new SoireeException("erreur lors de la récupération de la soirée");
+            throw new SoireeException($e->getMessage());
         }
     }
 

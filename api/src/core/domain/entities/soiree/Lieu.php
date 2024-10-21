@@ -3,6 +3,7 @@
 namespace nrv\core\domain\entities\soiree;
 
 use nrv\core\domain\entities\Entity;
+use nrv\core\dto\soiree\LieuDTO;
 use nrv\core\dto\soiree\SoireeDTO;
 
 class Lieu extends Entity{
@@ -18,5 +19,9 @@ class Lieu extends Entity{
         $this->adresse = $a;
         $this->places_assise = $placesAssise;
         $this->places_debout = $placesDebout;
+    }
+
+    public function toDTO(): LieuDTO{
+        return new LieuDTO($this);
     }
 }

@@ -26,8 +26,6 @@ return function( App $app): App {
 
     $app->get('/spectacles[/]', GetSpectaclesAction::class);
 
-    $app->get('/spectacles/{ID-SPECTACLE}/soiree', GetSoireeBySpectacleAction::class);
-
     // soiree
 
     $app->get('/soirees/{ID-SOIREE}[/]', GetSoireeByIdAction::class);
