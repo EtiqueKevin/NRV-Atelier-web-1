@@ -7,14 +7,14 @@ use nrv\core\dto\soiree\SoireeDTO;
 
 class Lieu extends Entity{
 
-    protected string $titre;
+    protected string $nom;
 
     protected string $adresse;
     protected int $places_assise;
     protected int $places_debout;
 
-    public function __construct(string $t, string $a, int $placesAssise, int $placesDebout){
-        $this->titre = $t;
+    public function __construct(string $n, string $a, int $placesAssise, int $placesDebout){
+        $this->nom = $n;
         $this->adresse = $a;
         $this->places_assise = $placesAssise;
         $this->places_debout = $placesDebout;
