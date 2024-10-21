@@ -13,7 +13,7 @@ class Lieu extends Entity{
     protected int $places_assise;
     protected int $places_debout;
 
-    public function construct(string $t, string $a, int $placesAssise, int $placesDebout){
+    public function __construct(string $t, string $a, int $placesAssise, int $placesDebout){
         $this->titre = $t;
         $this->adresse = $a;
         $this->places_assise = $placesAssise;

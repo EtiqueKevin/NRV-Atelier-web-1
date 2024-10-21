@@ -7,17 +7,17 @@ use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 
 class SpectacleService implements SpectacleServiceInterface
 {
-    private SoireesRepositoryInterface $spectacleRepository;
+    private SoireesRepositoryInterface $soireeRepository;
 
-    public function __construct($spectacleRepository)
+    public function __construct($soireeRepository)
     {
-        $this->spectacleRepository = $spectacleRepository;
+        $this->soireeRepository = $soireeRepository;
     }
 
     public function getAllSpectacles() : array
     {
         try{
-            $spectacles = $this->spectacleRepository->getAllSpectacles();
+            $spectacles = $this->soireeRepository->getAllSpectacles();
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
@@ -31,7 +31,7 @@ class SpectacleService implements SpectacleServiceInterface
     public function getSpectacleByIdSoiree($idSoiree) : array
     {
         try{
-            $spectacles = $this->spectacleRepository->getSpectacleByIdSoiree($idSoiree);
+            $spectacles = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);

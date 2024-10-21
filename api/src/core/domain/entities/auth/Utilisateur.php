@@ -16,7 +16,7 @@ class Utilisateur extends Entity{
 
     protected bool $admin;
 
-    public function construct(string $n, string $p, string $email, string $mdp, bool $admin){
+    public function __construct(string $n, string $p, string $email, string $mdp, bool $admin){
         $this->nom = $n;
         $this->prenom = $p;
         $this->email = $email;

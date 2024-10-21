@@ -19,7 +19,7 @@ class Soiree extends Entity {
 
     protected float $tarif_reduit;
 
-    public function construct(string $n, string $them, DateTime $date, Lieu $lieu, float $tn, float $tr){
+    public function __construct(string $n, string $them, DateTime $date, Lieu $lieu, float $tn, float $tr){
         $this->nom = $n;
         $this->thematique = $them;
         $this->date = $date;
