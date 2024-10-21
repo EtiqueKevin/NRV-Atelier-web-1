@@ -1,0 +1,4 @@
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE DATABASE utilisateurs;
+CREATE DATABASE soirees;

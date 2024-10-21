@@ -19,3 +19,7 @@ cache.properties
 # Composer
 composer.phar
 composer.lock
+#.env
+api.nrv.env
+app.nrv.env
+nrv.db.env

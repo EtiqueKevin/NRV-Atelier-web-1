@@ -2,6 +2,10 @@ networks:
   nrv.net:
     driver: bridge
 
+volumes:
+  sql_data_nrv:
+    driver: local
+
 services:
   api.nrv:
     build:
@@ -41,8 +45,8 @@ services:
     networks:
       - nrv.net
     volumes:
-      - ./api/sql:/docker-entrypoint-initdb.d
-      - ./sql_data:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+      - sql_data_nrv:/var/lib/postgresql/data
     restart: unless-stopped
 
   adminer:
