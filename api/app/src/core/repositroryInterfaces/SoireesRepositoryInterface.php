@@ -2,7 +2,7 @@
 
 namespace nrv\core\repositroryInterfaces;
 
-interface SpectacleRepositoryInterface
+interface SoireesRepositoryInterface
 {
 
 }
