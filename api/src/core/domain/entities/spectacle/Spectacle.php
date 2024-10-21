@@ -2,9 +2,10 @@
 
 namespace nrv\core\domain\entities\spectacle;
 
-use Faker\Core\DateTime;
+
 use nrv\core\domain\entities\Entity;
 use nrv\core\dto\specialite\SpectacleDTO;
+
 
 class Spectacle extends Entity {
 
@@ -12,11 +13,11 @@ class Spectacle extends Entity {
 
     protected string $description;
 
-    protected DateTime $heure;
+    protected \DateTime $heure;
 
     protected string $url_video;
 
-    public function __construct(string $titre, string $desc, DateTime $h, string $url_video){
+    public function __construct(string $titre, string $desc, \DateTime $h, string $url_video){
         $this->titre = $titre;
         $this->description = $desc;
         $this->heure = $h;

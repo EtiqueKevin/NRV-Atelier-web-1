@@ -1,6 +1,6 @@
 <?php
 
-namespace nrv\core\dto\specialite;
+namespace nrv\core\dto\spectacle;
 
 use DateTime;
 use nrv\core\domain\entities\spectacle\Spectacle;
@@ -8,7 +8,7 @@ use nrv\core\dto\DTO;
 
 class SpectacleDTO extends DTO
 {
-    private int $id;
+    private string $id;
     private string $titre;
     private string $description;
     private DateTime $heure;
@@ -16,7 +16,7 @@ class SpectacleDTO extends DTO
 
     public function __construct(Spectacle $spectacle)
     {
-        $this->id = $spectacle->id;
+        $this->id = $spectacle->ID;
         $this->titre = $spectacle->titre;
         $this->description = $spectacle->description;
         $this->heure = $spectacle->heure;

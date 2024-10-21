@@ -23,13 +23,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles');
             $stmt->execute();
-            $spectacles = $stmt->fetch();
+            $spectacles = $stmt->fetchAll();
             if( !$spectacles){
                 throw new RepositoryEntityNotFoundException('pas de spectacle');
             }
             $specTab = [];
             foreach ($spectacles as $spe){
-                $specEntity = new Spectacle($spe['titre'],$spe['description'],$spe['heure'],$spe['url_video']);
+                $heure = \DateTime::createFromFormat('H:i:s',$spe['heure']);
+                $specEntity = new Spectacle($spe['titre'],$spe['description'],$heure,$spe['url_video']);
                 $specEntity->setID($spe['id']);
                 $specTab[]=$specEntity;
             }
