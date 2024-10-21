@@ -16,11 +16,11 @@ class SpectacleDTO extends DTO
 
     public function __construct(Spectacle $spectacle)
     {
-        $this->id = $spectacle->getId();
-        $this->titre = $spectacle->getTitre();
-        $this->description = $spectacle->getDescription();
-        $this->heure = $spectacle->getHeure();
-        $this->urlVideo = $spectacle->getUrlVideo();
+        $this->id = $spectacle->id;
+        $this->titre = $spectacle->titre;
+        $this->description = $spectacle->description;
+        $this->heure = $spectacle->heure;
+        $this->urlVideo = $spectacle->url_video;
     }
 
     public function jsonSerialize(): array
