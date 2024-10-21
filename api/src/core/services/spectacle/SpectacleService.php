@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\spectacle;
 
+use nrv\core\dto\specialite\SpectacleDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 
 class SpectacleService implements SpectacleServiceInterface

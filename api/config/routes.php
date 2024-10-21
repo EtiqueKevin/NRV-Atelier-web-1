@@ -21,7 +21,7 @@ return function( App $app): App {
 
     // spectacle
 
-    $app->get('/spectacles[/]', HomeAction::class);
+    $app->get('/spectacles[/]', GetSpectaclesAction::class);
 
     $app->get('/spectacles/soiree/{ID-SPECTACLES}', HomeAction::class);
 
