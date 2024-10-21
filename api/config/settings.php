@@ -8,7 +8,7 @@ use Psr\Container\ContainerInterface;
 return  [
     'displayErrorDetails' => true,
     'logs.dir' => __DIR__ . '/../var/logs',
-    'logs.name' => 'toubeelib.log',
+    'logs.name' => 'nrv.log',
     'logs.level' => Level::Info,
 
     'logger' => function( ContainerInterface $c) {
