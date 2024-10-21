@@ -107,7 +107,7 @@ INSERT INTO spectacles (id, titre, description, heure, url_video) VALUES
 ('3ae5d9f5-8a86-4aa4-bc92-6cf8a29e0454', 'Acoustic Rock Sessions', 'Des performances acoustiques qui réinterprètent les classiques du rock avec une touche personnelle.', '19:15:00', 'https://example.com/acousticrocksessions'),
 ('ed12b736-4c83-42eb-bc74-ecb803f44ef9', 'Metallica Tribute Night', 'Une soirée dédiée à Metallica avec des reprises énergiques qui raviront tous les fans.', '21:30:00', 'https://example.com/metallicatributenight'),
 ('88a005ae-c11f-4c45-8414-ff8a8f7cd0c7', 'Britpop Revival', 'Revivez l’âge d’or du Britpop avec des groupes qui rendent hommage aux sons emblématiques de cette époque.', '20:45:00', 'https://example.com/britpoprevival'),
-('ff2d1c9c-1e5b-4678-bbe5-112d39a1e324', 'Hardcore Punk Night', 'Une soirée explosive avec des groupes de hardcore punk qui livrent des performances intenses.', '22:00:00', 'https://example.com/hardcorepunknight'),
+('ff2d1c9c-1e5b-4678-bbe5-112d39a1e324', 'Hardcore Punk Night', 'Une soirée explosive avec des groupes de hardcore punk qui livrent des performances intenses.', '22:00:00', 'https://example.com/hardcorepunknight');
 
 -- Faire un INSERT INTO de 48 soirees, sur 12 dates différentes, sur les 4 lieux (avec des uuid réaliste)
 INSERT INTO soirees (id, nom, thematique, date, id_lieu, tarif_normal, tarif_reduit) VALUES
