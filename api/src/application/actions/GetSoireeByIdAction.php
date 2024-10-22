@@ -6,6 +6,7 @@ use nrv\core\services\soiree\SoireeException;
 use nrv\core\services\soiree\SoireeService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpBadRequestException;
 
 class GetSoireeByIdAction extends AbstractAction
 {
@@ -27,10 +28,7 @@ class GetSoireeByIdAction extends AbstractAction
                 'soiree' => $soiree
             ];
         } catch (\Exception $e) {
-            $res = [
-                'type' => 'erreur',
-                'message' => $e->getMessage()
-            ];
+            throw new HttpBadRequestException($rq, $e->getMessage());
         }
 
 

@@ -14,31 +14,32 @@ class SpectacleService implements SpectacleServiceInterface
         $this->soireeRepository = $soireeRepository;
     }
 
-    public function getAllSpectacles() : array
+    public function getAllSpectacles(): array
     {
-        try{
+        try {
             $spectacles = $this->soireeRepository->getAllSpectacles();
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
             }
             return $tabDTO;
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new spectacleException($e->getMessage());
         }
     }
 
-    public function getSpectacleByIdSoiree($idSoiree) : array
+
+    public function getSpectacles($date, $style, $lieu)
     {
-        try{
-            $spectacles = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
+        try {
+            $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu);
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
             }
             return $tabDTO;
-        }catch (\Exception $e) {
-            throw new spectacleException("erreur lors de la récupération des spectacles");
+        } catch (\Exception $e) {
+            throw new spectacleException($e->getMessage());
         }
     }
 }

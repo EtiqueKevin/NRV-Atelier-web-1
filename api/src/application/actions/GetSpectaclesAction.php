@@ -5,6 +5,8 @@ namespace nrv\application\actions;
 use nrv\core\services\spectacle\SpectacleService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
+use Slim\Exception\HttpBadRequestException;
 
 class GetSpectaclesAction extends AbstractAction
 {
@@ -17,18 +19,54 @@ class GetSpectaclesAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        try {
-            $spectacles = $this->spectacleService->getAllSpectacles();
-            $res = [
-                'type' => 'ressource',
-                'spectacles' => $spectacles
-            ];
-        }catch (\Exception $e){
-            $res = [
-                'type' => 'erreur',
-                'message' => $e->getMessage()
-            ];
+
+        $params = $rq->getQueryParams();
+
+        if (!$params) {
+            $dates = [];
+            $styles = [];
+            $lieux = [];
+            if (isset($params['dates'])) {
+                $dates = explode($params['dates'], ';');
+                foreach ($dates as $d) {
+                    $dateValidator = Validator::date('H:i:s')->notEmpty();
+                    try {
+                        $dateValidator->assert($d);
+                    } catch (\Exception $e) {
+                        throw new \HttpInvalidParamException($rq, $e->getMessage());
+                    }
+                }
+            }
+            if (isset($params['styles'])) {
+                $styles = explode($params['styles'], ';');
+            }
+            if (isset($params['lieux'])) {
+                $lieux = explode($params['lieux'], ';');
+            }
+
+            try {
+                $spectacles = $this->spectacleService->getSpectacles($dates, $styles, $lieux);
+                $res = [
+                    'type' => 'ressource',
+                    'spectacles' => $spectacles
+                ];
+            }catch (\Exception $e){
+                throw new HttpBadRequestException($rq, $e->getMessage());
+            }
+
+        } else {
+            try {
+                $spectacles = $this->spectacleService->getAllSpectacles();
+                $res = [
+                    'type' => 'ressource',
+                    'spectacles' => $spectacles
+                ];
+            }catch (\Exception $e){
+                throw new HttpBadRequestException($rq, $e->getMessage());
+            }
         }
+
+
 
 
         $rs->getBody()->write(json_encode($res));
