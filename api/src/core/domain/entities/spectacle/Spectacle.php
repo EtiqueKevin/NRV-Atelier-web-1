@@ -4,7 +4,7 @@ namespace nrv\core\domain\entities\spectacle;
 
 
 use nrv\core\domain\entities\Entity;
-use nrv\core\dto\specialite\SpectacleDTO;
+use nrv\core\dto\spectacle\SpectacleDTO;
 
 
 class Spectacle extends Entity {
@@ -17,11 +17,17 @@ class Spectacle extends Entity {
 
     protected string $url_video;
 
+    protected string $idSoiree;
+
     public function __construct(string $titre, string $desc, \DateTime $h, string $url_video){
         $this->titre = $titre;
         $this->description = $desc;
         $this->heure = $h;
         $this->url_video = $url_video;
+    }
+
+    public function setIdSoiree($ids){
+        $this->idSoiree = $ids;
     }
 
     public function toDTO():SpectacleDTO{

@@ -14,6 +14,8 @@ class SpectacleDTO extends DTO
     private DateTime $heure;
     private string $urlVideo;
 
+    private string $idSoiree;
+
     public function __construct(Spectacle $spectacle)
     {
         $this->id = $spectacle->ID;
@@ -21,7 +23,10 @@ class SpectacleDTO extends DTO
         $this->description = $spectacle->description;
         $this->heure = $spectacle->heure;
         $this->urlVideo = $spectacle->url_video;
+        $this->idSoiree = $spectacle->idSoiree;
     }
+
+
 
     public function jsonSerialize(): array
     {
@@ -30,7 +35,8 @@ class SpectacleDTO extends DTO
             'titre' => $this->titre,
             'description' => $this->description,
             'heure' => $this->heure->format('Y-m-d H:i:s'),
-            'urlVideo' => $this->urlVideo
+            'urlVideo' => $this->urlVideo,
+            'idSoiree' => $this->idSoiree
         ];
     }
 

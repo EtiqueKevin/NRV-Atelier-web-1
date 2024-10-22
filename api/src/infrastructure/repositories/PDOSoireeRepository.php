@@ -30,16 +30,35 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             }
             $specTab = [];
             foreach ($spectacles as $spe){
+                $idsoiree = $this->getSoireeIdByIdSpectacle($spe['id']);
                 $heure = \DateTime::createFromFormat('H:i:s',$spe['heure']);
                 $specEntity = new Spectacle($spe['titre'],$spe['description'],$heure,$spe['url_video']);
                 $specEntity->setID($spe['id']);
+                $specEntity->setIdSoiree($idsoiree);
                 $specTab[]=$specEntity;
             }
             return $specTab;
 
         }catch (\Exception $e){
-            throw new RepositoryException('erreur lors du chargement des lists');
+            throw new RepositoryException('erreur lors du chargement des lists : '. $e->getMessage());
         }
+    }
+
+    public function getSoireeIdByIdSpectacle($idSpec): string{
+        try{
+            $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join soirees_spectacles ON spectacles.id = soirees_spectacles.id_spectacle WHERE soirees_spectacles.id_spectacle = ?');
+            $stmt->bindParam(1,$idSpec, PDO::PARAM_STR);
+            $stmt->execute();
+            $idsoireeRes = $stmt->fetch();
+            $idsoiree = "";
+            if( $idsoireeRes){
+                $idsoiree = $idsoireeRes['id_soiree'];
+            }
+            return $idsoiree;
+        }catch (Exception $e){
+            throw new RepositoryException('erreur lors de la liaison entre spectacle et soiree' .$e->getMessage());
+        }
+
     }
 
     public function getSpectacleByIdSoiree($idSoiree): array{
