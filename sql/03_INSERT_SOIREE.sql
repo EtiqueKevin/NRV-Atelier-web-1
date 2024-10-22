@@ -499,11 +499,10 @@ VALUES ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'cc426c58-2e91-4b5d-9103-61df8f1
        ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'e875e08c-42ef-4f5d-85c6-3b1e93c71bb1'),
        ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'd6e057f4-3314-4b5d-bb9d-0c86a5e6e35f');
 
--- Artiste 34 dans 3 spectacles
+-- Artiste 34 dans 2 spectacles
 INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
 VALUES ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '893c1845-1df3-4d6f-b5b1-0df28c93f580'),
        ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '8edc4aa7-9d4a-44c6-bb92-b60cb5f1839f'),
-       ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '84e51bcf-eaa0-4071-9a07-7e155f617ff8');
 
 -- Artiste 35 dans 2 spectacles
 INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
@@ -643,7 +642,6 @@ INSERT INTO img_spectacles (id_spectacle, url_img) VALUES
 ('d6e057f4-3314-4b5d-bb9d-0c86a5e6e35f','DAA40A0B-96E8-46EE-9A4E-DAE072B9116C.jpg'),
 ('893c1845-1df3-4d6f-b5b1-0df28c93f580','DB3AD2BC-5419-4085-A287-DC661E1E5943.jpg'),
 ('8edc4aa7-9d4a-44c6-bb92-b60cb5f1839f','DF3F374F-023A-4B7E-BBAA-775D910EC42E.png'),
-('84e51bcf-eaa0-4071-9a07-7e155f617ff8','E1797EDC-3051-439F-B7ED-DCBBCAC0C86B.jpg'),
 ('6d8f2da0-cbe5-4ae3-8aeb-89cb53179c42','E3198851-B562-4242-BD1A-9942A2A71C35.jpg'),
 ('3ae5d9f5-8a86-4aa4-bc92-6cf8a29e0454','E50256BE-075D-45A2-A205-D3B20021A75A.jpg'),
 ('ed12b736-4c83-42eb-bc74-ecb803f44ef9','E53F9046-628F-4121-941A-3CE59E6E973A.jpg'),
