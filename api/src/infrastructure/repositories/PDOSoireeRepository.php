@@ -12,7 +12,6 @@ use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use PDO;
 use PHPUnit\Exception;
-use function PHPUnit\Framework\isEmpty;
 
 class PDOSoireeRepository implements SoireesRepositoryInterface{
 
