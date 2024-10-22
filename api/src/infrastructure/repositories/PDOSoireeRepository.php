@@ -212,4 +212,42 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
         return $imgTab;
     }
+
+    public function getSpectacles($date, $style, $lieu): array{
+        $sql = 'SELECT * FROM spectacles inner join soirees_spectacles on spectacles.id = id_spectacle inner join soirees on id_soiree = soirees.id  WHERE 1=1 ';
+        $params = [];
+        if(!empty($date)){
+            $placeholders = implode(',', array_fill(0, count($date), '?'));
+            $sql .= "AND date IN (" . $placeholders . ")";
+            $params = array_merge($params, $date);
+        }
+        if(!empty($style)){
+            $placeholders = implode(',', array_fill(0, count($style), '?'));
+            $sql .= "AND thematique IN (" . $placeholders . ")";
+            $params = array_merge($params, $style);
+        }
+        if(!empty($lieu)){
+            $placeholders = implode(',', array_fill(0, count($lieu), '?'));
+            $sql .= "AND id_lieu IN (" . $placeholders . ")";
+            $params = array_merge($params, $lieu);
+        }
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        $spectacles = $stmt->fetchAll();
+        $specTab = [];
+        try{
+            foreach ($spectacles as $spe){
+                $idsoiree = $this->getSoireeIdByIdSpectacle($spe['id']);
+                $heure = \DateTime::createFromFormat('H:i:s',$spe['heure']);
+                $specEntity = new Spectacle($spe['titre'],$spe['description'],$heure,$spe['url_video']);
+                $specEntity->setID($spe['id']);
+                $specEntity->setIdSoiree($idsoiree);
+                $specTab[]=$specEntity;
+            }
+        }catch (\Exception $e){
+            throw new RepositoryException('erreur lors du chargement des lists : '. $e->getMessage());
+        }
+        return $specTab;
+    }
 }

@@ -3,6 +3,7 @@
 namespace nrv\application\actions;
 
 use nrv\core\services\spectacle\SpectacleService;
+use nrv\core\services\spectacle\SpectacleServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator;
@@ -10,9 +11,9 @@ use Slim\Exception\HttpBadRequestException;
 
 class GetSpectaclesAction extends AbstractAction
 {
-    private SpectacleService $spectacleService;
+    private SpectacleServiceInterface $spectacleService;
 
-    public function __construct(SpectacleService $spectacleService)
+    public function __construct(SpectacleServiceInterface $spectacleService)
     {
         $this->spectacleService = $spectacleService;
     }
@@ -22,14 +23,14 @@ class GetSpectaclesAction extends AbstractAction
 
         $params = $rq->getQueryParams();
 
-        if ($params) {
+        if (!empty($params)) {
             $dates = [];
             $styles = [];
             $lieux = [];
             if (isset($params['dates'])) {
-                $dates = explode($params['dates'], ';');
+                $dates = explode(";" ,$params['dates']);
                 foreach ($dates as $d) {
-                    $dateValidator = Validator::date('H:i:s')->notEmpty();
+                    $dateValidator = Validator::date('Y-m-d')->notEmpty();
                     try {
                         $dateValidator->assert($d);
                     } catch (\Exception $e) {
@@ -38,10 +39,10 @@ class GetSpectaclesAction extends AbstractAction
                 }
             }
             if (isset($params['styles'])) {
-                $styles = explode($params['styles'], ';');
+                $styles = explode(";" ,$params['styles']);
             }
             if (isset($params['lieux'])) {
-                $lieux = explode($params['lieux'], ';');
+                $lieux = explode(";", $params['lieux']);
             }
 
             try {
@@ -85,6 +86,9 @@ class GetSpectaclesAction extends AbstractAction
                 throw new HttpBadRequestException($rq, $e->getMessage());
             }
         }
+
+
+
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
