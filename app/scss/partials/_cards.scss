@@ -1,0 +1,85 @@
+@use 'config' as *;
+
+@mixin card($width: 100%) {
+    box-sizing: border-box;
+    background-color: $secondary-bg-color;
+    color: $text-color;
+    border-radius: 2rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+    width: $width;
+}
+
+.spectacle-card {
+    @include card(100%);
+
+    img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 2rem;
+    }
+
+    article {
+        padding: 1rem;
+        color : $text-color;
+    }
+
+    &-horizontal {
+        @include card(100%);
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+
+        img {
+            height: auto;
+            width: auto;
+            aspect-ratio: 1 / 1;
+            border-radius: 2rem;
+        }
+
+        article, section {
+            flex: 1;
+            padding: 1rem;
+            color: $text-color;
+        }
+
+        section {
+            border-left: 2px solid $text-color;
+            h3 {
+                margin-bottom: 0.5rem;
+            }
+
+            ul {
+                list-style-type: none;
+                padding: 0;
+
+                li {
+                    margin-bottom: 0.5rem;
+                    padding-left: 1.5rem;
+                    position: relative;
+                }
+            }
+        }
+    }
+}
+
+.soiree-card {
+    @include card(100%);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+
+    margin-bottom: 2rem;
+
+    h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        margin: 0.25rem 0;
+        font-size: 1rem;
+    }
+}

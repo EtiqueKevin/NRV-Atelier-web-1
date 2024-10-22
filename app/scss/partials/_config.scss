@@ -5,19 +5,18 @@
  $default-font-path: '../fonts/Ubuntu-Medium.ttf';
  $default-font-family: 'Ubuntu';
 
+ $main-bg-color: #090101;
+ $secondary-bg-color: #170d0d;
+ $section-bg-color: #aaaaaa;
+ $highlight-bg-color: #ffffff;
+ $text-color: #ffffff;
+
+ $gradient-color-1: red;
+ $gradient-color-2: orange;
+
 /***********************************************
-            HEADER & FOOTER
-***********************************************/
-
-
-$footer-bg: #333;
-$footer-color: #fff;
-$footer-padding: 0.25rem;
-
-/***********************************************
-                    NAV
+                    GRID
 ************************************************/
 
-$nav-background-color: #333;
-$nav-link-color: #fff;
-$nav-link-hover-color: #ddd;
+$default-gap: 1rem;
+$column-nb: 12;

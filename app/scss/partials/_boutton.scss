@@ -1,0 +1,43 @@
+@use 'config' as *;
+
+@mixin button($bg-color: $main-bg-color, $gradient: false, $start-color: $gradient-color-1, $end-color: $gradient-color-2) {
+    @if $gradient == true {
+        background: linear-gradient(to bottom right, $start-color, $end-color);
+    } @else {
+        background-color: $bg-color;
+    }
+    color: $text-color;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.25rem;
+
+    &:hover {
+        @if $gradient == true {
+            background: linear-gradient(to bottom right, adjust-color($start-color, $lightness: -10%), adjust-color($end-color, $lightness: -10%));
+        } @else {
+            background-color: adjust-color($bg-color, $lightness: -10%);
+        }
+    }
+
+    &:active {
+        @if $gradient == true {
+            background: linear-gradient(to bottom right, adjust-color($start-color, $lightness: -20%), adjust-color($end-color, $lightness: -20%));
+        } @else {
+            background-color: adjust-color($bg-color, $lightness: -20%);
+        }
+    }
+}
+
+.boutton {
+    @include button($main-bg-color);
+}
+
+.search-button {
+    @include button($gradient: true);
+}

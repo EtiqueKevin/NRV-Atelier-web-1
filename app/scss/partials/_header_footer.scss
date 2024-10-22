@@ -1,21 +1,36 @@
 @use 'config' as *;
 
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
   width: 100%;
+  z-index: 1000;
+}
+
+#main-content {
+  flex: 1;
+  padding: 2rem;
 }
 
 .footer {
-  background-color: $footer-bg;
-  color: $footer-color;
-  padding: $footer-padding;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+  background-color: $secondary-bg-color;
+  color: $text-color;
+  padding: 1rem;
+}
+
+.home-section{
+  color : $text-color;
+  background-color: $secondary-bg-color;
+  padding : 2rem;
+  border-radius: 10px;
 }

@@ -5,35 +5,33 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background-color: $nav-background-color;
-    color: $nav-link-color;
+    background-color: $secondary-bg-color;
+    color: white;
 
     ul {
         list-style: none;
         display: flex;
         margin: 0;
         padding: 0;
+        gap : 1rem;
 
         li {
-            margin: 0 1rem;
 
             .logo {
-                max-height: 75px;
+                display: block;
+                height: 4rem;
+                width: 4rem;
+                border-radius: 50%;
+                background: linear-gradient(to bottom right, $gradient-color-1, $gradient-color-2);
             }
 
             a {
                 text-decoration: none;
-                font-weight: bold;
-                font-size: 1.5rem;
-                color: $nav-link-color;
-
-                &:hover {
-                    color: $nav-link-hover-color;
-                }
             }
 
             h1 {
                 font-size: 2.25rem;
+                margin: 0;
             }
         }
     }
