@@ -14,4 +14,6 @@ interface SoireesRepositoryInterface{
     public function getSoireeById($id): Soiree;
 
     public function getLieuById($id): Lieu;
+
+    public function getSoireeByIdDetail($id): array;
 }
