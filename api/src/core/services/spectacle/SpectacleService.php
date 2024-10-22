@@ -29,7 +29,7 @@ class SpectacleService implements SpectacleServiceInterface
     }
 
 
-    public function getSpectacles($date, $style, $lieu)
+    public function getSpectacles($date, $style, $lieu): array
     {
         try {
             $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu);
@@ -43,7 +43,7 @@ class SpectacleService implements SpectacleServiceInterface
         }
     }
 
-    public function getSpectacleById($id)
+    public function getSpectacleById($id): SpectacleDTO
     {
         try {
             $spectacle = $this->soireeRepository->getSpectacleById($id);
@@ -53,7 +53,7 @@ class SpectacleService implements SpectacleServiceInterface
         }
     }
 
-    public function getArtistesBySpectacle($idSpectacle)
+    public function getArtistesBySpectacle($idSpectacle): array
     {
         try {
             $artistes = $this->soireeRepository->getArtisteIdByIdSpectacle($idSpectacle);
@@ -63,7 +63,8 @@ class SpectacleService implements SpectacleServiceInterface
         }
     }
 
-    public function getArtisteById($idArtiste){
+    public function getArtisteById($idArtiste): \nrv\core\dto\artiste\ArtisteDTO
+    {
         try {
             $artiste = $this->soireeRepository->getArtisteById($idArtiste);
             return $artiste->toDTO();

@@ -4,6 +4,7 @@ namespace nrv\application\actions;
 
 use nrv\core\services\soiree\SoireeException;
 use nrv\core\services\soiree\SoireeService;
+use nrv\core\services\soiree\SoireeServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
@@ -11,9 +12,9 @@ use Slim\Exception\HttpBadRequestException;
 class GetSoireeByIdAction extends AbstractAction
 {
 
-    private SoireeService $soireeService;
+    private SoireeServiceInterface $soireeService;
 
-    public function __construct(SoireeService $soireeService)
+    public function __construct(SoireeServiceInterface $soireeService)
     {
         $this->soireeService = $soireeService;
     }

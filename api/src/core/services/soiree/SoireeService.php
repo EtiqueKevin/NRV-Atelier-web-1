@@ -5,6 +5,7 @@ namespace nrv\core\services\soiree;
 use nrv\core\dto\soiree\SoireeDetailDTO;
 use nrv\core\dto\soiree\SoireeDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
+use nrv\core\services\spectacle\spectacleException;
 
 class SoireeService implements SoireeServiceInterface
 {
@@ -15,7 +16,7 @@ class SoireeService implements SoireeServiceInterface
         $this->soireeRepository = $soireeRepository;
     }
 
-    public function getSoireeById($id)
+    public function getSoireeById($id): SoireeDTO
     {
         try{
             $soiree = $this->soireeRepository->getSoireeById($id);
@@ -25,17 +26,8 @@ class SoireeService implements SoireeServiceInterface
         }
     }
 
-    public function getSoireeBySpectacle($idSpectacle)
+    public function getSoireeDetail($idSoiree): SoireeDTO
     {
-        try{
-            $soiree = $this->soireeRepository->getSoireeBySpectacle($idSpectacle);
-            return new SoireeDTO($soiree);
-        }catch (\Exception $e) {
-            throw new SoireeException("erreur lors de la récupération de la soirée");
-        }
-    }
-
-    public function getSoireeDetail($idSoiree){
         try{
             $soiree = $this->soireeRepository->getSoireeById($idSoiree);
             return new SoireeDTO($soiree);
@@ -44,7 +36,8 @@ class SoireeService implements SoireeServiceInterface
         }
     }
 
-    public function getSpectacleByIdSoiree($idSoiree){
+    public function getSpectacleByIdSoiree($idSoiree): array
+    {
         try{
             $tabIdSoiree = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
 
@@ -52,6 +45,20 @@ class SoireeService implements SoireeServiceInterface
             throw new SoireeException("erreur lors de la récupération de la soirée detail");
         }
         return $tabIdSoiree;
+    }
+
+    public function getLieux(): array
+    {
+        try {
+            $lieux = $this->soireeRepository->getLieux();
+            $tabDTO = [];
+            foreach ($lieux as $lieu) {
+                $tabDTO[] = $lieu->toDTO();
+            }
+            return $tabDTO;
+        } catch (\Exception $e) {
+            throw new spectacleException($e->getMessage());
+        }
     }
 
 }

@@ -8,5 +8,11 @@ interface SpectacleServiceInterface
 
     public function getSpectacles($date, $style, $lieu);
 
+    public function getSpectacleById($id);
+
+    public function getArtistesBySpectacle($idSpectacle);
+
+    public function getArtisteById($idArtiste);
+
 
 }

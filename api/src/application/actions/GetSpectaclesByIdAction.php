@@ -3,6 +3,7 @@
 namespace nrv\application\actions;
 
 use nrv\core\services\spectacle\SpectacleService;
+use nrv\core\services\spectacle\SpectacleServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator;
@@ -10,9 +11,9 @@ use Slim\Exception\HttpBadRequestException;
 
 class GetSpectaclesByIdAction extends AbstractAction
 {
-    private SpectacleService $spectacleService;
+    private SpectacleServiceInterface $spectacleService;
 
-    public function __construct(SpectacleService $spectacleService)
+    public function __construct(SpectacleServiceInterface $spectacleService)
     {
         $this->spectacleService = $spectacleService;
     }
