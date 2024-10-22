@@ -6,11 +6,13 @@ use nrv\application\actions\GetSoireeBySpectacleAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
+use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use nrv\core\services\soiree\SoireeService;
 use nrv\core\services\soiree\SoireeServiceInterface;
 use nrv\core\services\spectacle\SpectacleService;
 use nrv\core\services\spectacle\SpectacleServiceInterface;
 use nrv\infrastructure\repositories\PDOSoireeRepository;
+use nrv\infrastructure\repositories\PDOUtilisateurRepository;
 use Psr\Container\ContainerInterface;
 
 
@@ -18,6 +20,10 @@ return [
 
     SoireesRepositoryInterface::class  => function (ContainerInterface $c){
         return new PDOSoireeRepository($c->get('soirees.pdo'));
+    },
+
+    UtilisateursRepositoryInterface::class => function (ContainerInterface $c){
+        return new PDOUtilisateurRepository($c->get('utilisateurs.pdo'));
     },
 
     SoireeServiceInterface::class => function (ContainerInterface $c) {
