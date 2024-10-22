@@ -17,4 +17,5 @@ class Artiste extends Entity {
         $this->prenom = $p;
         $this->description = $desc;
     }
+
 }
