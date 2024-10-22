@@ -21,7 +21,7 @@ CREATE TABLE soirees (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     nom text NOT NULL,
     thematique text NOT NULL,
-    date TIMESTAMP NOT NULL,
+    date DATE NOT NULL,
     id_lieu uuid NOT NULL,
     tarif_normal integer NOT NULL,
     tarif_reduit integer NOT NULL,
