@@ -105,7 +105,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
                 throw new RepositoryEntityNotFoundException('pas de soiree trouvé');
             }
             $lieuEntity = $this->getLieuById($soireeRes['id_lieu']);
-            $soireeEntity = new Soiree($soireeRes['nom'],$soireeRes['thematique'], DateTime::createFromFormat('Y-m-d H:i:s', $soireeRes['date']),$lieuEntity,$soireeRes['tarif_normal'],$soireeRes['tarif_reduit']);
+            $soireeEntity = new Soiree($soireeRes['nom'],$soireeRes['thematique'], DateTime::createFromFormat('Y-m-d', $soireeRes['date']),$lieuEntity,$soireeRes['tarif_normal'],$soireeRes['tarif_reduit']);
             $soireeEntity->setID($soireeRes['id']);
             return $soireeEntity;
         }catch (Exception $e){
@@ -123,8 +123,16 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
                 throw new RepositoryEntityNotFoundException('pas de soiree trouvé');
             }
             $idsoiree = $this->getSoireeIdByIdSpectacle($spectacle['id']);
-            $heure = \DateTime::createFromFormat('H:i:s',$spectacle['heure']);
-            $specEntity = new Spectacle($spectacle['titre'],$spectacle['description'],$heure,$spectacle['url_video']);
+
+            $soiree = $this->getSoireeById($idsoiree);
+
+            list($h, $m, $s) = explode(':', $spectacle['heure']);
+
+            $dateRes = $soiree->date;
+
+            $dateRes->setTime((int)$h,(int)$m,(int)$s);
+
+            $specEntity = new Spectacle($spectacle['titre'],$spectacle['description'],$dateRes,$spectacle['url_video']);
             $specEntity->setID($spectacle['id']);
             $specEntity->setIdSoiree($idsoiree);
         }catch (\Exception $e){
