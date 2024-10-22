@@ -42,4 +42,24 @@ class SpectacleService implements SpectacleServiceInterface
             throw new spectacleException($e->getMessage());
         }
     }
+
+    public function getSpectacleById($id)
+    {
+        try {
+            $spectacle = $this->soireeRepository->getSpectacleById($id);
+            return new SpectacleDTO($spectacle);
+        } catch (\Exception $e) {
+            throw new spectacleException($e->getMessage());
+        }
+    }
+
+    public function getArtistesBySpectacle($idSpectacle)
+    {
+        try {
+            $artistes = $this->soireeRepository->getArtisteIdByIdSpectacle($idSpectacle);
+            return $artistes;
+        } catch (\Exception $e) {
+            throw new spectacleException($e->getMessage());
+        }
+    }
 }

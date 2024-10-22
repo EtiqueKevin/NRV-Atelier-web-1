@@ -27,7 +27,7 @@ export const listeSpectacleTemplate = `
       <button type="submit" class="search-button">Search</button>
     </form>
   </section>
-  <section class="grid grid-col-4 gap-4" id="liste-spectacle">
+  <section class="grid grid-col-4-l grid-col-3-m grid-col-2-s gap-4" id="liste-spectacle">
     {{#each spectacles}}
       <div data-id="{{this.id}}" class="spectacle-card spectacle">
         {{#if this.image}}
@@ -37,7 +37,6 @@ export const listeSpectacleTemplate = `
         {{/if}}
         <article>
           <h2>{{this.titre}}</h2>
-          <p>Description: {{this.description}}</p>
           <p>Date: {{this.heure}}</p>
         </article>
       </div>

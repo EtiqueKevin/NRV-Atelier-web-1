@@ -26,6 +26,10 @@ class SpectacleDTO extends DTO
         $this->idSoiree = $spectacle->idSoiree;
     }
 
+    public function getId(): string
+    {
+        return $this->id;
+    }
 
 
     public function jsonSerialize(): array
@@ -37,10 +41,6 @@ class SpectacleDTO extends DTO
             'heure' => $this->heure->format('Y-m-d H:i:s'),
             'urlVideo' => $this->urlVideo,
             'idSoiree' => $this->idSoiree,
-            'link' => [
-                'href' => 'spectacle/'.$this->id,
-            ]
-
         ];
     }
 

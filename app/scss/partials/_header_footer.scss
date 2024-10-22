@@ -13,6 +13,10 @@ body {
   z-index: 1000;
 }
 
+#nav-title{
+  cursor: pointer;
+}
+
 #main-content {
   flex: 1;
   padding: 2rem;

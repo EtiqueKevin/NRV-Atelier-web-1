@@ -3,7 +3,7 @@ import {handleNavButtons} from './handlers.js';
 
 async function init(){
     handleNavButtons();
-    displayHome();
+    //displayHome();
 }
 
 window.addEventListener('load', init);

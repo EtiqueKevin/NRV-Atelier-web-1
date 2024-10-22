@@ -29,6 +29,10 @@ body {
   z-index: 1000;
 }
 
+#nav-title {
+  cursor: pointer;
+}
+
 #main-content {
   flex: 1;
   padding: 2rem;
@@ -87,6 +91,11 @@ body {
   display: flex;
   align-items: center;
 }
+@media screen and (max-width: 768px) {
+  .nav-menu {
+    flex-direction: column;
+  }
+}
 
 .boutton {
   background-color: #090101;
@@ -128,9 +137,18 @@ body {
   background: linear-gradient(to bottom right, #990000, #996300);
 }
 
+.secondary-form-button {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  text-decoration: underline;
+}
+
 .grid {
   display: grid;
-  gap: 1rem;
+  gap: 0.5rem;
   color: #ffffff;
   place-items: center;
 }
@@ -187,23 +205,23 @@ body {
 }
 
 .gap-1 {
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 .gap-2 {
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .gap-3 {
-  gap: 3rem;
+  gap: 1.5rem;
 }
 
 .gap-4 {
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .gap-5 {
-  gap: 5rem;
+  gap: 2.5rem;
 }
 
 .col-span-1 {
@@ -302,6 +320,120 @@ body {
   grid-column-end: 12;
 }
 
+@media (max-width: 899px) {
+  .grid-col-1-s {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid-col-2-s {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-col-3-s {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-col-4-s {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid-col-5-s {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .grid-col-6-s {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .grid-col-7-s {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .grid-col-8-s {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .grid-col-9-s {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .grid-col-10-s {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .grid-col-11-s {
+    grid-template-columns: repeat(11, 1fr);
+  }
+  .grid-col-12-s {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  .grid-col-1-m {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid-col-2-m {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-col-3-m {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-col-4-m {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid-col-5-m {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .grid-col-6-m {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .grid-col-7-m {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .grid-col-8-m {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .grid-col-9-m {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .grid-col-10-m {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .grid-col-11-m {
+    grid-template-columns: repeat(11, 1fr);
+  }
+  .grid-col-12-m {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .grid-col-1-l {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .grid-col-2-l {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-col-3-l {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-col-4-l {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .grid-col-5-l {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .grid-col-6-l {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .grid-col-7-l {
+    grid-template-columns: repeat(7, 1fr);
+  }
+  .grid-col-8-l {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .grid-col-9-l {
+    grid-template-columns: repeat(9, 1fr);
+  }
+  .grid-col-10-l {
+    grid-template-columns: repeat(10, 1fr);
+  }
+  .grid-col-11-l {
+    grid-template-columns: repeat(11, 1fr);
+  }
+  .grid-col-12-l {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
 .spectacle-card {
   box-sizing: border-box;
   background-color: #170d0d;
@@ -381,8 +513,31 @@ body {
   font-size: 1rem;
 }
 
+.connexion-card {
+  box-sizing: border-box;
+  background-color: #170d0d;
+  color: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.grid .spectacle-card {
+  align-self: stretch;
+  cursor: pointer;
+}
+.grid .spectacle-card:hover {
+  transform: scale(1.03);
+  transition: transform 0.3s ease-in-out;
+}
+
 .search-form {
   padding: 2rem;
+  margin-bottom: 1rem;
   background-color: #170d0d;
   border-radius: 0.5em;
   position: relative;
@@ -429,6 +584,20 @@ body {
 .search-form input:focus {
   border-color: #090101;
   outline: none;
+}
+
+@media (max-width: 768px) {
+  .search-form form {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .search-form label {
+    font-size: 0.875rem;
+  }
+  .search-form input {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

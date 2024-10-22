@@ -4,6 +4,7 @@ declare(strict_types=1);
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSoireeBySpectacleAction;
 use nrv\application\actions\GetSpectaclesAction;
+use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\middlewares\Cors;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,7 +13,7 @@ use Slim\App;
 
 return function( App $app): App {
 
-    $app->add(Cors::class);
+    //$app->add(Cors::class);
 
     $app->options('/{routes:.+}',
         function( Request $rq,
@@ -25,6 +26,7 @@ return function( App $app): App {
     // spectacle
 
     $app->get('/spectacles[/]', GetSpectaclesAction::class);
+    $app->get('/spectacles/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
 
     // soiree
 

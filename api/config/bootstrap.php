@@ -2,7 +2,7 @@
 
 use DI\ContainerBuilder;
 use Slim\Factory\AppFactory;
-
+use nrv\application\middlewares\Cors;
 $builder = new ContainerBuilder();
 $builder->addDefinitions(__DIR__ . '/settings.php' );
 $builder->addDefinitions(__DIR__ . '/dependencies.php');
@@ -12,6 +12,7 @@ $app = AppFactory::createFromContainer($c);
 
 
 $app->addBodyParsingMiddleware();
+$app->add(Cors::class);
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware($c->get('displayErrorDetails'), false, false)
 //    ->getDefaultErrorHandler()

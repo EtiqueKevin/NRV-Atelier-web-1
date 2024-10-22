@@ -3,6 +3,7 @@
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSoireeBySpectacleAction;
 use nrv\application\actions\GetSpectaclesAction;
+use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\services\soiree\SoireeService;
 use nrv\core\services\soiree\SoireeServiceInterface;
@@ -36,6 +37,10 @@ return [
 
     GetSpectaclesAction::class => function (ContainerInterface $c) {
         return new GetSpectaclesAction($c->get(SpectacleServiceInterface::class));
-    }
+    },
+
+    GetSpectaclesByIdAction::class => function (ContainerInterface $c) {
+        return new GetSpectaclesByIdAction($c->get(SpectacleServiceInterface::class));
+    },
 
 ];

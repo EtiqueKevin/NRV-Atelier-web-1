@@ -22,7 +22,7 @@ class GetSpectaclesAction extends AbstractAction
 
         $params = $rq->getQueryParams();
 
-        if (!$params) {
+        if ($params) {
             $dates = [];
             $styles = [];
             $lieux = [];
@@ -46,9 +46,19 @@ class GetSpectaclesAction extends AbstractAction
 
             try {
                 $spectacles = $this->spectacleService->getSpectacles($dates, $styles, $lieux);
+                $spectaclesWithHref = array_map(function($spectacle) {
+                    return [
+                        'spectacle' => $spectacle,
+                        'links' =>[
+                            'self' =>[
+                                'href' => '/spectacle/' . $spectacle->getId()
+                            ]
+                        ]
+                    ];
+                }, $spectacles);
                 $res = [
-                    'type' => 'ressource',
-                    'spectacles' => $spectacles
+                    'type' => 'collection',
+                    'spectacles' => $spectaclesWithHref,
                 ];
             }catch (\Exception $e){
                 throw new HttpBadRequestException($rq, $e->getMessage());
@@ -57,17 +67,24 @@ class GetSpectaclesAction extends AbstractAction
         } else {
             try {
                 $spectacles = $this->spectacleService->getAllSpectacles();
+                $spectaclesWithHref = array_map(function($spectacle) {
+                    return [
+                        'spectacle' => $spectacle,
+                        'links' =>[
+                            'self' =>[
+                                'href' => '/spectacle/' . $spectacle->getId()
+                            ]
+                        ]
+                    ];
+                }, $spectacles);
                 $res = [
-                    'type' => 'ressource',
-                    'spectacles' => $spectacles
+                    'type' => 'collection',
+                    'spectacles' => $spectaclesWithHref,
                 ];
             }catch (\Exception $e){
                 throw new HttpBadRequestException($rq, $e->getMessage());
             }
         }
-
-
-
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');

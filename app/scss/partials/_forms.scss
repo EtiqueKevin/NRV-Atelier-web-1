@@ -1,9 +1,42 @@
 @use 'config' as *;
 
+// Define mixins
+@mixin form-container($padding, $margin-bottom, $bg-color, $border-radius) {
+    padding: $padding;
+    margin-bottom: $margin-bottom;
+    background-color: $bg-color;
+    border-radius: $border-radius;
+}
+
+@mixin input-style($padding, $border, $border-radius, $font-size) {
+    padding: $padding;
+    border: $border;
+    border-radius: $border-radius;
+    font-size: $font-size;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+
+    &:focus {
+        border-color: $main-bg-color;
+        outline: none;
+    }
+}
+
+@mixin label-style($font-weight, $position, $top, $left, $bg-color, $padding, $z-index, $border-radius) {
+    font-weight: $font-weight;
+    position: $position;
+    top: $top;
+    left: $left;
+    background: $bg-color;
+    padding: $padding;
+    z-index: $z-index;
+    border-radius: $border-radius;
+}
+
+// Apply mixins
 .search-form {
-    padding: 2rem;
-    background-color: $secondary-bg-color;
-    border-radius: 0.5em;
+    @include form-container(2rem, 1rem, $secondary-bg-color, 0.5em);
     position: relative;
 
     &::before {
@@ -30,28 +63,28 @@
     }
 
     label {
-        font-weight: bold;
-        position: absolute;
-        top: -0.75rem;
-        left: 0;
-        background: white;
-        padding: 0 0.5rem;
-        z-index: 1;
-        border-radius: 0.25em;
+        @include label-style(bold, absolute, -0.75rem, 0, white, 0 0.5rem, 1, 0.25em);
     }
 
     input {
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-        width: 100%;
-        box-sizing: border-box;
-        transition: border-color 0.3s;
+        @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
+    }
+}
 
-        &:focus {
-            border-color: $main-bg-color;
-            outline: none;
+@media (max-width: 768px) {
+    .search-form {
+        form {
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+        }
+
+        input {
+            padding: 0.5rem;
+            font-size: 0.875rem;
         }
     }
 }

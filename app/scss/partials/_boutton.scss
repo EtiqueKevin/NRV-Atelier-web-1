@@ -41,3 +41,12 @@
 .search-button {
     @include button($gradient: true);
 }
+
+.secondary-form-button{
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    color: $text-color;
+    padding: 10px 20px;
+    text-decoration: underline;
+}
