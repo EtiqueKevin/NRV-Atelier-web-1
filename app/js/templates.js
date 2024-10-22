@@ -33,7 +33,7 @@ export const listeSpectacleTemplate = `
         {{#if this.image}}
           <img src="{{this.image}}" alt="Spectacle Image">
         {{else}}
-          <img src="/public/default-spectacle.png" alt="Default Spectacle Image">
+          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image">
         {{/if}}
         <article>
           <h2>{{this.titre}}</h2>
