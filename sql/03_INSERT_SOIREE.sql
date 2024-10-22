@@ -502,7 +502,7 @@ VALUES ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'cc426c58-2e91-4b5d-9103-61df8f1
 -- Artiste 34 dans 2 spectacles
 INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
 VALUES ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '893c1845-1df3-4d6f-b5b1-0df28c93f580'),
-       ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '8edc4aa7-9d4a-44c6-bb92-b60cb5f1839f'),
+       ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '8edc4aa7-9d4a-44c6-bb92-b60cb5f1839f');
 
 -- Artiste 35 dans 2 spectacles
 INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
