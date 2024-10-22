@@ -36,7 +36,11 @@ class SpectacleDTO extends DTO
             'description' => $this->description,
             'heure' => $this->heure->format('Y-m-d H:i:s'),
             'urlVideo' => $this->urlVideo,
-            'idSoiree' => $this->idSoiree
+            'idSoiree' => $this->idSoiree,
+            'link' => [
+                'href' => 'spectacle/'.$this->id,
+            ]
+
         ];
     }
 

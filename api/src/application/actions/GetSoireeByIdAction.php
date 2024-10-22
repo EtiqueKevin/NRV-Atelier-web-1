@@ -22,7 +22,7 @@ class GetSoireeByIdAction extends AbstractAction
     {
         $idSoiree = $args['ID-SOIREE'];
         try {
-            $soiree = $this->soireeService->getSoireeById($idSoiree);
+            $soiree = $this->soireeService->getSoireeDetail($idSoiree);
             $res = [
                 'type' => 'ressource',
                 'soiree' => $soiree

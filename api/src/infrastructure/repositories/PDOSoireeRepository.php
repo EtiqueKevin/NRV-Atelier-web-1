@@ -70,17 +70,17 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $specTab = [];
         try{
             foreach ($soireeSpectacles as $sspec){
-                $spectacleEntity = $this->getSpectacleById($sspec['spectacle_id']);
+                $spectacleEntity = $this->getSpectacleById($sspec['id_spectacle']);
 
-                $arrayIdArtiste = $this->getArtisteIdByIdSpectacle($sspec['spectacle_id']);
+                $arrayIdArtiste = $this->getArtisteIdByIdSpectacle($sspec['id_spectacle']);
 
                 $artisteTab = [];
                 foreach ( $arrayIdArtiste as $idart){
                     $artisteEntity = $this->getArtisteById($idart);
-                    $artisteTab = $artisteEntity;
+                    $artisteTab[] = $artisteEntity;
                 }
 
-                $specTab = [
+                $specTab[] = [
                      'spectacle' => $spectacleEntity,
                      'artistes' => $artisteTab
                  ];
@@ -159,7 +159,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $artisteEntity;
     }
 
-    public function getArtisteIdByIdSpectacle($idSpec): string {
+    public function getArtisteIdByIdSpectacle($idSpec): array {
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join artistes_spectacles ON spectacles.id = artistes_spectacles.id_spectacle WHERE artistes_spectacles.id_spectacle = ?');
             $stmt->bindParam(1,$idSpec, PDO::PARAM_STR);
@@ -168,10 +168,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             if(!$art_spec){
                 throw new RepositoryEntityNotFoundException('getArtisteIdBySpectacle : pas artiste trouvé pour spectacle : ' . $idSpec );
             }
-            $IdArtisteTab =[];
+            $IdArtisteTab = [];
+
             foreach ($art_spec as $i){
-                $IdArtisteTab = $i['id_artiste'];
+                $IdArtisteTab[] = $i['id_artiste'];
             }
+
         }catch (\Exception $e){
             throw new RepositoryException('getArtisteIdBySpectacle : erreur lors du chargement de image : '. $e->getMessage());
         }
