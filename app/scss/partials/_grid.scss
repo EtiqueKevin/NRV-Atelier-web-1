@@ -35,7 +35,16 @@
     }
 }
 
-@media (max-width: 899px) {
+
+@media (max-width: 449px) {
+    @for $i from 1 through $column-nb {
+        .grid-col-#{$i}-xs {
+            grid-template-columns: repeat(#{$i}, 1fr);
+        }
+    }
+}
+
+@media (min-width: 450px) and (max-width: 899px) {
     @for $i from 1 through $column-nb {
         .grid-col-#{$i}-s {
             grid-template-columns: repeat(#{$i}, 1fr);

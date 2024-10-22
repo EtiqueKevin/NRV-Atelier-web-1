@@ -12,15 +12,15 @@ export function displayHome() {
 
 export async function displaySpectacleList() {
     const data = await spectacle.getSpectacles();
-
     const template = Handlebars.compile(templates.listeSpectacleTemplate);
     const html = template({ spectacles: data });
     document.getElementById('main-content').innerHTML = html;
     eventHandler.handleSpectacleList();
 }
 
-export function displaySoiree() {
+export async function displaySoiree(id) {
+    const data = await spectacle.getSoiree(id);
     const template = Handlebars.compile(templates.soireeTemplate);
-    const html = template();
+    const html = template(data);
     document.getElementById('main-content').innerHTML = html;
 }

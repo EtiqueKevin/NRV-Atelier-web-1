@@ -23,6 +23,9 @@
         } @else {
             background-color: adjust-color($bg-color, $lightness: -10%);
         }
+
+        transform: scale(1.05);
+        transition: transform 0.3s ease-in-out;
     }
 
     &:active {
@@ -38,7 +41,7 @@
     @include button($main-bg-color);
 }
 
-.search-button {
+.color-button {
     @include button($gradient: true);
 }
 

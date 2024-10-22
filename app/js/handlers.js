@@ -30,8 +30,10 @@ export function handleHomeSpectacleButton() {
 export function handleSpectacleList(){
     const spectacles = document.getElementsByClassName('spectacle');
     for (const spectacle of spectacles) {
+        const dataId = spectacle.getAttribute('data-id');
+
         spectacle.addEventListener('click', () => {
-            ui.displaySoiree();
+            ui.displaySoiree(dataId);
         });
     }
 }

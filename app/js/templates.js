@@ -1,9 +1,13 @@
 export const homeTemplate = `
-  <section class="home-section">
-    <h2>Bienvenue au NRV Festival</h2>
-    <p>Découvrez les spectacles les plus incroyables et vivez des moments inoubliables.</p>
-    <button class="boutton" id="home-spectacle">Voir les spectacles</button>
-  </section>
+      <section class="home-section">
+        <div id="home-title">
+          <h1>Bienvenue au NRV Festival 2024</h1>
+        </div>
+        <div id="home-description">
+          <p>Découvrez les spectacles les plus incroyables et vivez des moments inoubliables.</p>
+          <button class="color-button" id="home-spectacle">Voir les spectacles</button>
+        </div>
+      </section>
 `;
 
 export const listeSpectacleTemplate = `
@@ -24,16 +28,16 @@ export const listeSpectacleTemplate = `
         <input type="text" id="search-lieu" name="search-lieu" placeholder="Enter lieu">
       </div>      
   
-      <button type="submit" class="search-button">Search</button>
+      <button type="submit" class="color-button">Search</button>
     </form>
   </section>
-  <section class="grid grid-col-4-l grid-col-3-m grid-col-2-s gap-4" id="liste-spectacle">
+  <section class="grid grid-col-4-l grid-col-3-m grid-col-2-s grid-col-1-xs gap-2" id="liste-spectacle">
     {{#each spectacles}}
-      <div data-id="{{this.id}}" class="spectacle-card spectacle">
-        {{#if this.image}}
-          <img src="{{this.image}}" alt="Spectacle Image">
+      <div data-id="{{this.idSoiree}}" class="spectacle-card-hover spectacle">
+        {{#if this.image.length}}
+          <img src="{{this.image.[0]}}" alt="Spectacle Image"  loading="lazy">
         {{else}}
-          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image">
+          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image"  loading="lazy">
         {{/if}}
         <article>
           <h2>{{this.titre}}</h2>
@@ -45,37 +49,60 @@ export const listeSpectacleTemplate = `
 `;
 
 export const soireeTemplate = `
-  <div class="soiree-card">
-    <h2>{{nomSoiree}}</h2>
+  <section class="soiree-card">
+    <h2>{{nom}}</h2>
     <p>Thématique: {{thematique}}</p>
-    <p>Date et horaire: {{dateHoraire}}</p>
-    <p>Lieu: {{lieu}}</p>
+    <p>Date : {{date}}</p>
+    <p>Lieu: {{lieu.nom}}, {{lieu.adresse}}</p>
     <p>Tarifs:</p>
     <ul>
-      <li>Normal: {{tarifNormal}}</li>
-      <li>Réduit: {{tarifReduit}}</li>
+      <li>Normal: {{tarif_normal}}</li>
+      <li>Réduit: {{tarif_reduit}}</li>
     </ul>
-  </div>
+  </section>
+
+  <section class="grid grid-col-3-l grid-col-2-m grid-col-1-xs gap-4" id="liste-spectacle">
+    {{#each spectacles}}
+      <div data-id="{{this.spectacle.id}}" class="spectacle-card spectacle">
+        {{#if this.spectacle.image.length}}
+          <img src="{{this.spectacle.image.[0]}}" alt="Spectacle Image"  loading="lazy">
+        {{else}}
+          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image"  loading="lazy">
+        {{/if}}
+        <article>
+          <h2>{{this.spectacle.titre}}</h2>
+          <p>Date: {{this.spectacle.heure}}</p>
+          <p>{{this.spectacle.description}}</p>
+          <iframe width="560" height="315" src="{{this.spectacle.urlVideo}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </article>
+        <article>
+          <h2>Artistes</h2>
+          <ul>
+            {{#each this.artistes}}
+              <li>{{this.prenom}} {{this.nom}} - {{this.description}}</li>
+            {{/each}}
+          </ul>
+        </article>
+      </div>
+    {{/each}}
+  </section>
 `;
 
-export const spectacleSoireeTemplate = `
-  {{#each spectacles}}
-  <div class="spectacle-card-horizontal">
-    <img src="{{imageSrc}}" alt="image spectacle">
-    <article>
-      <h2>{{titre}}</h2>
-      <p>{{description}}</p>
-      <p>{{styleMusique}}</p>
-      <p>{{video}}</p>
-    </article>
-    <section>
-      <h2>Artistes</h2>
-      <ul>
-        {{#each artistes}}
-        <li>{{this}}</li>
-        {{/each}}
-      </ul>
-    </section>
-  </div>
-  {{/each}}
+export const connexionTemplate = `
+      <section class="connexion-card">
+        <h1>Connexion</h1>
+        <form class="connexion-form">
+          <div class="input-container">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required autocomplete="email">
+          </div>
+          <div class="input-container">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password">
+            <button type="button" id="toggle-password">Show</button>
+          </div>
+          <button type="submit" id="submit">Connexion</button>
+        </form>
+        <button class="secondary-form-button">S'inscrire</button>
+      </section>
 `;
