@@ -23,9 +23,20 @@ class GetSoireeByIdAction extends AbstractAction
         $idSoiree = $args['ID-SOIREE'];
         try {
             $soiree = $this->soireeService->getSoireeDetail($idSoiree);
+            $spectaclesIds = $this->soireeService->getSpectacleByIdSoiree($idSoiree);
+
+            $spectaclesLinks = array_map(function($spectacleId) {
+                return [
+                    'href' => "spectacles/{$spectacleId}"
+                ];
+            }, $spectaclesIds);
+
             $res = [
                 'type' => 'ressource',
-                'soiree' => $soiree
+                'soiree' => $soiree,
+                'links' => [
+                    'spectacles' => $spectaclesLinks
+            ]
             ];
         } catch (\Exception $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());

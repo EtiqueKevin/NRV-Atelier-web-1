@@ -37,11 +37,21 @@ class SoireeService implements SoireeServiceInterface
 
     public function getSoireeDetail($idSoiree){
         try{
-            $soiree = $this->soireeRepository->getSoireeByIdDetail($idSoiree);
-            return new SoireeDetailDTO($soiree);
+            $soiree = $this->soireeRepository->getSoireeById($idSoiree);
+            return new SoireeDTO($soiree);
         }catch (\Exception $e) {
             throw new SoireeException("erreur lors de la récupération de la soirée detail");
         }
+    }
+
+    public function getSpectacleByIdSoiree($idSoiree){
+        try{
+            $tabIdSoiree = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
+
+        }catch (\Exception $e) {
+            throw new SoireeException("erreur lors de la récupération de la soirée detail");
+        }
+        return $tabIdSoiree;
     }
 
 }

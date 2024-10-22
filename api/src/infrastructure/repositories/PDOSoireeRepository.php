@@ -70,20 +70,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $specTab = [];
         try{
             foreach ($soireeSpectacles as $sspec){
-                $spectacleEntity = $this->getSpectacleById($sspec['id_spectacle']);
-
-                $arrayIdArtiste = $this->getArtisteIdByIdSpectacle($sspec['id_spectacle']);
-
-                $artisteTab = [];
-                foreach ( $arrayIdArtiste as $idart){
-                    $artisteEntity = $this->getArtisteById($idart);
-                    $artisteTab[] = $artisteEntity;
-                }
-
-                $specTab[] = [
-                     'spectacle' => $spectacleEntity,
-                     'artistes' => $artisteTab
-                 ];
+                $specTab[] = $sspec['id_spectacle'];
             }
         }catch (\Exception $e){
             throw new RepositoryException('getSpectacleByIdSoiree : erreur lors du chargement des spectacles ou de l artiste'.$e->getMessage());
