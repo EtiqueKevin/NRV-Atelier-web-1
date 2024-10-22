@@ -308,5 +308,241 @@ INSERT INTO artistes (id, nom, prenom, description) VALUES
 ('5a5d20aa-3c5b-42d0-bb79-1f66aa49735c', 'Sullivan', 'Eric', 'Batteur avec un style percutant.'),
 ('f52f8925-bf0d-4425-8b7a-1895c1dc6d74', 'Bennett', 'Grace', 'Chanteuse avec une présence scénique captivante.');
 
--- atribution des spectacles aux artistes sachant qu'il peuvent être plusieurs par spectacle
+-- atribution des spectacles aux artistes sachant qu'ils peuvent être plusieurs par spectacle
+-- Artiste 1 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('1f35d5c8-b0e3-4f96-bc2e-60a8eec73587', '14e701bf-a9b2-4037-93fa-c86bcbdc24d5'),
+       ('1f35d5c8-b0e3-4f96-bc2e-60a8eec73587', 'bd3883fc-5e7d-4309-af2d-7194374e030d'),
+       ('1f35d5c8-b0e3-4f96-bc2e-60a8eec73587', 'a750a2b2-7f13-4208-80f8-071df46afd31');
 
+-- Artiste 2 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('c2f8e2e1-69d2-4c59-a091-8d32af92a654', '7ed62eed-29e2-472f-96d3-7e94e5f9d37e'),
+       ('c2f8e2e1-69d2-4c59-a091-8d32af92a654', '19a5896c-29f5-4275-ad0d-e5499d1cb682');
+
+-- Artiste 3 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('f38b1289-5b67-4851-8c4a-ecbcb3e43ee2', 'c8a9348f-32a3-41b9-897c-6362e53d0233'),
+       ('f38b1289-5b67-4851-8c4a-ecbcb3e43ee2', '48960340-6122-4494-8654-90227afb4f86'),
+       ('f38b1289-5b67-4851-8c4a-ecbcb3e43ee2', 'f38c904d-5c31-4173-970a-fe6a36872b65'),
+       ('f38b1289-5b67-4851-8c4a-ecbcb3e43ee2', '21e8e3ae-3023-4ca1-a1b9-6f9550fe909b');
+
+-- Artiste 4 dans 1 spectacle
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('7d50d1a4-68a5-4e5a-b3f8-e2c60e1d2b93', '59ba6c47-93b6-4206-b50f-d192a2d3e12c');
+
+-- Artiste 5 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('b1cf6f2e-fde1-4c82-a1d4-8e2d04572a7d', 'fc5bd0a0-cc7e-4421-8418-ecd8d58b91fa'),
+       ('b1cf6f2e-fde1-4c82-a1d4-8e2d04572a7d', '8f9d3f5d-36b7-4268-afb5-edb1bbb5e092');
+
+-- Artiste 6 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('3e9dabe1-03ab-4e62-bdcb-086c121d8d0f', '83b852a4-bfb1-46ab-a0fc-556d8d9421c0'),
+       ('3e9dabe1-03ab-4e62-bdcb-086c121d8d0f', 'd813c3d6-8ca8-45e4-afe8-4af86ec82cc3'),
+       ('3e9dabe1-03ab-4e62-bdcb-086c121d8d0f', '0c02d78e-b108-4c60-8050-62ffa75521d7');
+
+-- Artiste 7 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('e92347d5-72f6-41be-b9bc-53b4b5b64d35', '2451dd38-f426-442a-ba7d-245dd6c7f716'),
+       ('e92347d5-72f6-41be-b9bc-53b4b5b64d35', '483bbd62-16ea-4421-a1ba-7431d951fea4');
+
+-- Artiste 8 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('5f7f1233-49e1-4fa5-a8b9-57b6e9a8d1f8', 'ca7ac1fd-f10a-42d0-bcc5-3f530b335a8c'),
+       ('5f7f1233-49e1-4fa5-a8b9-57b6e9a8d1f8', 'b25c563c-05e9-4971-80d1-50268d83a0f3'),
+       ('5f7f1233-49e1-4fa5-a8b9-57b6e9a8d1f8', '86743a46-ce57-4f21-8395-6195a81c30cd'),
+       ('5f7f1233-49e1-4fa5-a8b9-57b6e9a8d1f8', '03b3f911-74c6-4918-8a65-bc2e6eadac16');
+
+-- Artiste 9 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('df4d2a3e-fec0-4f76-a255-f07a2503e0c0', '1768429e-af60-414f-995a-9dd2803fefc1'),
+       ('df4d2a3e-fec0-4f76-a255-f07a2503e0c0', 'a82f7b34-4eb3-480c-a81a-edd3d5f4a4a7');
+
+-- Artiste 10 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('ee3271e7-78b7-41e7-93b7-0b1a4bfbfd88', 'b774871d-dfc9-4417-97cf-ff16ca69fc95'),
+       ('ee3271e7-78b7-41e7-93b7-0b1a4bfbfd88', 'a4718fd9-7631-4298-b4af-c18ab46c0e58'),
+       ('ee3271e7-78b7-41e7-93b7-0b1a4bfbfd88', 'd5db6f51-cca1-4f64-9821-9d3f0cdf1d00');
+
+-- Artiste 11 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('612ab2d3-502f-49b5-bd40-1b94a1f22f8a', 'c2ba1db2-638e-4f86-a88f-804f65ee1a28'),
+       ('612ab2d3-502f-49b5-bd40-1b94a1f22f8a', 'a5841bf1-55f5-4d23-b7fe-2b3a1cdd389f');
+
+-- Artiste 12 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('70d36267-e92e-432f-9b38-dc50a7350d37', 'ae7b64c6-6f21-4f50-b98a-e68ef2af7f79'),
+       ('70d36267-e92e-432f-9b38-dc50a7350d37', 'fdadf72e-1e41-49b4-94a2-739da9dd3c0e'),
+       ('70d36267-e92e-432f-9b38-dc50a7350d37', '17c6db99-8532-44e4-8368-378b3d20d1b4'),
+       ('70d36267-e92e-432f-9b38-dc50a7350d37', 'ac130890-7f80-42e1-8fcb-e7fc7b54a32f');
+
+-- Artiste 13 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('b5a1484a-f0e5-4e81-a190-645623af4f3a', 'e65b4a7e-79d9-4f68-bb3d-70d2f7f2bbba'),
+       ('b5a1484a-f0e5-4e81-a190-645623af4f3a', 'a36db2c4-2f67-47a9-9d87-54dc9b2e1a90'),
+       ('b5a1484a-f0e5-4e81-a190-645623af4f3a', 'd0f7c1b2-3b89-4e96-9f0f-9d3f8e91fcfa');
+
+-- Artiste 14 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('c81b6d91-c788-4f8c-83f7-9783f2f6b621', '75837c5e-3b7d-4513-b8f0-8c2f7364c071'),
+       ('c81b6d91-c788-4f8c-83f7-9783f2f6b621', 'ef305b4b-7c9f-41d9-880e-dfb4121dfd09');
+
+-- Artiste 15 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('b20606da-dfc1-45ef-a891-00b648f8d9d2', 'ba3c49b7-6ca1-4999-b520-fcfbf3d14807'),
+       ('b20606da-dfc1-45ef-a891-00b648f8d9d2', '06ab32cb-f1f3-4c2d-bb65-2cb91f4f2fb3'),
+       ('b20606da-dfc1-45ef-a891-00b648f8d9d2', '8b420d23-d928-44d4-b0c8-7af518fc10a7');
+
+-- Artiste 16 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('42089405-7ac9-4b2a-b54e-b4d7c5aa7f43', 'f0081e91-91e3-47a2-b03f-c0d1e321f027'),
+       ('42089405-7ac9-4b2a-b54e-b4d7c5aa7f43', 'bfe6fe64-87e7-47a2-9867-249c5c0c9a28');
+
+-- Artiste 17 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('8403cbf5-4d44-4c12-b1ba-0bcf74864359', '2d81a542-bcf3-41b4-b1cb-1739ab308c95'),
+       ('8403cbf5-4d44-4c12-b1ba-0bcf74864359', 'e25c2848-88ad-445b-8038-8fbe7435a409'),
+       ('8403cbf5-4d44-4c12-b1ba-0bcf74864359', 'b6c7a3d6-bb9e-46b5-9f8a-71b02c2739d2');
+
+-- Artiste 18 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('e54c4f9e-8242-4114-9338-3ffb1db1a4e3', 'fabe32f4-cc6f-4fbf-8160-9738041d5442'),
+       ('e54c4f9e-8242-4114-9338-3ffb1db1a4e3', 'fe0b6b24-02b9-4baf-a8b0-bc59550d0874');
+
+-- Artiste 19 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('67bba6a1-3027-4b90-bb38-24560f96115b', '64075c6e-fd6f-43da-9aa7-73ed48a877e3'),
+       ('67bba6a1-3027-4b90-bb38-24560f96115b', '6cdb23f1-7f23-42c0-8303-e3686108dd7b'),
+       ('67bba6a1-3027-4b90-bb38-24560f96115b', '1ab616d3-4bfb-4cf6-b79a-63cb1b27f5e1'),
+       ('67bba6a1-3027-4b90-bb38-24560f96115b', '07d95ca0-51d8-4345-b80f-86eced43fb53');
+
+-- Artiste 20 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('f2f688d1-e457-4c78-9f24-f0b54b12f7e8', '6e764589-c110-46bc-b119-58b4d2c70a2c'),
+       ('f2f688d1-e457-4c78-9f24-f0b54b12f7e8', 'c5910b7b-d627-46b1-b84c-0a2672d57b74'),
+       ('f2f688d1-e457-4c78-9f24-f0b54b12f7e8', 'f62fae0b-95d1-4e2b-bfef-3bfe23f9bb65');
+
+-- Artiste 21 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('de2240b1-2419-4a79-bd71-81334d70204b', 'bb4c55d7-bb78-4cf6-b25e-ec80f1240f11'),
+       ('de2240b1-2419-4a79-bd71-81334d70204b', 'e3529f6f-660a-44b2-9822-c656d56d2c35');
+
+-- Artiste 22 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('a2f24bc2-3f05-44c5-8a67-fc86dc5f7ee4', '7f8353ff-b9b2-4937-a3f7-54847ed81ac7'),
+       ('a2f24bc2-3f05-44c5-8a67-fc86dc5f7ee4', '123912d8-e472-4c8e-9dc1-07b3a7bc880b'),
+       ('a2f24bc2-3f05-44c5-8a67-fc86dc5f7ee4', '27a3fdac-983e-46ed-a982-2b2326c0b49e'),
+       ('a2f24bc2-3f05-44c5-8a67-fc86dc5f7ee4', '7e1b5c78-6097-4932-8151-51b8265bbfea');
+
+-- Artiste 23 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('36b2433d-e7ab-4edb-8a63-e2347b0b8b1b', '0297cf6e-e339-48f7-912a-1174e51ccbe3'),
+       ('36b2433d-e7ab-4edb-8a63-e2347b0b8b1b', '2ef2c561-dbe6-42ca-8a9e-4c3761651c62'),
+       ('36b2433d-e7ab-4edb-8a63-e2347b0b8b1b', '5edfe9b2-5120-4b21-89ba-1db4ab926818');
+
+-- Artiste 24 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('64166bc2-b63c-45b0-a78f-ef8326c50d68', 'b2d8ccf4-7170-4a0f-a7f1-b57e7dd8f379'),
+       ('64166bc2-b63c-45b0-a78f-ef8326c50d68', 'f8b72a74-2045-4bff-8dbe-0e2ac681ae18');
+
+-- Artiste 25 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('dc7ed7f4-1534-44c9-9d69-df27056af36e', 'f0a871ef-f621-4b5e-84d5-d1421c3d8b3d'),
+       ('dc7ed7f4-1534-44c9-9d69-df27056af36e', '2ddc617a-8594-45bb-b94c-52e02487f8fa'),
+       ('dc7ed7f4-1534-44c9-9d69-df27056af36e', '9c4172ff-d4d8-4f10-bf37-d7d8f6b38d32'),
+       ('dc7ed7f4-1534-44c9-9d69-df27056af36e', 'c2457204-18f6-4652-b2c5-d15c0f87e4fb');
+
+-- Artiste 26 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('5df80c72-b8a4-4f93-a827-8c3a84a3d0c6', 'b09c1e4a-7dc4-4db1-b76a-55d48b891f69'),
+       ('5df80c72-b8a4-4f93-a827-8c3a84a3d0c6', '5bf2ef91-b7f0-42c4-97b4-6e8c909e6789'),
+       ('5df80c72-b8a4-4f93-a827-8c3a84a3d0c6', 'f79cba33-495d-4af3-9db6-1a983c6f60b5');
+
+-- Artiste 27 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('003dfc0a-69ec-46d2-98c4-d460a6728d68', 'd504fb1f-1763-47f1-93b1-63f71cb7d9d3'),
+       ('003dfc0a-69ec-46d2-98c4-d460a6728d68', 'd582c6d6-9d35-4d38-bb37-9e31e1bcd8ef');
+
+-- Artiste 28 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('b7fbd949-1161-4945-8a99-1c20a8cfc8b5', '44a19755-99b3-4c97-a0d4-99459e9e6c63'),
+       ('b7fbd949-1161-4945-8a99-1c20a8cfc8b5', '64f848ff-ff21-4dc3-b500-8051f160c5cb'),
+       ('b7fbd949-1161-4945-8a99-1c20a8cfc8b5', 'a10f03f4-1f38-48f1-bb61-907e223ff90e');
+
+-- Artiste 29 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('6cb1e858-1b67-46ca-8e60-c8c84c76b84b', 'd48a9d64-72b6-4c7d-b4b1-f8fd59d37835'),
+       ('6cb1e858-1b67-46ca-8e60-c8c84c76b84b', '88a47822-4452-4d10-8064-2bca8c8e0805');
+
+-- Artiste 30 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('9f6c90e3-d2f1-4799-a285-f9425b7c1c2e', '541f2446-8359-478a-a8a6-bf8e7d61453d'),
+       ('9f6c90e3-d2f1-4799-a285-f9425b7c1c2e', '91382f3e-e5c5-4c2d-b8b1-d57b245e7c27'),
+       ('9f6c90e3-d2f1-4799-a285-f9425b7c1c2e', '8b6f99fd-7981-4fd6-9ec1-8f939b2f45a1'),
+       ('9f6c90e3-d2f1-4799-a285-f9425b7c1c2e', '1b49721d-5c68-4b76-86ed-7cbce306a413');
+
+-- Artiste 31 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('7b207b9d-ecb7-4535-8393-0c47a3f8eec1', '8f1d672a-13d6-45fb-b46f-e74ff65fc7cf'),
+       ('7b207b9d-ecb7-4535-8393-0c47a3f8eec1', 'd9f66e15-38f2-4627-b30b-593c33171e23'),
+       ('7b207b9d-ecb7-4535-8393-0c47a3f8eec1', 'cd2c02ab-5fbe-4bde-89f0-d46e3d07f76f');
+
+-- Artiste 32 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('b7c1bcb4-f39e-4863-b9a4-b44dfb58cc61', '66c53b19-92b4-4636-835d-579cba5da87b'),
+       ('b7c1bcb4-f39e-4863-b9a4-b44dfb58cc61', '1f77f36e-79d5-4a8c-9f63-3c2e5701a57b');
+
+-- Artiste 33 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'cc426c58-2e91-4b5d-9103-61df8f191ce1'),
+       ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', '05f93d8e-b63c-4c9e-80c5-2bc26bde2496'),
+       ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'e875e08c-42ef-4f5d-85c6-3b1e93c71bb1'),
+       ('e08c2b48-3287-46b2-bcb3-94c1b70b5c79', 'd6e057f4-3314-4b5d-bb9d-0c86a5e6e35f');
+
+-- Artiste 34 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '893c1845-1df3-4d6f-b5b1-0df28c93f580'),
+       ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '8edc4aa7-9d4a-44c6-bb92-b60cb5f1839f'),
+       ('f3e4441c-e0ae-4822-a9e2-e9c10435c1da', '84e51bcf-eaa0-4071-9a07-7e155f617ff8');
+
+-- Artiste 35 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('0cbe66bc-bb5c-4622-a6ee-473e08347c37', '6d8f2da0-cbe5-4ae3-8aeb-89cb53179c42'),
+       ('0cbe66bc-bb5c-4622-a6ee-473e08347c37', '3ae5d9f5-8a86-4aa4-bc92-6cf8a29e0454');
+
+-- Artiste 36 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('57592e35-bc25-46c6-b4ed-7693c4d9efba', 'ed12b736-4c83-42eb-bc74-ecb803f44ef9'),
+       ('57592e35-bc25-46c6-b4ed-7693c4d9efba', '88a005ae-c11f-4c45-8414-ff8a8f7cd0c7'),
+       ('57592e35-bc25-46c6-b4ed-7693c4d9efba', 'ff2d1c9c-1e5b-4678-bbe5-112d39a1e324');
+
+-- Artiste 37 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('f4f7943a-4c09-438f-a1cf-5e1885e25c95', '2d81a542-bcf3-41b4-b1cb-1739ab308c95'),
+       ('f4f7943a-4c09-438f-a1cf-5e1885e25c95', 'e25c2848-88ad-445b-8038-8fbe7435a409'),
+       ('f4f7943a-4c09-438f-a1cf-5e1885e25c95', 'b6c7a3d6-bb9e-46b5-9f8a-71b02c2739d2');
+
+-- Artiste 38 dans 2 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('858649d6-9d65-4a54-90b7-7ff169648f9d', 'fabe32f4-cc6f-4fbf-8160-9738041d5442'),
+       ('858649d6-9d65-4a54-90b7-7ff169648f9d', 'fe0b6b24-02b9-4baf-a8b0-bc59550d0874');
+
+-- Artiste 39 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('1b4500ff-b177-47ee-9ae4-5a2e4c1b0b6c', '64075c6e-fd6f-43da-9aa7-73ed48a877e3'),
+       ('1b4500ff-b177-47ee-9ae4-5a2e4c1b0b6c', '6cdb23f1-7f23-42c0-8303-e3686108dd7b'),
+       ('1b4500ff-b177-47ee-9ae4-5a2e4c1b0b6c', '1ab616d3-4bfb-4cf6-b79a-63cb1b27f5e1');
+
+-- Artiste 40 dans 4 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('5a5d20aa-3c5b-42d0-bb79-1f66aa49735c', '07d95ca0-51d8-4345-b80f-86eced43fb53'),
+       ('5a5d20aa-3c5b-42d0-bb79-1f66aa49735c', '6e764589-c110-46bc-b119-58b4d2c70a2c'),
+       ('5a5d20aa-3c5b-42d0-bb79-1f66aa49735c', 'c5910b7b-d627-46b1-b84c-0a2672d57b74'),
+       ('5a5d20aa-3c5b-42d0-bb79-1f66aa49735c', 'f62fae0b-95d1-4e2b-bfef-3bfe23f9bb65');
+
+-- Artiste 41 dans 3 spectacles
+INSERT INTO artistes_spectacles (id_artiste, id_spectacle)
+VALUES ('f52f8925-bf0d-4425-8b7a-1895c1dc6d74', 'bb4c55d7-bb78-4cf6-b25e-ec80f1240f11'),
+       ('f52f8925-bf0d-4425-8b7a-1895c1dc6d74', 'e3529f6f-660a-44b2-9822-c656d56d2c35'),
+       ('f52f8925-bf0d-4425-8b7a-1895c1dc6d74', '7f8353ff-b9b2-4937-a3f7-54847ed81ac7');
