@@ -11,7 +11,8 @@ class Cors{
 
     private $allowedOrigins = [
         'http://localhost:35611',
-        'http://docketu.iutnc.univ-lorraine.fr:35611'
+        'http://docketu.iutnc.univ-lorraine.fr:35611',
+        'http://localhost:35610',
     ];
 
     public function __invoke(ServerRequestInterface $rq, RequestHandlerInterface $next): ResponseInterface {
