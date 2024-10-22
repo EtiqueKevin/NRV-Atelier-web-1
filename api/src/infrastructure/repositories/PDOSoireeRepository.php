@@ -38,7 +38,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             return $specTab;
 
         }catch (\Exception $e){
-            throw new RepositoryException('erreur lors du chargement des lists : '. $e->getMessage());
+            throw new RepositoryException('erreur lors du chargement de la collection AllSpectacle : '. $e->getMessage());
         }
     }
 
@@ -211,6 +211,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     }
 
     public function getSpectacles($date, $style, $lieu): array{
+        //le 1=1 c'est pour que je puisse mettre AND au début de chaque condition
         $sql = 'SELECT * FROM spectacles inner join soirees_spectacles on spectacles.id = id_spectacle inner join soirees on id_soiree = soirees.id  WHERE 1=1 ';
         $params = [];
         if(!empty($date)){
