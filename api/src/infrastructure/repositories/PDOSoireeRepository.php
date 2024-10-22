@@ -12,6 +12,7 @@ use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use PDO;
 use PHPUnit\Exception;
+use function PHPUnit\Framework\isEmpty;
 
 class PDOSoireeRepository implements SoireesRepositoryInterface{
 
@@ -31,11 +32,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             }
             $specTab = [];
             foreach ($spectacles as $spe){
-                $idsoiree = $this->getSoireeIdByIdSpectacle($spe['id']);
-                $heure = \DateTime::createFromFormat('H:i:s',$spe['heure']);
-                $specEntity = new Spectacle($spe['titre'],$spe['description'],$heure,$spe['url_video']);
-                $specEntity->setID($spe['id']);
-                $specEntity->setIdSoiree($idsoiree);
+                $specEntity = $this->getSpectacleById($spe['id']);
                 $specTab[]=$specEntity;
             }
             return $specTab;
@@ -138,7 +135,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $specEntity->setID($spectacle['id']);
             $specEntity->setIdSoiree($idsoiree);
         }catch (\Exception $e){
-            throw new RepositoryException('getSpectacleById : erreur lors du chargement du spectacle '.$e->getMessage());
+            throw new RepositoryException('getSpectacleById : erreur lors du chargement du spectacle '.$id ." ".$e->getMessage());
         }
         return $specEntity;
     }
@@ -238,11 +235,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $specTab = [];
         try{
             foreach ($spectacles as $spe){
-                $idsoiree = $this->getSoireeIdByIdSpectacle($spe['id']);
-                $heure = \DateTime::createFromFormat('H:i:s',$spe['heure']);
-                $specEntity = new Spectacle($spe['titre'],$spe['description'],$heure,$spe['url_video']);
-                $specEntity->setID($spe['id']);
-                $specEntity->setIdSoiree($idsoiree);
+                $specEntity = $this->getSpectacleById($spe['id_spectacle']);
                 $specTab[]=$specEntity;
             }
         }catch (\Exception $e){
