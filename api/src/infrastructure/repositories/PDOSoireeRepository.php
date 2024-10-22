@@ -132,7 +132,9 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
             $dateRes->setTime((int)$h,(int)$m,(int)$s);
 
-            $specEntity = new Spectacle($spectacle['titre'],$spectacle['description'],$dateRes,$spectacle['url_video']);
+            $imgs = $this->getImageBySpectacleId($spectacle['id']);
+
+            $specEntity = new Spectacle($spectacle['titre'],$spectacle['description'],$dateRes,$spectacle['url_video'],$imgs);
             $specEntity->setID($spectacle['id']);
             $specEntity->setIdSoiree($idsoiree);
         }catch (\Exception $e){
@@ -187,5 +189,27 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             'soiree'=>$soireeEntity,
             'spectacleDetail'=>$arraySpectacle
         ];
+    }
+
+    public function getImageBySpectacleId($specId) :array{
+
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join img_spectacles ON spectacles.id = img_spectacles.id_spectacle  WHERE img_spectacles.id_spectacle = ?');
+            $stmt->bindParam(1, $specId, \PDO::PARAM_STR);
+            $stmt->execute();
+            $imgRes = $stmt->fetchAll();
+            if(!$imgRes){
+                throw new RepositoryEntityNotFoundException('getImageBySpectacleId : pas artiste trouvé pour spectacle : ' . $specId );
+            }
+
+            $imgTab = [];
+
+            foreach ($imgRes as $i){
+                $imgTab[] = 'img/'.$i['url_img'];
+            }
+        }catch (\Exception $e){
+            throw new RepositoryException('getImageBySpectacleId : erreur lors du chargement image : '. $e->getMessage() );
+        }
+        return $imgTab;
     }
 }

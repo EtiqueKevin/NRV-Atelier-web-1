@@ -19,11 +19,14 @@ class Spectacle extends Entity {
 
     protected string $idSoiree;
 
-    public function __construct(string $titre, string $desc, \DateTime $h, string $url_video){
+    protected array $imgs;
+
+    public function __construct(string $titre, string $desc, \DateTime $h, string $url_video, array $imgs){
         $this->titre = $titre;
         $this->description = $desc;
         $this->heure = $h;
         $this->url_video = $url_video;
+        $this->imgs =$imgs;
     }
 
     public function setIdSoiree($ids){
