@@ -1,5 +1,6 @@
 <?php
 
+use nrv\application\actions\GetArtisteByIdAction;
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSoireeBySpectacleAction;
 use nrv\application\actions\GetSpectaclesAction;
@@ -41,6 +42,10 @@ return [
 
     GetSpectaclesByIdAction::class => function (ContainerInterface $c) {
         return new GetSpectaclesByIdAction($c->get(SpectacleServiceInterface::class));
+    },
+
+    GetArtisteByIdAction::class => function (ContainerInterface $c) {
+        return new GetArtisteByIdAction($c->get(SpectacleServiceInterface::class));
     },
 
 ];

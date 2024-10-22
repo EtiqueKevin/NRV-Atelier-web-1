@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use nrv\application\actions\GetArtisteByIdAction;
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSoireeBySpectacleAction;
 use nrv\application\actions\GetSpectaclesAction;
@@ -26,7 +27,12 @@ return function( App $app): App {
     // spectacle
 
     $app->get('/spectacles[/]', GetSpectaclesAction::class);
+
     $app->get('/spectacles/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
+
+    // artiste
+
+    $app->get('/artiste/{ID-ARTISTE}[/]',GetArtisteByIdAction::class);
 
     // soiree
 

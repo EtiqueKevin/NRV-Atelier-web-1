@@ -27,9 +27,6 @@ class ArtisteDTO extends DTO {
             'nom' => $this->nom,
             'prenom' => $this->prenom,
             'description' => $this->description,
-            'link' => [
-                'href' => 'artiste/'.$this->id,
-            ]
         ];
     }
 

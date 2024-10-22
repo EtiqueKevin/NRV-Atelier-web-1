@@ -3,6 +3,7 @@
 namespace nrv\core\domain\entities\artiste;
 
 use nrv\core\domain\entities\Entity;
+use nrv\core\dto\artiste\ArtisteDTO;
 
 class Artiste extends Entity {
 
@@ -16,6 +17,10 @@ class Artiste extends Entity {
         $this->nom = $n;
         $this->prenom = $p;
         $this->description = $desc;
+    }
+
+    public function toDTO(){
+        return new ArtisteDTO($this);
     }
 
 }
