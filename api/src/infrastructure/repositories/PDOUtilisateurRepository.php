@@ -52,7 +52,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             $stmt->bindParam(1, $idUser);
             $stmt->execute();
             $panier = $stmt->fetch();
-
+            
             if (!$panier) {
                 throw new RepositoryEntityNotFoundException('panier inconnu');
             }
@@ -74,7 +74,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             $panierItems = $stmt->fetchAll();
 
             if (!$panierItems) {
-                throw new RepositoryEntityNotFoundException('panier inconnue');
+                return [];
             }
 
             foreach ($panierItems as $panierItem) {
@@ -84,7 +84,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             }
 
         } catch (\Exception $e) {
-            throw new RepositoryException('getPanierItems : erreur lors du chargemement panier '. $idPanier ." " . $e->getMessage());
+            throw new RepositoryException('getPanierItems : erreur lors du chargemement panier'. $idPanier ." " . $e->getMessage());
         }
         return $panierItemsRes;
     }
@@ -176,8 +176,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
-    public function ajouterPanierUtilisateur(string $id): void
-    {
+    public function ajouterPanierUtilisateur(string $id){
         try {
             $stmt = $this->pdo->prepare('INSERT INTO paniers_utilisateurs (id_utilisateur) VALUES (?)');
             $stmt->bindParam(1, $id, PDO::PARAM_STR);

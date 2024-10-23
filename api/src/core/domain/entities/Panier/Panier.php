@@ -17,6 +17,7 @@ class Panier extends Entity
     {
         $this->idUtilisateur = $idUtilisateur;
         $this->idPanier = $idPanier;
+        $this->panierItems = [];
         $this->valide = $valide;
     }
 
