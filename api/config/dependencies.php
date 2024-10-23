@@ -61,7 +61,7 @@ return [
     },
 
     PanierServiceInterface::class => function (ContainerInterface $c) {
-        return new PanierService($c->get(UtilisateursRepositoryInterface::class));
+        return new PanierService($c->get(UtilisateursRepositoryInterface::class), $c->get(SoireesRepositoryInterface::class));
     },
 
     UtilisateurServiceInterface::class => function (ContainerInterface $c) {

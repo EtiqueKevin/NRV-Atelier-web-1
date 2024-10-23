@@ -3,16 +3,19 @@
 namespace nrv\core\services\Panier;
 
 use nrv\core\dto\Panier\PanierDTO;
+use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 
 class PanierService implements PanierServiceInterface
 {
 
     private UtilisateursRepositoryInterface $UtilisateursRepository;
+    private SoireesRepositoryInterface $SoireesRepository;
 
-    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository)
+    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface $soireesRepository)
     {
         $this->UtilisateursRepository = $utilisateursRepository;
+        $this->SoireesRepository = $soireesRepository;
     }
 
     public function getPanier(string $idUser) : PanierDTO
@@ -22,6 +25,7 @@ class PanierService implements PanierServiceInterface
             $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
 
             foreach ($panierItemsRes as $panierItem){
+                $panierItem->setSoiree($this->SoireesRepository->getSoireeById($panierItem->idSoiree));
                 $panier->addPanierItem($panierItem->toDTO());
             }
 
@@ -40,7 +44,6 @@ class PanierService implements PanierServiceInterface
             $update = false;
             foreach ($panierItemsRes as $panierItem) {
                 if ($panierItem->idSoiree == $idSoiree && $panierItem->tarif == $tarif) {
-                    echo "caca";
                     $update = true;
                     $panierItem->setQte($panierItem->qte + $qte);
                     $this->UtilisateursRepository->updatePanier($panierItem);
