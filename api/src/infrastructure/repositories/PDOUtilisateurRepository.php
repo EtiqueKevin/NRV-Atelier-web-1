@@ -70,7 +70,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             }
 
             foreach ($panierItems as $panierItem) {
-                $panierItemEntity = new PanierItem($panierItem['id_panier'], $panierItem['id_soiree'], $panierItem['tarif'], $panierItem['tarif_total'], $panierItem['quantite']);
+                $panierItemEntity = new PanierItem($panierItem['id_soiree'], $panierItem['id_panier'], $panierItem['tarif'], $panierItem['tarif_total'], $panierItem['quantite']);
                 $panierItemEntity->setID($panierItem['id']);
                 $panierItemsRes[] = $panierItemEntity;
             }
@@ -81,22 +81,23 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $panierItemsRes;
     }
 
-    public function addPanier($idSoiree, $idPanier, $tarif, $qte) : void
+    public function addPanier($idPanier, $idSoiree, $tarif, $qte) : void
     {
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO paniers (id_soiree, id_panier, tarif, quantite) VALUES (?, ?, ?, ?)');
-            $stmt->bindParam(1, $idSoiree);
-            $stmt->bindParam(2, $idPanier);
+            $stmt = $this->pdo->prepare('INSERT INTO paniers (id_panier ,id_soiree, tarif, quantite) VALUES (?, ?, ?, ?)');
+            $stmt->bindParam(1, $idPanier);
+            $stmt->bindParam(2, $idSoiree);
             $stmt->bindParam(3, $tarif);
             $stmt->bindParam(4, $qte);
             $stmt->execute();
         } catch (\Exception $e) {
-            throw new RepositoryException('addPanier : erreur lors de l\'ajout au panier '. $idUser ." " . $e->getMessage());
+            throw new RepositoryException('addPanier : erreur lors de l\'ajout au panier '. $idPanier ." " . $e->getMessage());
         }
     }
 
     public function updatePanier($panierItem) : void
     {
+        var_dump($panierItem);
         try {
             $stmt = $this->pdo->prepare('UPDATE paniers SET qte = ? WHERE id_panier = ? AND id_soiree = ?');
             $stmt->bindParam(1, $panierItem->qte);

@@ -7,12 +7,12 @@ use nrv\core\dto\DTO;
 
 class PanierDTO extends DTO
 {
-    private string $id;
-    private string $idUtilisateur;
-    private string $idPanier;
+    protected string $id;
+    protected string $idUtilisateur;
+    protected string $idPanier;
 
-    private array $panierItems;
-    private bool $valide;
+    protected array $panierItems;
+    protected bool $valide;
 
     public function __construct($panier)
     {
