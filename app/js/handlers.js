@@ -41,6 +41,13 @@ export function handleNavButtons() {
             ui.displayPanier();
         });
     }
+    
+    const navBillets = document.getElementById('nav-billets');
+    if (navBillets) {
+        navBillets.addEventListener('click', async () => {
+            ui.displayBilletsList();
+        });
+    }
 }
 
 export function handleHomeSpectacleButton() {

@@ -62,3 +62,10 @@ export async function displayPanier() {
 
     modal.style.display = 'block';
 }
+
+export async function displayBilletsList() {
+    const data = await users.getBillets();
+    const template = Handlebars.compile(templates.listeBilletTemplate);
+    const html = template({billets: data.billets});
+    document.getElementById('main-content').innerHTML = html;
+}
