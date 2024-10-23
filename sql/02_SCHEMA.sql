@@ -82,10 +82,19 @@ CREATE TABLE paniers (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     id_panier uuid NOT NULL,
     id_soiree uuid NOT NULL,
-    tarif integer NOT NULL,
+    tarif numeric NOT NULL,
     quantite integer DEFAULT 1 NOT NULL,
-    tarif_total integer DEFAULT 0 NOT NULL,
+    tarif_total numeric DEFAULT 0 NOT NULL,
     FOREIGN KEY (id_panier) REFERENCES paniers_utilisateurs(id_panier)
+);
+
+CREATE TABLE billets (
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    id_utilisateur uuid NOT NULL,
+    id_soiree text NOT NULL,  
+    date_heure_soiree TIMESTAMP NOT NULL,
+    categorie_tarif text NOT NULL,  
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id)
 );
 
 

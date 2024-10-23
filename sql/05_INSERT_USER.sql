@@ -45,3 +45,4 @@ INSERT INTO paniers (id_panier, id_soiree, tarif, quantite) VALUES
 ('300ab149-3ee7-446a-bbe1-c86e2c961398','e46d5253-4d5d-4a6b-94c0-fc84217dc42d',12.00,20);
 
 
+
