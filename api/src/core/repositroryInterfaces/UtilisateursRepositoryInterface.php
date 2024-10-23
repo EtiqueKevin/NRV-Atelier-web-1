@@ -8,4 +8,6 @@ use nrv\core\domain\entities\soiree\Soiree;
 interface UtilisateursRepositoryInterface{
 
     public function UtilisateurByEmail(string $email);
+
+    public function getPanier($idUser);
 }
