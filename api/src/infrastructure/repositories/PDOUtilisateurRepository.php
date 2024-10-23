@@ -2,6 +2,8 @@
 
 namespace nrv\infrastructure\repositories;
 
+use DateTime;
+use nrv\core\domain\entities\billet\Billet;
 use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\Panier\PanierItem;
 use nrv\core\domain\entities\utilisateur\Utilisateur;
@@ -139,7 +141,27 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion utilisateur : '.$e->getMessage());
         }
+
         return $id;
+    }
+
+    public function getBilletsByIdUtilisateur(string $id):array{
+
+        $stmt = $this->pdo->prepare('SELECT * FROM billets WHERE id_utilisateur = ?');
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $billets = $stmt->fetchAll();
+
+        $billetTab=[];
+
+        foreach ($billets as $b){
+            $billetEnity = new Billet($id, $b['id_soiree'], DateTime::createFromFormat('Y-m-d H:i:s',$b['date_heure_soiree']), $b['categorie_tarif']);
+            $billetEnity->setID($b['id']);
+            $billetTab[] = $billetEnity;
+        }
+        //'Y-m-d H:i:s'
+
+        return $billetTab;
     }
 
     public function validerPanier(string $idUser): void

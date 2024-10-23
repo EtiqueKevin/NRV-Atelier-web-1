@@ -2,6 +2,7 @@
 
 use nrv\application\actions\AddPanierAction;
 use nrv\application\actions\GetArtisteByIdAction;
+use nrv\application\actions\GetBilletsByIdUtilisateur;
 use nrv\application\actions\GetLieuxAction;
 use nrv\application\actions\GetPanierAction;
 use nrv\application\actions\GetSoireeByIdAction;
@@ -16,6 +17,8 @@ use nrv\application\providers\auth\AuthProviderInterface;
 use nrv\application\providers\auth\JWTManager;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use nrv\core\services\billet\BilletService;
+use nrv\core\services\billet\BilletServiceInterface;
 use nrv\core\services\Panier\PanierService;
 use nrv\core\services\Panier\PanierServiceInterface;
 use nrv\core\services\soiree\SoireeService;
@@ -65,6 +68,10 @@ return [
         return new UtilisateurService($c->get(UtilisateursRepositoryInterface::class));
     },
 
+    BilletServiceInterface::class => function (ContainerInterface $c) {
+    return new BilletService($c->get(UtilisateursRepositoryInterface::class),$c->get(SoireesRepositoryInterface::class));
+},
+
     // PROVIDERS
 
     AuthProviderInterface::class => function(ContainerInterface $c){
@@ -111,6 +118,10 @@ return [
 
     SignUpAction::class => function (ContainerInterface $c) {
         return new SignUpAction($c->get(UtilisateurServiceInterface::class));
+    },
+
+    GetBilletsByIdUtilisateur::class => function (ContainerInterface $c) {
+        return new GetBilletsByIdUtilisateur($c->get(BilletServiceInterface::class));
     },
 
     // MIDDLEWARES
