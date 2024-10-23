@@ -25,6 +25,7 @@ export async function displaySoiree(id) {
     const template = Handlebars.compile(templates.soireeTemplate);
     const html = template({soiree : data, connected : connected});
     document.getElementById('main-content').innerHTML = html;
+    eventHandler.handleSoiree();
 }
 
 export async function displayConnexion() {

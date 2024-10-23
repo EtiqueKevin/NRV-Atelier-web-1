@@ -58,46 +58,46 @@ export const listeSpectacleTemplate = `
 `;
 
 export const soireeTemplate = `
-      <section class="soiree-card">
-        <div id="soiree-info">
-          <h2>{{soiree.nom}}</h2>
-          <p>Thématique: {{soiree.thematique}}</p>
-          <p>Date : {{soiree.date}}</p>
-          <p>Lieu: {{soiree.lieu.nom}}, {{soiree.lieu.adresse}}</p>
-          <p>Tarifs:</p>
-          <ul>
-            <li>Normal: {{soiree.tarif_normal}} €</li>
-            <li>Réduit: {{soiree.tarif_reduit}} €</li>
-          </ul>
-        </div>
-      {{#if connected}}
-        <div id="add-to-cart-form">
-          <form>
-            <div class="input-container">
-              <label for="ticket-quantity">Nombre de billets:</label>
-              <input type="number" id="ticket-quantity" name="quantity" value="1" min="1" required>
-            </div>
-            <div class="input-container">
-            <label for="ticket-tarif">Sélectionnez le tarif:</label>
-              <select id="ticket-tarif" name="tarif" required>
-                <option value="{{soiree.tarif_normal}}">Normal</option>
-                <option value="{{soiree.tarif_reduit}}">Réduit</option>
-              </select>
-            </div>
-
-            <button type="button" class="boutton">Ajouter au panier</button>
-          </form>
-        </div>
-      {{/if}}
-      </section>
+  <section class="soiree-card">
+    <div id="soiree-info">
+      <h2>{{soiree.nom}}</h2>
+      <p>Thématique: {{soiree.thematique}}</p>
+      <p>Date : {{soiree.date}}</p>
+      <p>Lieu: {{soiree.lieu.nom}}, {{soiree.lieu.adresse}}</p>
+      <p>Tarifs:</p>
+      <ul>
+        <li>Normal: {{soiree.tarif_normal}} €</li>
+        <li>Réduit: {{soiree.tarif_reduit}} €</li>
+      </ul>
+    </div>
+    {{#if connected}}
+      <div id="add-to-cart-form">
+        <form>
+          <input type="hidden" id="soiree-id" name="soiree-id" value="{{soiree.id}}">
+          <div class="input-container">
+            <label for="quantite">Nombre de billets:</label>
+            <input type="number" id="quantite" name="quantity" value="1" min="1" required>
+          </div>
+          <div class="input-container">
+            <label for="tarif">Sélectionnez le tarif:</label>
+            <select id="tarif" name="tarif" required>
+              <option value="{{soiree.tarif_normal}}">Normal</option>
+              <option value="{{soiree.tarif_reduit}}">Réduit</option>
+            </select>
+          </div>
+          <button type="button" class="boutton" id="submit-button">Ajouter au panier</button>
+        </form>
+      </div>
+    {{/if}}
+  </section>
 
   <section class="grid grid-col-3-l grid-col-2-m grid-col-1-xs gap-4" id="liste-spectacle">
     {{#each soiree.spectacles}}
       <div data-id="{{this.spectacle.id}}" class="spectacle-card spectacle">
         {{#if this.spectacle.image.length}}
-          <img src="{{this.spectacle.image.[0]}}" alt="Spectacle Image"  loading="lazy">
+          <img src="{{this.spectacle.image.[0]}}" alt="Spectacle Image" loading="lazy">
         {{else}}
-          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image"  loading="lazy">
+          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image" loading="lazy">
         {{/if}}
         <article>
           <h2>{{this.spectacle.titre}}</h2>
