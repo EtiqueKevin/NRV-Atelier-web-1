@@ -22,7 +22,7 @@ class AddPanierAction extends AbstractAction
         $idSoiree = $params['idSoiree'];
         $tarif = $params['tarif'];
         $qte = $params['qte'];
-        $idUser = $rq->getAttribute('UtiOutDTO');
+        $idUser = $rq->getAttribute('UtiOutDTO')->id;
 
 
         $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $qte);

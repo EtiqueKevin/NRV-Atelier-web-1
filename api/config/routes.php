@@ -60,9 +60,9 @@ return function( App $app): App {
     $app->get('/billets[/]', HomeAction::class);
 
     //panier
-    $app->get('/panier[/]', GetPanierAction::class);
+    $app->get('/panier[/]', GetPanierAction::class)->add(AuthMiddleware::class);
 
-    $app->post('/panier[/]', AddPanierAction::class);
+    $app->post('/panier[/]', AddPanierAction::class)->add(AuthMiddleware::class);
 
     $app->delete('/panier[/]', DeletePanierAction::class);
 

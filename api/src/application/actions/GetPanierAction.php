@@ -18,7 +18,7 @@ class GetPanierAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idUser = $rq->getAttribute("UtiOutDTO");
+        $idUser = $rq->getAttribute("UtiOutDTO")->id;
 
         $panier = $this->panierService->getPanier($idUser);
 

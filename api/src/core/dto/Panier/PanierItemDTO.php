@@ -7,12 +7,14 @@ use nrv\core\dto\DTO;
 
 class PanierItemDTO extends DTO
 {
-    private string $id;
-    private string $idPanier;
-    private string $idSoiree;
-    private int $tarif;
-    private int $tatifTotal;
-    private int $qte;
+    protected string $id;
+    protected string $idPanier;
+
+    protected string $idSoiree;
+    protected int $tarif;
+    protected int $tatifTotal;
+    protected int $qte;
+    protected int $tarifTotal;
 
     public function __construct(PanierItem $panierItem)
     {
@@ -20,7 +22,7 @@ class PanierItemDTO extends DTO
         $this->idSoiree = $panierItem->idSoiree;
         $this->idPanier = $panierItem->idPanier;
         $this->tarif = $panierItem->tarif;
-        $this->tatifTotal = $panierItem->tatifTotal;
+        $this->tarifTotal = $panierItem->tarifTotal;
         $this->qte = $panierItem->qte;
     }
 
@@ -31,7 +33,7 @@ class PanierItemDTO extends DTO
             'idPanier' => $this->idPanier,
             'idSoiree' => $this->idSoiree,
             'tarif' => $this->tarif,
-            'tatifTotal' => $this->tatifTotal,
+            'tarifTotal' => $this->tarifTotal,
             'qte' => $this->qte
         ];
     }
