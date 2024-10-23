@@ -6,6 +6,11 @@ use nrv\application\actions\GetPanierAction;
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
+use nrv\application\actions\SignInAction;
+use nrv\application\middlewares\AuthMiddleware;
+use nrv\application\providers\auth\AuthProvider;
+use nrv\application\providers\auth\AuthProviderInterface;
+use nrv\application\providers\auth\JWTManager;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use nrv\core\services\Panier\PanierService;
@@ -14,12 +19,16 @@ use nrv\core\services\soiree\SoireeService;
 use nrv\core\services\soiree\SoireeServiceInterface;
 use nrv\core\services\spectacle\SpectacleService;
 use nrv\core\services\spectacle\SpectacleServiceInterface;
+use nrv\core\services\utilisateur\UtilisateurService;
+use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 use nrv\infrastructure\repositories\PDOSoireeRepository;
 use nrv\infrastructure\repositories\PDOUtilisateurRepository;
 use Psr\Container\ContainerInterface;
 
 
 return [
+
+    // REPOSITORY
 
     SoireesRepositoryInterface::class  => function (ContainerInterface $c){
         return new PDOSoireeRepository($c->get('soirees.pdo'));
@@ -28,6 +37,14 @@ return [
     UtilisateursRepositoryInterface::class => function (ContainerInterface $c){
         return new PDOUtilisateurRepository($c->get('utilisateurs.pdo'));
     },
+
+    // JWT
+
+    JWTManager::class => function(ContainerInterface $c){
+        return new JWTManager($c->get('SECRET_KEY'));
+    },
+
+    // SERVICES
 
     SoireeServiceInterface::class => function (ContainerInterface $c) {
         return new SoireeService($c->get(SoireesRepositoryInterface::class));
@@ -40,6 +57,18 @@ return [
     PanierServiceInterface::class => function (ContainerInterface $c) {
         return new PanierService($c->get(UtilisateursRepositoryInterface::class));
     },
+
+    UtilisateurServiceInterface::class => function (ContainerInterface $c) {
+        return new UtilisateurService($c->get(UtilisateursRepositoryInterface::class));
+    },
+
+    // PROVIDERS
+
+    AuthProviderInterface::class => function(ContainerInterface $c){
+        return new AuthProvider($c->get(UtilisateurServiceInterface::class),$c->get(JWTManager::class));
+    },
+
+    // ACTIONS
 
     GetSoireeByIdAction::class => function (ContainerInterface $c) {
         return new GetSoireeByIdAction($c->get(SoireeServiceInterface::class));
@@ -65,8 +94,13 @@ return [
         return new GetPanierAction($c->get(PanierServiceInterface::class));
     },
 
+    SignInAction::class => function(ContainerInterface $c){
+        return new SignInAction($c->get(AuthProviderInterface::class));
+    },
 
+    // MIDDLEWARES
 
-
-
+    AuthMiddleware::class => function (ContainerInterface $c) {
+        return new AuthMiddleware($c->get(AuthProviderInterface::class));
+    },
 ];

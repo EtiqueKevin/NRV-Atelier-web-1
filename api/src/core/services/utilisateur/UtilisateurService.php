@@ -17,7 +17,7 @@ class UtilisateurService implements UtilisateurServiceInterface{
 
     public function verifyCredentials(UtilisateurInputDTO $utiInpuDTO):UtilisateurDTO{
         try{
-            $user = $this->authRepository->findByEmail($utiInpuDTO->email);
+            $user = $this->utilisateursRepository->UtilisateurByEmail($utiInpuDTO->email);
             if ($user && password_verify($utiInpuDTO->mdp, $user->mdp)) {
                 return $user->toDTO();
             }else{

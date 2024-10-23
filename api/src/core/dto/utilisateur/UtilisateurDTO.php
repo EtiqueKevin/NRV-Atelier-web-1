@@ -9,14 +9,12 @@ class UtilisateurDTO extends DTO{
 
     protected string $id;
     protected string $nom;
-
     protected string $prenom;
-
     protected string $email;
-
     protected string $mdp;
-
     protected int $role;
+    protected ?string $accessToken;
+    protected ?string $refreshToken;
 
     public function __construct(Utilisateur $uti){
         $this->nom = $uti->nom;
@@ -25,6 +23,14 @@ class UtilisateurDTO extends DTO{
         $this->mdp = $uti->mdp;
         $this->role = $uti->role;
         $this->id = $uti->ID;
+    }
+
+    public function setAccessToken(string $actoken){
+        $this->accessToken = $actoken;
+    }
+
+    public function setRefreshToken(string $retoken){
+        $this->refreshToken = $retoken;
     }
 
     public function jsonSerialize(): array{

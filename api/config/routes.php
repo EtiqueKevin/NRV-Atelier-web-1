@@ -7,6 +7,9 @@ use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\application\actions\HomeAction;
+use nrv\application\actions\RefreshAction;
+use nrv\application\actions\SignInAction;
+use nrv\application\middlewares\AuthMiddleware;
 use nrv\application\middlewares\Cors;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -40,13 +43,15 @@ return function( App $app): App {
 
     //lieux
 
-    $app->get('/lieux[/]', GetLieuxAction::class);
+    $app->get('/lieux[/]', GetLieuxAction::class)->add(AuthMiddleware::class);
 
-    // user
+    // utilisateur
 
-    $app->get('/users/signin[/]', HomeAction::class);
+    $app->get('/utilisateur/signin[/]', SignInAction::class);
 
-    $app->get('/users/signup[/]', HomeAction::class);
+    $app->get('/utilisateur/signup[/]', HomeAction::class);
+
+    $app->get('/utilisateur/refresh[/]',RefreshAction::class)->add(AuthMiddleware::class);
 
     // billet
 

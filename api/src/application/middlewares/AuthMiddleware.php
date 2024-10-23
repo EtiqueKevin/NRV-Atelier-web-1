@@ -30,16 +30,16 @@ class AuthMiddleware{
             New HttpUnauthorizedException ($rq, "missing Authorization Header (auth)");
         }
         if(!isset($rq->getHeader('Authorization')[0])){
-            throw new HttpUnauthorizedException($rq,"no auth, try /users/signin");
+            throw new HttpUnauthorizedException($rq,"no auth, try /utilisateur/signin[/] or /utilisateur/signup[/]");
         }
         if(strlen($rq->getHeader('Authorization')[0]) == 6){
-            throw new HttpUnauthorizedException($rq,"no auth, try /users/signin");
+            throw new HttpUnauthorizedException($rq,"no auth, try /utilisateur/signin[/] or /utilisateur/signup[/]");
         }
 
         try{
             $h = $rq->getHeader('Authorization')[0];
             $tokenstring = sscanf($h, "Bearer %s")[0];
-            $authDTO = $this->provider->getSignIn($tokenstring);
+            $utiOutDTO = $this->provider->getSignIn($tokenstring);
 
 
         }catch (ExpiredException $e) {
@@ -52,7 +52,7 @@ class AuthMiddleware{
             throw new HttpUnauthorizedException($rq,"unexpected value token");
         }
 
-        $rq = $rq->withAttribute('AuthDTO',$authDTO);
+        $rq = $rq->withAttribute('UtiOutDTO',$utiOutDTO);
 
         $response = $next->handle($rq);
         return $response;

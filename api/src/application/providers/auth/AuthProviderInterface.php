@@ -1,11 +1,15 @@
 <?php
 namespace nrv\application\providers\auth;
 
-use nrv\core\dto\AuthDTO;
-use nrv\core\dto\InputAuthDTO;
+use nrv\core\dto\utilisateur\UtilisateurDTO;
+use nrv\core\dto\utilisateur\UtilisateurInputDTO;
+use nrv\core\dto\utilisateur\UtilisateurOutputDTO;
+use nrv\core\dto\utilisateur\UtilisateurRefreshDTO;
 
 interface AuthProviderInterface{
-    public function signIn(InputAuthDTO $credentials): AuthDTO;
+    public function signIn(UtilisateurInputDTO $credentials): UtilisateurDTO;
 
-    public function getSignIn(string $token): AuthDTO;
+    public function getSignIn(string $token): UtilisateurOutputDTO;
+
+    public function refresh(string $token):UtilisateurRefreshDTO;
 }
