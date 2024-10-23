@@ -11,7 +11,7 @@ class UtilisateurOutputDTO extends DTO{
     protected string $email;
     protected int $role;
 
-    public function __construct($id,$email,$role){
+    public function __construct(string $id,string $email,int $role){
         $this->id = $id;
         $this->email = $email;
         $this->role = $role;

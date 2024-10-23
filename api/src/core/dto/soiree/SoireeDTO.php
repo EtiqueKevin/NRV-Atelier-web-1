@@ -4,6 +4,7 @@ namespace nrv\core\dto\soiree;
 
 use DateTime;
 use nrv\core\domain\entities\soiree\Lieu;
+use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\dto\DTO;
 
 class SoireeDTO extends DTO{
@@ -15,7 +16,7 @@ class SoireeDTO extends DTO{
     private float $tarif_normal;
     private float $tarif_reduit;
 
-    public function __construct($soiree){
+    public function __construct(Soiree $soiree){
         $this->id = $soiree->ID;
         $this->nom = $soiree->nom;
         $this->thematique = $soiree->thematique;

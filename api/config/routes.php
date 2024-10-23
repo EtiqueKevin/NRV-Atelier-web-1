@@ -37,7 +37,7 @@ return function( App $app): App {
 
     $app->get('/spectacles[/]', GetSpectaclesAction::class);
 
-    $app->get('/spectacles/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
+    $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
 
     // artiste
 

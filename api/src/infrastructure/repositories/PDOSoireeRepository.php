@@ -107,7 +107,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specEntity;
     }
 
-    public function getSpectacleByIdSoiree($idSoiree): array{
+    public function getSpectacleByIdSoiree(string $idSoiree): array{
         $stmt = $this->pdo->prepare('SELECT * FROM soirees inner join soirees_spectacles ON soirees.id = soirees_spectacles.id_soiree WHERE soirees_spectacles.id_soiree = ?');
         $stmt->bindParam(1,$idSoiree, PDO::PARAM_STR);
         $stmt->execute();
@@ -126,7 +126,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     //soirées
 
-    public function getSoireeIdByIdSpectacle($idSpec): string{
+    public function getSoireeIdByIdSpectacle(string $idSpec): string{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join soirees_spectacles ON spectacles.id = soirees_spectacles.id_spectacle WHERE soirees_spectacles.id_spectacle = ?');
             $stmt->bindParam(1,$idSpec, PDO::PARAM_STR);
@@ -142,7 +142,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
-    public function getSoireeById($id): Soiree{
+    public function getSoireeById(string $id): Soiree{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM soirees WHERE id = ?');
             $stmt->bindParam(1, $id, \PDO::PARAM_STR);
@@ -160,7 +160,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
-    public function getSoireeByIdDetail($id): array{
+    public function getSoireeByIdDetail(string $id): array{
         try {
             $soireeEntity = $this->getSoireeById($id);
             $arraySpectacle = $this->getSpectacleByIdSoiree($id);
@@ -175,7 +175,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     //artistes
 
-    public function getArtisteById($id) : Artiste{
+    public function getArtisteById(string $id) : Artiste{
         $stmt = $this->pdo->prepare('SELECT * FROM artistes WHERE id = ?');
         $stmt->bindParam(1, $id, \PDO::PARAM_STR);
         $stmt->execute();
@@ -188,7 +188,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $artisteEntity;
     }
 
-    public function getArtisteIdByIdSpectacle($idSpec): array {
+    public function getArtisteIdByIdSpectacle(string $idSpec): array {
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join artistes_spectacles ON spectacles.id = artistes_spectacles.id_spectacle WHERE artistes_spectacles.id_spectacle = ?');
             $stmt->bindParam(1,$idSpec, PDO::PARAM_STR);
@@ -213,7 +213,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     //lieux
 
 
-    public function getLieuById($id): Lieu{
+    public function getLieuById(string $id): Lieu{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM lieux WHERE id = ?');
             $stmt->bindParam(1,$id, PDO::PARAM_STR);
@@ -250,7 +250,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     //images
 
-    public function getImageBySpectacleId($specId) :array{
+    public function getImageBySpectacleId(string $specId) :array{
 
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join img_spectacles ON spectacles.id = img_spectacles.id_spectacle  WHERE img_spectacles.id_spectacle = ?');

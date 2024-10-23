@@ -2,20 +2,18 @@
 
 namespace nrv\core\services\spectacle;
 
+use nrv\core\dto\artiste\ArtisteDTO;
 use nrv\core\dto\spectacle\SpectacleDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 
-class SpectacleService implements SpectacleServiceInterface
-{
+class SpectacleService implements SpectacleServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
-    public function __construct($soireeRepository)
-    {
+    public function __construct(SoireesRepositoryInterface $soireeRepository){
         $this->soireeRepository = $soireeRepository;
     }
 
-    public function getAllSpectacles(): array
-    {
+    public function getAllSpectacles(): array{
         try {
             $spectacles = $this->soireeRepository->getAllSpectacles();
             $tabDTO = [];
@@ -29,8 +27,7 @@ class SpectacleService implements SpectacleServiceInterface
     }
 
 
-    public function getSpectacles($date, $style, $lieu): array
-    {
+    public function getSpectacles($date, $style, $lieu): array{
         try {
             $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu);
             $tabDTO = [];
@@ -43,8 +40,7 @@ class SpectacleService implements SpectacleServiceInterface
         }
     }
 
-    public function getSpectacleById($id): SpectacleDTO
-    {
+    public function getSpectacleById(string $id): SpectacleDTO{
         try {
             $spectacle = $this->soireeRepository->getSpectacleById($id);
             return new SpectacleDTO($spectacle);
@@ -53,8 +49,7 @@ class SpectacleService implements SpectacleServiceInterface
         }
     }
 
-    public function getArtistesBySpectacle($idSpectacle): array
-    {
+    public function getArtistesBySpectacle(string $idSpectacle): array{
         try {
             $artistes = $this->soireeRepository->getArtisteIdByIdSpectacle($idSpectacle);
             return $artistes;
@@ -63,8 +58,7 @@ class SpectacleService implements SpectacleServiceInterface
         }
     }
 
-    public function getArtisteById($idArtiste): \nrv\core\dto\artiste\ArtisteDTO
-    {
+    public function getArtisteById(string $idArtiste): ArtisteDTO{
         try {
             $artiste = $this->soireeRepository->getArtisteById($idArtiste);
             return $artiste->toDTO();

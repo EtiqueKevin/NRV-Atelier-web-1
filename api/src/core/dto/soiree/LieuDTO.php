@@ -2,6 +2,7 @@
 
 namespace nrv\core\dto\soiree;
 
+use nrv\core\domain\entities\soiree\Lieu;
 use nrv\core\dto\DTO;
 
 class LieuDTO extends DTO
@@ -12,7 +13,7 @@ class LieuDTO extends DTO
     private int $places_assise;
     private int $places_debout;
 
-    public function __construct($lieu)
+    public function __construct(Lieu $lieu)
     {
         $this->id = $lieu->ID;
         $this->nom = $lieu->nom;

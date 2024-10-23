@@ -9,7 +9,7 @@ use nrv\core\dto\billet\BilletOutputDTO;
 
 interface BilletServiceInterface{
 
-    public function getBilletsByIdUtilisateur($id): BilletOutputDTO;
+    public function getBilletsByIdUtilisateur(string $id): BilletOutputDTO;
 
     public function getBilletById(BilletInputDTO $biInputDTO): BilletDTO;
 

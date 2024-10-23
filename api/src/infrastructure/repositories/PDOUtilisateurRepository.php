@@ -7,7 +7,6 @@ use nrv\core\domain\entities\billet\Billet;
 use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\Panier\PanierItem;
 use nrv\core\domain\entities\utilisateur\Utilisateur;
-use nrv\core\dto\Panier\PanierItemDTO;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
@@ -124,7 +123,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
-    public function updatePanier( PanierItem $panierItem) : void
+    public function updatePanier(PanierItem $panierItem) : void
     {
         try {
             $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND tarif = ?');

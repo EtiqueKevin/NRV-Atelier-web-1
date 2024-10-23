@@ -2,12 +2,14 @@
 
 namespace nrv\core\services\soiree;
 
+use nrv\core\dto\soiree\SoireeDTO;
+
 interface SoireeServiceInterface{
-    public function getSoireeById($id);
+    public function getSoireeById(string $id): SoireeDTO;
 
-    public function getSoireeDetail($idSoiree);
+    public function getSoireeDetail(string $idSoiree): SoireeDTO;
 
-    public function getSpectacleByIdSoiree($idSoiree);
+    public function getSpectacleByIdSoiree(string $idSoiree): array;
 
-    public function getLieux();
+    public function getLieux(): array;
 }

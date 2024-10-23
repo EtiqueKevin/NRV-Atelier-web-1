@@ -18,7 +18,7 @@ class BilletService implements BilletServiceInterface{
         $this->soireesRepository = $soireesRepository;
     }
 
-    public function getBilletsByIdUtilisateur($id): BilletOutputDTO{
+    public function getBilletsByIdUtilisateur(string $id): BilletOutputDTO{
         $billetsTab = $this->utilisateursRepository->getBilletsByIdUtilisateur($id);
         $billetsTabRes = [];
         foreach ($billetsTab as $b){
