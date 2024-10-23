@@ -1,15 +1,15 @@
 @use 'config' as *;
 
-@mixin card($width: 100%) {
+@mixin card($width: 100%, $bg-color: $secondary-bg-color, $border-radius: 2rem, $text-color: $text-color) {
     box-sizing: border-box;
-    background-color: $secondary-bg-color;
-    color : $text-color;
-    border-radius: 2rem;
+    background-color: $bg-color;
+    color: $text-color;
+    border-radius: $border-radius;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
     width: $width;
 }
 
-%spectacle-card{
+%spectacle-card {
     @include card(100%);
     align-self: stretch;
 
@@ -22,7 +22,7 @@
 
     article {
         padding: 1rem;
-        color : $text-color;
+        color: $text-color;
 
         iframe {
             width: 100%;
@@ -65,26 +65,53 @@
 
     @media screen and (max-width: 550px) {
         flex-direction: column;
-        gap : 1rem;
+        gap: 1rem;
 
-        #soiree-info{
+        #soiree-info {
             margin-left: 0;
 
-            h2{
+            h2 {
                 text-align: center;
             }
         }
 
-        #add-to-cart-form{
+        #add-to-cart-form {
             width: 100%;
         }
     }
 }
 
-.connexion-card{
+.connexion-card {
     @include card(100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+}
+
+.billet {
+    @include card(100%, $highlight-bg-color, 0rem, black);
+    display: flex;
+    flex-direction: column;
+    gap : 1rem;
+    padding: 1rem;
+
+    h2 {
+        margin: 0;
+    }
+
+    .billet-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            margin: 0 1rem 0 0;
+        }
+    }
+
+    &:hover {
+        transform: scale(1.025);
+        transition: transform 0.3s ease-in-out;
+    }
 }

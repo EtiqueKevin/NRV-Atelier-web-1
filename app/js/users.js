@@ -51,3 +51,8 @@ export async function inscription(email, password, password2, nom, prenom) {
     }
     return data;
 }
+
+export async function getBillets(){
+    const data = await loader.loadData('/utilisateur/billets');
+    return data;
+}

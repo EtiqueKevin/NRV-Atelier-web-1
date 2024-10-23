@@ -1,6 +1,7 @@
 @use 'config' as *;
 
 @mixin modal-content($margin: 9% auto){
+  box-sizing: border-box;
   position: relative;
   background-color: $highlight-bg-color;
   margin: $margin;
@@ -25,16 +26,17 @@
 .modal-panier {
   @include modal-content(5% 2% auto auto);
   display: flex;
-  gap : 2rem;
+  gap: 2rem;
   flex-direction: column;
   justify-content: center;
 
-  h1{
+  h1 {
     margin: 0;
   }
 
   @media screen and (max-width: 768px) {
-    margin : 5% auto;
+    margin: 5% 5%;
+    width: 90%;
   }
 }
 

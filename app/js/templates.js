@@ -228,3 +228,18 @@ export const panierTemplate = `
     {{/if}}
   </div>
 `;
+
+export const listeBilletTemplate = `
+<section class="grid grid-col-2 grid-col-1-xs gap-2">
+  {{#each billets}}
+    <div class="billet" id="billet-{{id}}">
+      <h2>Billet n°{{id}}</h2>
+      <div class="billet-info">
+        <p>Soirée: {{nomSoiree}}</p>
+        <p>Date: {{dateDebut}}</p>
+        <p>Catégorie Tarif: {{categorie_tarif}}</p>
+      </div>
+    </div>
+  {{/each}}
+</section>
+`;
