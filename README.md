@@ -26,7 +26,7 @@
 |14| Affichage de la jauge des spactacles:nombre de places vendues pour chaque soirée |  |  |  |  |
 
 | n° | Fonctionnalité de Base | Paul | Kevin | Amaury | Clément || Fonctionnalité étendue | Paul | Kevin | Amaury | Clément |
-|----||----------------|------|-------|--------|---------|
+|----|----------------|------|-------|--------|---------|
 |1| Pagination de la liste de spectacles |  |  |  |  |
 |2| Modification du panier : nombre de billets |  |  |  |  |
 |3| Backoffice : ajouter des spectacles et des soirées |  |  |  |  |
