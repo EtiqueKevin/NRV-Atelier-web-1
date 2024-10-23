@@ -77,14 +77,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specTab;
     }
 
-    public function getSpectacleById($id) : Spectacle{
+    public function getSpectacleById(string $id) : Spectacle{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles WHERE id = ?');
             $stmt->bindParam(1, $id, \PDO::PARAM_STR);
             $stmt->execute();
             $spectacle = $stmt->fetch();
             if(!$spectacle){
-                throw new RepositoryEntityNotFoundException('pas de soiree trouvé');
+                throw new RepositoryEntityNotFoundException('pas de $spectacle trouvé');
             }
             $idsoiree = $this->getSoireeIdByIdSpectacle($spectacle['id']);
 

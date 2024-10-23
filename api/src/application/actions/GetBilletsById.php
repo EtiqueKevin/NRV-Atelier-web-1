@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 
-class GetBilletsById{
+class GetBilletsById extends AbstractAction {
 
     private  BilletServiceInterface $billetService;
 
@@ -32,7 +32,10 @@ class GetBilletsById{
             $res = [
                 'type' => 'collection',
                 'billet' => $billetDTO,
-                'nomAcheteur' => $UtiDTO->nom
+                'acheteur' =>[
+                    'nom' => $UtiDTO->nom,
+                    'prenom' => $UtiDTO->prenom
+                ]
             ];
         } catch (\Exception $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());
