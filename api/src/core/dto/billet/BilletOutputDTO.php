@@ -22,9 +22,9 @@ class BilletOutputDTO extends DTO{
             $tab[] = $b->toDTO();
         }
 
-        return [
-            'billets' =>$tab
-        ];
+        return
+            $tab;
+
     }
 
 }
