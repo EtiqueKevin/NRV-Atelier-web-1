@@ -20,9 +20,10 @@ export async function displaySpectacleList(data, lieux) {
 }
 
 export async function displaySoiree(id) {
+    const connected = users.isConnected();
     const data = await spectacle.getSoiree(id);
     const template = Handlebars.compile(templates.soireeTemplate);
-    const html = template(data);
+    const html = template({soiree : data, connected : connected});
     document.getElementById('main-content').innerHTML = html;
 }
 
@@ -46,4 +47,17 @@ export async function displayNav() {
     const html = template({ connected });
     document.getElementsByClassName('nav-right')[0].innerHTML = html;
     eventHandler.handleNavButtons();
+}
+
+export async function displayPanier() {
+    const data = await users.getPanier();
+    
+    const template = Handlebars.compile(templates.panierTemplate);
+    const html = template({data});
+    var modal = document.getElementById('myModal');
+    modal.innerHTML = html;
+
+    eventHandler.handlePanier();
+
+    modal.style.display = 'block';
 }

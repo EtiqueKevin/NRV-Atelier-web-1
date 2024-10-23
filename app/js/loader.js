@@ -25,7 +25,7 @@ async function refreshAccessToken() {
 
 async function connexionRequest(email, password) {
     const credentials = btoa(`${email}:${password}`);
-    const response = await fetch(apiUrl + '/utilisateur/signin', {
+    const response = await fetch(apiUrl + 'utilisateur/signin', {
         mode: 'cors',
         headers: {
             'Authorization': `Basic ${credentials}`,
@@ -39,6 +39,33 @@ async function connexionRequest(email, password) {
     const data = await response.json();
     jwt.storeTokens(data.atoken, data.rtoken);
     return data;
+};
+
+async function inscriptionRequest(email, password, password2, nom, prenom) {
+    const body = {
+        "nom": nom,
+        "prenom": prenom,
+        "email": email,
+        "mdp": password,
+        "mdp2": password2
+    };
+
+    const response = await fetch(apiUrl + 'utilisateur/signup', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        throw new Error('Reponse non ok');
+    }
+
+    const data = await response;
+    return data.ok;
+    
 };
 
 async function loadData(url) {
@@ -68,4 +95,4 @@ async function loadData(url) {
     }
 };
 
-export { loadData, connexionRequest };
+export { loadData, connexionRequest, inscriptionRequest };

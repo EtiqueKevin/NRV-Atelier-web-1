@@ -34,6 +34,13 @@ export function handleNavButtons() {
             ui.displayNav();
         });
     }
+
+    const navPanier = document.getElementById('nav-panier');
+    if (navPanier) {
+        navPanier.addEventListener('click', () => {
+            ui.displayPanier();
+        });
+    }
 }
 
 export function handleHomeSpectacleButton() {
@@ -97,17 +104,19 @@ export function handleConnexionForm() {
 }
 
 export function handleInscriptionForm() {
-    const inscriptionForm = document.getElementById('inscription-form');
-    if (inscriptionForm) {
-        inscriptionForm.addEventListener('submit', async (event) => {
+    const inscriptionButton = document.getElementById('submit-button');
+    if (inscriptionButton) {
+        inscriptionButton.addEventListener('click', async (event) => {
             event.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const password2 = document.getElementById('password-confirm').value;
             const nom = document.getElementById('nom').value;
             const prenom = document.getElementById('prenom').value;
-            const user = await user.inscription(email, password, nom, prenom);
+            const user = await users.inscription(email, password, password2, nom, prenom);
             if (user) {
                 ui.displayHome();
+                ui.displayNav();
             }
         });
     }
@@ -115,7 +124,21 @@ export function handleInscriptionForm() {
     const connexionButton = document.getElementById('connexion-button');
     if (connexionButton) {
         connexionButton.addEventListener('click', () => {
-            ui.displayConnexion();
+            ui.displayConnexion();  
         });
     }
+}
+
+export function handlePanier(){
+    document.getElementById("myModal").addEventListener('click', function(event) {
+        if (event.target === this) {
+            this.style.display = "none";
+            this.innerHTML = '';
+        }
+    });
+    document.getElementById("close-button").addEventListener('click', function() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+        modal.innerHTML = '';
+    });
 }

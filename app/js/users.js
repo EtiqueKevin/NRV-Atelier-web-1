@@ -1,4 +1,4 @@
-import { connexionRequest } from "./loader.js";
+import { connexionRequest, loadData, inscriptionRequest } from "./loader.js";
 import * as jwt from './jwt.js';
 
 export async function connexion(email, password) {
@@ -19,4 +19,26 @@ export function isConnected() {
 
 export function deconnexion(){
     jwt.wipeTokens();
+}
+
+export async function getPanier(){
+    const data = await loadData('/panier');
+
+    let total = 0;
+    data.panier.panierItems.forEach(item => {
+        total += item.tarifTotal;
+    });
+    return {
+        panier: data.panier,
+        total: total
+    };
+}
+
+export async function inscription(email, password, password2, nom, prenom) {
+    const data = await inscriptionRequest(email, password, password2, nom, prenom);
+
+    if(data){
+        await connexion(email, password);
+    }
+    return data;
 }

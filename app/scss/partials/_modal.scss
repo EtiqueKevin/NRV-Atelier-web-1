@@ -1,0 +1,48 @@
+@use 'config' as *;
+
+@mixin modal-content($margin: 9% auto){
+  position: relative;
+  background-color: $highlight-bg-color;
+  margin: $margin;
+  padding: 20px;
+  border: 1px solid black;
+  width : clamp(200px, 50%, 500px);
+}
+
+
+.modal {
+  display: none;
+  position: fixed; 
+  z-index: 50;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(29, 29, 29, 0.4);
+}
+
+.modal-panier {
+  @include modal-content(5% 2% auto auto);
+  display: flex;
+  gap : 2rem;
+  flex-direction: column;
+  justify-content: center;
+
+  h1{
+    margin: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    margin : 5% auto;
+  }
+}
+
+#close-button {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 36px;
+  margin-left: 50px;
+  cursor: pointer;
+}

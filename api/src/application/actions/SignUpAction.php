@@ -27,6 +27,6 @@ class SignUpAction extends AbstractAction
         $utiDTO = new UtilisateurInputCreationDTO($params['nom'],$params['prenom'],$params['email'],$params['mdp'],$params['mdp2']);
         $this->utilisateurService->createUtilisateur($utiDTO);
 
-        return $rs->withHeader('Content-Type', 'application/json')->withStatus(200);
+        return $rs->withStatus(200);
     }
 }
