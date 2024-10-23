@@ -7,4 +7,6 @@ interface PanierServiceInterface
     public function getPanier(string $idUser);
 
     public function addPanier(string $idUser,string $idSoiree,int $tarif,int $qte);
+
+    public function validerPanier(string $idUser);
 }

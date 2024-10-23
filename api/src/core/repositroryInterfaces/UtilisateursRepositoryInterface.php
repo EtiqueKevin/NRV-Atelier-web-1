@@ -22,4 +22,6 @@ interface UtilisateursRepositoryInterface{
     public function updatePanier(PanierItem $panierItem) : void;
 
     public function saveUtilisateur(Utilisateur $uti):string;
+
+    public function validerPanier(string $idUser): void;
 }

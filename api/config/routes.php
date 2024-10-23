@@ -12,6 +12,7 @@ use nrv\application\actions\HomeAction;
 use nrv\application\actions\RefreshAction;
 use nrv\application\actions\SignInAction;
 use nrv\application\actions\SignUpAction;
+use nrv\application\actions\ValiderPanierAction;
 use nrv\application\middlewares\AuthMiddleware;
 use nrv\application\middlewares\Cors;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -67,7 +68,7 @@ return function( App $app): App {
 
     $app->delete('/panier[/]', DeletePanierAction::class);
 
-    $app->post('/panier/valider[/]', ValiderPanierAction::class);
+    $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
 
     return $app;
 };

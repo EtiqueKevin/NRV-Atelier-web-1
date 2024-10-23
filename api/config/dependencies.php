@@ -1,5 +1,6 @@
 <?php
 
+use nrv\application\actions\AddPanierAction;
 use nrv\application\actions\GetArtisteByIdAction;
 use nrv\application\actions\GetLieuxAction;
 use nrv\application\actions\GetPanierAction;
@@ -8,6 +9,7 @@ use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\application\actions\SignInAction;
 use nrv\application\actions\SignUpAction;
+use nrv\application\actions\ValiderPanierAction;
 use nrv\application\middlewares\AuthMiddleware;
 use nrv\application\providers\auth\AuthProvider;
 use nrv\application\providers\auth\AuthProviderInterface;
@@ -93,6 +95,14 @@ return [
 
     GetPanierAction::class => function (ContainerInterface $c) {
         return new GetPanierAction($c->get(PanierServiceInterface::class));
+    },
+
+    AddPanierAction::class => function (ContainerInterface $c) {
+        return new AddPanierAction($c->get(PanierServiceInterface::class));
+    },
+
+    ValiderPanierAction::class => function (ContainerInterface $c) {
+        return new ValiderPanierAction($c->get(PanierServiceInterface::class));
     },
 
     SignInAction::class => function(ContainerInterface $c){

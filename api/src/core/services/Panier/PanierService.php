@@ -57,5 +57,13 @@ class PanierService implements PanierServiceInterface
         return $retour;
     }
 
-
+    public function validerPanier(string $idUser) : PanierDTO
+    {
+        try {
+            $this->UtilisateursRepository->validerPanier($idUser);
+            return $this->getPanier($idUser);
+        }catch (\Exception $e){
+            throw new PanierException($e->getMessage());
+        }
+    }
 }

@@ -139,8 +139,17 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion utilisateur : '.$e->getMessage());
         }
-
-
         return $id;
+    }
+
+    public function validerPanier(string $idUser): void
+    {
+        try {
+            $stmt = $this->pdo->prepare('UPDATE paniers_utilisateurs SET valide = TRUE WHERE id_utilisateur = ?');
+            $stmt->bindParam(1, $idUser);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('validerPanier : erreur lors de la validation du panier '. $idUser ." " . $e->getMessage());
+        }
     }
 }
