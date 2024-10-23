@@ -11,6 +11,7 @@ use nrv\core\services\utilisateur\UtilisateurException;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
 class RefreshAction extends AbstractAction
 {
@@ -20,11 +21,14 @@ class RefreshAction extends AbstractAction
         $this->authProvider = $authProvider;
     }
 
-    public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
-    {
+    public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
 
-        $h = $rq->getHeader('Authorization')[0];
-        $tokenstring = sscanf($h, "Bearer %s")[0];
+        try {
+            $h = $rq->getHeader('Authorization')[0];
+            $tokenstring = sscanf($h, "Bearer %s")[0];
+        }catch (\Exception $e){
+            throw new HttpBadRequestException("erreur lors de la recuperation du token : ".$e->getMessage());
+        }
 
         try {
             $authRes = $this->authProvider->refresh($tokenstring);

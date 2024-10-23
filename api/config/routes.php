@@ -43,7 +43,7 @@ return function( App $app): App {
 
     //lieux
 
-    $app->get('/lieux[/]', GetLieuxAction::class)->add(AuthMiddleware::class);
+    $app->get('/lieux[/]', GetLieuxAction::class);
 
     // utilisateur
 
