@@ -176,7 +176,8 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
-    public function ajouterPanierUtilisateur(string $id){
+    public function ajouterPanierUtilisateur(string $id): void
+    {
         try {
             $stmt = $this->pdo->prepare('INSERT INTO paniers_utilisateurs (id_utilisateur) VALUES (?)');
             $stmt->bindParam(1, $id, PDO::PARAM_STR);
