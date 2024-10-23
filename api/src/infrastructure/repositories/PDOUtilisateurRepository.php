@@ -142,6 +142,8 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             throw new UtilisateurException('erreur insertion utilisateur : '.$e->getMessage());
         }
 
+        $this->ajouterPanierUtilisateur($id);
+
         return $id;
     }
 
@@ -164,14 +166,23 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $billetTab;
     }
 
-    public function validerPanier(string $idUser): void
-    {
+    public function validerPanier(string $idUser): void{
         try {
             $stmt = $this->pdo->prepare('UPDATE paniers_utilisateurs SET valide = TRUE WHERE id_utilisateur = ?');
             $stmt->bindParam(1, $idUser);
             $stmt->execute();
         } catch (\Exception $e) {
             throw new RepositoryException('validerPanier : erreur lors de la validation du panier '. $idUser ." " . $e->getMessage());
+        }
+    }
+
+    public function ajouterPanierUtilisateur(string $id){
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO paniers_utilisateurs (id_utilisateur) VALUES (?)');
+            $stmt->bindParam(1, $id, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('ajouterPanierUtilisateur : erreur creation panier'. $id ." " . $e->getMessage());
         }
     }
 }
