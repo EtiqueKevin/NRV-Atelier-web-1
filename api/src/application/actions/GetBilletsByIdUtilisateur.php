@@ -16,7 +16,7 @@ class GetBilletsByIdUtilisateur{
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idUti = $args['ID-UTILISATEUR'];
+        $idUti = $rq->getAttribute('UtiOutDTO')->id;
         try {
             $billetOutDTO = $this->billetService->getBilletsByIdUtilisateur($idUti);
 

@@ -62,7 +62,7 @@ return function( App $app): App {
 
     $app->get('/billets[/]', HomeAction::class);
 
-    $app->get('/billets/{ID-UTILISATEUR}[/]', GetBilletsByIdUtilisateur::class)->add(AuthMiddleware::class);
+    $app->get('/utilisateur/billets[/]', GetBilletsByIdUtilisateur::class)->add(AuthMiddleware::class);
 
     //panier
     $app->get('/panier[/]', GetPanierAction::class)->add(AuthMiddleware::class);
