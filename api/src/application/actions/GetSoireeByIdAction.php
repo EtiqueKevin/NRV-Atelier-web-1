@@ -28,7 +28,7 @@ class GetSoireeByIdAction extends AbstractAction
 
             $spectaclesLinks = array_map(function($spectacleId) {
                 return [
-                    'href' => "spectacles/{$spectacleId}"
+                    'href' => "spectacle/{$spectacleId}"
                 ];
             }, $spectaclesIds);
 

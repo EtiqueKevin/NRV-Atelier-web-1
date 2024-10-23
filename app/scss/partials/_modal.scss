@@ -1,6 +1,6 @@
 @use 'config' as *;
 
-@mixin modal-content($margin: 9% auto){
+@mixin modal-content-mixin($margin: 9% auto){
   box-sizing: border-box;
   position: relative;
   background-color: $highlight-bg-color;
@@ -10,21 +10,8 @@
   width : clamp(200px, 50%, 500px);
 }
 
-
-.modal {
-  display: none;
-  position: fixed; 
-  z-index: 50;
-  left: 0;
-  top: 0;
-  width: 100%; 
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(29, 29, 29, 0.4);
-}
-
-.modal-panier {
-  @include modal-content(5% 2% auto auto);
+%modal-content {
+  @include modal-content-mixin(5% 2% auto auto);
   display: flex;
   gap: 2rem;
   flex-direction: column;
@@ -40,6 +27,22 @@
   }
 }
 
+.modal {
+  display: none;
+  position: fixed; 
+  z-index: 50;
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(29, 29, 29, 0.4);
+}
+
+.modal-panier, .modal-billet {
+  @extend %modal-content;
+}
+
 #close-button {
   position: absolute;
   top: 0;
@@ -47,4 +50,18 @@
   font-size: 36px;
   margin-left: 50px;
   cursor: pointer;
+}
+
+@media print {
+  .modal-billet {
+    display: block;
+    position: static;
+    width: 100%;
+    height: auto;
+    background: white;
+    color: black;
+  }
+  #close-button {
+    display: none;
+  }
 }

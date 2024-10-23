@@ -40,7 +40,16 @@ export async function addToPanier(idSoiree, qte, tarif){
         "qte": qte,
         "tarif": tarif
     };
-    await loader.postData('/panier', body);
+    const data = await loader.postData('/panier', body);
+
+    let total = 0;
+    data.panier.panierItems.forEach(item => {
+        total += item.tarifTotal;
+    });
+    return {
+        panier: data.panier,
+        total: total
+    };
 }
 
 export async function inscription(email, password, password2, nom, prenom) {
@@ -54,5 +63,10 @@ export async function inscription(email, password, password2, nom, prenom) {
 
 export async function getBillets(){
     const data = await loader.loadData('/utilisateur/billets');
+    return data;
+}
+
+export async function getBillet(id){
+    const data = await loader.loadData(`/utilisateur/billets/${id}`);
     return data;
 }

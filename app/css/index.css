@@ -846,19 +846,7 @@ body {
   outline: none;
 }
 
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 50;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(29, 29, 29, 0.4);
-}
-
-.modal-panier {
+.modal-panier, .modal-billet {
   box-sizing: border-box;
   position: relative;
   background-color: #ffffff;
@@ -871,14 +859,26 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-.modal-panier h1 {
+.modal-panier h1, .modal-billet h1 {
   margin: 0;
 }
 @media screen and (max-width: 768px) {
-  .modal-panier {
+  .modal-panier, .modal-billet {
     margin: 5% 5%;
     width: 90%;
   }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 50;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(29, 29, 29, 0.4);
 }
 
 #close-button {
@@ -888,6 +888,20 @@ body {
   font-size: 36px;
   margin-left: 50px;
   cursor: pointer;
+}
+
+@media print {
+  .modal-billet {
+    display: block;
+    position: static;
+    width: 100%;
+    height: auto;
+    background: white;
+    color: black;
+  }
+  #close-button {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=index.css.map */

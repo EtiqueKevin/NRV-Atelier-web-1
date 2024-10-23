@@ -243,3 +243,17 @@ export const listeBilletTemplate = `
   {{/each}}
 </section>
 `;
+
+export const billetDetailTemplate = `
+<div class="modal-billet">
+  <span id="close-button">&times;</span>
+  <div class="billet-content">
+    <h1>Billet n°{{id}}</h1>
+    <h3>Billet pour {{nomSoiree}}</h3>
+    <p>Nom de l'acheteur: {{acheteur.nom}} {{acheteur.prenom}}</p>
+    <p>Référence: {{id}}</p>
+    <p>Date et horaire de la soirée: {{dateDebut}}</p>
+    <p>Catégorie de tarif: {{categorie_tarif}}</p>
+  </div>
+</div>
+`;
