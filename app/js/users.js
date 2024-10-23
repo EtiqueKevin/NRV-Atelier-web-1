@@ -22,7 +22,7 @@ export function deconnexion(){
 }
 
 export async function getPanier(){
-    const data = await loader.loadData('/panier');
+    const data = await loader.loadData('panier');
 
     let total = 0;
     data.panier.panierItems.forEach(item => {
@@ -40,7 +40,7 @@ export async function addToPanier(idSoiree, qte, tarif){
         "qte": qte,
         "tarif": tarif
     };
-    const data = await loader.postData('/panier', body);
+    const data = await loader.postData('panier', body);
 
     let total = 0;
     data.panier.panierItems.forEach(item => {
@@ -62,11 +62,11 @@ export async function inscription(email, password, password2, nom, prenom) {
 }
 
 export async function getBillets(){
-    const data = await loader.loadData('/utilisateur/billets');
+    const data = await loader.loadData('utilisateur/billets');
     return data;
 }
 
 export async function getBillet(id){
-    const data = await loader.loadData(`/utilisateur/billets/${id}`);
+    const data = await loader.loadData(`utilisateur/billet/${id}`);
     return data;
 }

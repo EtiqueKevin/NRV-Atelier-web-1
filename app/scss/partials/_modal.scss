@@ -7,7 +7,7 @@
   margin: $margin;
   padding: 20px;
   border: 1px solid black;
-  width : clamp(200px, 50%, 500px);
+  width : clamp(200px, 50%, 800px);
 }
 
 %modal-content {
@@ -19,11 +19,6 @@
 
   h1 {
     margin: 0;
-  }
-
-  @media screen and (max-width: 768px) {
-    margin: 5% 5%;
-    width: 90%;
   }
 }
 
@@ -39,8 +34,24 @@
   background-color: rgba(29, 29, 29, 0.4);
 }
 
-.modal-panier, .modal-billet {
+.modal-panier {
+  @include modal-content-mixin(5% 2% auto auto);
   @extend %modal-content;
+
+  @media screen and (max-width: 768px) {
+    margin: 5% 5%;
+    width: 90%;
+  }
+}
+
+.modal-billet {
+  @include modal-content-mixin(5% auto);
+  @extend %modal-content;
+
+  @media screen and (max-width: 768px) {
+    margin: 5% 5%;
+    width: 90%;
+  }
 }
 
 #close-button {
@@ -62,6 +73,9 @@
     color: black;
   }
   #close-button {
+    display: none;
+  }
+  #print{
     display: none;
   }
 }

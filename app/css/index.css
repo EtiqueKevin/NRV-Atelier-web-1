@@ -846,27 +846,21 @@ body {
   outline: none;
 }
 
-.modal-panier, .modal-billet {
+.modal-billet, .modal-panier {
   box-sizing: border-box;
   position: relative;
   background-color: #ffffff;
   margin: 5% 2% auto auto;
   padding: 20px;
   border: 1px solid black;
-  width: clamp(200px, 50%, 500px);
+  width: clamp(200px, 50%, 800px);
   display: flex;
   gap: 2rem;
   flex-direction: column;
   justify-content: center;
 }
-.modal-panier h1, .modal-billet h1 {
+.modal-billet h1, .modal-panier h1 {
   margin: 0;
-}
-@media screen and (max-width: 768px) {
-  .modal-panier, .modal-billet {
-    margin: 5% 5%;
-    width: 90%;
-  }
 }
 
 .modal {
@@ -879,6 +873,38 @@ body {
   height: 100%;
   overflow: auto;
   background-color: rgba(29, 29, 29, 0.4);
+}
+
+.modal-panier {
+  box-sizing: border-box;
+  position: relative;
+  background-color: #ffffff;
+  margin: 5% 2% auto auto;
+  padding: 20px;
+  border: 1px solid black;
+  width: clamp(200px, 50%, 800px);
+}
+@media screen and (max-width: 768px) {
+  .modal-panier {
+    margin: 5% 5%;
+    width: 90%;
+  }
+}
+
+.modal-billet {
+  box-sizing: border-box;
+  position: relative;
+  background-color: #ffffff;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid black;
+  width: clamp(200px, 50%, 800px);
+}
+@media screen and (max-width: 768px) {
+  .modal-billet {
+    margin: 5% 5%;
+    width: 90%;
+  }
 }
 
 #close-button {
@@ -900,6 +926,9 @@ body {
     color: black;
   }
   #close-button {
+    display: none;
+  }
+  #print {
     display: none;
   }
 }

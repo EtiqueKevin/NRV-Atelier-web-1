@@ -230,30 +230,44 @@ export const panierTemplate = `
 `;
 
 export const listeBilletTemplate = `
-<section class="grid grid-col-2 grid-col-1-xs gap-2">
-  {{#each billets}}
-    <div class="billet" id="billet-{{id}}">
-      <h2>Billet n°{{id}}</h2>
-      <div class="billet-info">
-        <p>Soirée: {{nomSoiree}}</p>
-        <p>Date: {{dateDebut}}</p>
-        <p>Catégorie Tarif: {{categorie_tarif}}</p>
+  <section class="grid grid-col-2 grid-col-1-xs gap-2">
+    {{#each billets}}
+      <div class="billet" data-id="{{id}}">
+        <h2>Billet n°{{id}}</h2>
+        <div class="billet-info">
+          <p>Soirée: {{nomSoiree}}</p>
+          <p>Date: {{dateDebut}}</p>
+          <p>
+            {{#eq categorie_tarif "N"}}
+              <p>Catégorie Tarif: normal</p>
+            {{else}}
+              <p>Catégorie Tarif: réduit</p>
+            {{/eq}}
+          </p>
+        </div>
       </div>
-    </div>
-  {{/each}}
-</section>
+    {{/each}}
+  </section>
 `;
 
 export const billetDetailTemplate = `
-<div class="modal-billet">
-  <span id="close-button">&times;</span>
-  <div class="billet-content">
-    <h1>Billet n°{{id}}</h1>
-    <h3>Billet pour {{nomSoiree}}</h3>
-    <p>Nom de l'acheteur: {{acheteur.nom}} {{acheteur.prenom}}</p>
-    <p>Référence: {{id}}</p>
-    <p>Date et horaire de la soirée: {{dateDebut}}</p>
-    <p>Catégorie de tarif: {{categorie_tarif}}</p>
+  <div class="modal-billet">
+    <span id="close-button">&times;</span>
+    <div class="billet-content">
+      <h1>Billet n°{{billet.id}}</h1>
+      <h3>Billet pour la soirée {{billet.nomSoiree}}</h3>
+      <p>Nom de l'acheteur: {{acheteur.nom}} {{acheteur.prenom}}</p>
+      <p>Date et horaire de la soirée: {{billet.dateDebut}}</p>
+      <p>
+        {{#eq billet.categorie_tarif "N"}}
+          <p>Catégorie Tarif: normal</p>
+        {{else}}
+          <p>Catégorie Tarif: réduit</p>
+        {{/eq}}
+      </p>
+      <button id="print" class="boutton">
+        <i class="fa-solid fa-print"></i> Imprimer
+      </button>
+    </div>
   </div>
-</div>
 `;

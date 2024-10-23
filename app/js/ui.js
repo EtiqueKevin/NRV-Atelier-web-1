@@ -48,10 +48,10 @@ export function displayNav(connected) {
 export function displayPanier(data) {
     const template = Handlebars.compile(templates.panierTemplate);
     const html = template({ data });
-    var modal = document.getElementById('myModal');
+    const modal = document.getElementById('myModal');
     modal.innerHTML = html;
 
-    eventHandler.handlePanier();
+    eventHandler.handleModal();
 
     modal.style.display = 'block';
 }
@@ -60,10 +60,17 @@ export function displayBilletsList(data) {
     const template = Handlebars.compile(templates.listeBilletTemplate);
     const html = template({ billets: data.billets });
     document.getElementById('main-content').innerHTML = html;
+    eventHandler.handleBilletsList();
 }
 
 export function displayBillet(data) {
-    const template = Handlebars.compile(templates.billetTemplate);
-    const html = template({ billet: data });
-    document.getElementById('main-content').innerHTML = html;
+    const template = Handlebars.compile(templates.billetDetailTemplate);
+    const html = template({ billet: data.billet, acheteur: data.acheteur });
+    const modal = document.getElementById('myModal');
+    modal.innerHTML = html;
+
+    eventHandler.handleModal();
+    eventHandler.handleBillet();
+
+    modal.style.display = 'block';
 }

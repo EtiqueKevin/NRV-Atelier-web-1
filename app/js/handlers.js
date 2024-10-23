@@ -140,7 +140,7 @@ export function handleInscriptionForm() {
     }
 }
 
-export function handlePanier(){
+export function handleModal(){
     document.getElementById("myModal").addEventListener('click', function(event) {
         if (event.target === this) {
             this.style.display = "none";
@@ -175,11 +175,19 @@ export function handleBilletsList(){
 
         billet.addEventListener('click', async () => {
             const data = await users.getBillet(id);
-            ui.displayBillet(data.billet);
+            ui.displayBillet(data);
         });
     }
 }
 
 export function handleBillet(){
-    //todo
+    const printButton = document.getElementById('print');
+    if (printButton) {
+        printButton.addEventListener('click', () => {
+            const billetElement = document.querySelector('.modal-billet');
+            if (billetElement) {
+                window.print();
+            }
+        });
+    }
 }
