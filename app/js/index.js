@@ -1,8 +1,7 @@
-import {displayHome} from './ui.js';
-import {handleNavButtons} from './handlers.js';
+import {displayHome, displayNav} from './ui.js';
 
 async function init(){
-    handleNavButtons();
+    displayNav();
     displayHome();
 }
 

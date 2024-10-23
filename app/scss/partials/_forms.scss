@@ -18,13 +18,12 @@
     transition: border-color 0.3s;
 
     &:focus {
-        border-color: $main-bg-color;
+        border-color: none;
         outline: none;
     }
 }
 
-@mixin label-style($font-weight, $position, $top, $left, $bg-color, $padding, $z-index, $border-radius) {
-    font-weight: $font-weight;
+@mixin label-style($position, $top, $left, $bg-color, $padding, $z-index, $border-radius) {
     position: $position;
     top: $top;
     left: $left;
@@ -32,6 +31,7 @@
     padding: $padding;
     z-index: $z-index;
     border-radius: $border-radius;
+    color: black;
 }
 
 // Apply mixins
@@ -63,10 +63,14 @@
     }
 
     label {
-        @include label-style(bold, absolute, -0.75rem, 0, white, 0 0.5rem, 1, 0.25em);
+        @include label-style(absolute, -0.75rem, 0, white, 0 0.5rem, 1, 0.25em);
     }
 
     input {
+        @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
+    }
+
+    select {
         @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
     }
 }
@@ -85,6 +89,40 @@
         input {
             padding: 0.5rem;
             font-size: 0.875rem;
+        }
+    }
+}
+
+
+.connexion-card {
+    @include form-container(2rem, 1rem, $secondary-bg-color, 0.5em);
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .connexion-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+
+            label {
+                @include label-style(absolute, -0.75rem, 0, white, 0 0.5rem, 1, 0.25em);
+            }
+
+            input {
+                @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
+            }
         }
     }
 }
