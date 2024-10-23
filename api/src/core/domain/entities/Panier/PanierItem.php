@@ -3,11 +3,13 @@
 namespace nrv\core\domain\entities\Panier;
 
 use nrv\core\domain\entities\Entity;
+use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\dto\Panier\PanierItemDTO;
 
 class PanierItem extends Entity
 {
     protected string $idSoiree;
+    protected Soiree $soiree;
     protected string $idPanier;
     protected int $tarif;
 
@@ -25,6 +27,10 @@ class PanierItem extends Entity
 
     public function setQte(int $qte) {
         $this->qte = $qte;
+    }
+
+    public function setSoiree(Soiree $soiree) {
+        $this->soiree = $soiree;
     }
 
     public function toDTO(): PanierItemDTO
