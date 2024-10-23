@@ -70,16 +70,24 @@ CREATE TABLE utilisateurs (
     role INTEGER DEFAULT 0 NOT NULL
 );
 
-CREATE TABLE paniers (
+CREATE TABLE paniers_utilisateurs (
     id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
     id_utilisateur uuid NOT NULL,
-    id_soiree uuid NOT NULL,
-    tarif integer NOT NULL,
-    valider boolean DEFAULT FALSE NOT NULL,
+    id_panier uuid DEFAULT gen_random_uuid() NOT NULL UNIQUE,
+    valide boolean DEFAULT FALSE NOT NULL,
     FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id)
 );
 
-CREATE TABLE billets (
-    id_panier uuid PRIMARY KEY,
-    FOREIGN KEY (id_panier) REFERENCES paniers(id)
+CREATE TABLE paniers (
+    id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+    id_panier uuid NOT NULL,
+    id_soiree uuid NOT NULL,
+    tarif integer NOT NULL,
+    quantite integer DEFAULT 1 NOT NULL,
+    tarif_total integer DEFAULT 0 NOT NULL,
+    FOREIGN KEY (id_panier) REFERENCES paniers_utilisateurs(id_panier)
 );
+
+
+
+
