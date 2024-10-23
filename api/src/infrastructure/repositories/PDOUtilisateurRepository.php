@@ -5,6 +5,7 @@ namespace nrv\infrastructure\repositories;
 use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\Panier\PanierItem;
 use nrv\core\domain\entities\utilisateur\Utilisateur;
+use nrv\core\dto\Panier\PanierItemDTO;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
@@ -42,7 +43,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
     }
 
 
-    public function getPanier($idUser) : Panier
+    public function getPanier(string $idUser) : Panier
     {
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM paniers_utilisateurs WHERE id_utilisateur = ?');
@@ -61,7 +62,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $panierEntity;
     }
 
-    public function getPanierItems($idPanier) : array
+    public function getPanierItems(string $idPanier) : array
     {
         $panierItemsRes = [];
         try {
@@ -86,7 +87,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $panierItemsRes;
     }
 
-    public function addPanier($idPanier, $idSoiree, $tarif, $qte) : void
+    public function addPanier(string $idPanier,string $idSoiree,int $tarif,int $qte) : void
     {
         try {
             $stmt = $this->pdo->prepare('INSERT INTO paniers (id_panier ,id_soiree, tarif, quantite) VALUES (?, ?, ?, ?)');
@@ -100,14 +101,18 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
-    public function updatePanier($panierItem) : void
+    public function updatePanier( PanierItem $panierItem) : void
     {
-        var_dump($panierItem);
         try {
-            $stmt = $this->pdo->prepare('UPDATE paniers SET qte = ? WHERE id_panier = ? AND id_soiree = ?');
-            $stmt->bindParam(1, $panierItem->qte);
-            $stmt->bindParam(2, $panierItem->ID);
-            $stmt->bindParam(3, $panierItem->idSoiree);
+            $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND tarif = ?');
+            $qte = $panierItem->qte;
+            $idPanier = $panierItem->idPanier;
+            $idSoiree = $panierItem->idSoiree;
+            $tarif = $panierItem->tarif;
+            $stmt->bindParam(1, $qte);
+            $stmt->bindParam(2, $idPanier);
+            $stmt->bindParam(3, $idSoiree);
+            $stmt->bindParam(4, $tarif);
             $stmt->execute();
         } catch (\Exception $e) {
             throw new RepositoryException('updatePanier : erreur lors de la mise à jour du panier '. $panierItem->idPanier ." " . $e->getMessage());

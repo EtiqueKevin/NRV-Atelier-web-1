@@ -12,7 +12,6 @@ class PanierItemDTO extends DTO
 
     protected string $idSoiree;
     protected int $tarif;
-    protected int $tatifTotal;
     protected int $qte;
     protected int $tarifTotal;
 

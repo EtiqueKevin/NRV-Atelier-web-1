@@ -5,6 +5,7 @@ namespace nrv\application\actions;
 use nrv\core\services\Panier\PanierServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Exception\HttpBadRequestException;
 
 class AddPanierAction extends AbstractAction
 {
@@ -25,12 +26,15 @@ class AddPanierAction extends AbstractAction
         $idUser = $rq->getAttribute('UtiOutDTO')->id;
 
 
-        $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $qte);
+        try {
+            $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $qte);
+        }catch(\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
         $res = [
             'type' => 'resource',
             'panier' => $panier
         ];
-
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
     }

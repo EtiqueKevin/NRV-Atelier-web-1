@@ -2,7 +2,6 @@
 
 namespace nrv\core\services\Panier;
 
-use nrv\core\domain\entities\Panier\PanierItem;
 use nrv\core\dto\Panier\PanierDTO;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 
@@ -16,7 +15,7 @@ class PanierService implements PanierServiceInterface
         $this->UtilisateursRepository = $utilisateursRepository;
     }
 
-    public function getPanier($idUser) : PanierDTO
+    public function getPanier(string $idUser) : PanierDTO
     {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser);
@@ -33,22 +32,21 @@ class PanierService implements PanierServiceInterface
 
     }
 
-    public function addPanier($idUser, $idSoiree, $tarif, $qte) :PanierDTO
+    public function addPanier(string $idUser,string $idSoiree,int $tarif,int $qte) :PanierDTO
     {
         try {
-            $panier = $this->getPanier($idUser);
+            $panier = $this->UtilisateursRepository->getPanier($idUser);
+            $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
             $update = false;
-            foreach ($panier->panierItems as $panierItem) {
-                if ($panierItem->idSoiree == $idSoiree) {
-                    if ($panierItem->tarif == $tarif) {
-                        $update = true;
-                        $valeur =$panierItem->qte + $qte;
-                        $test = new PanierItem($panierItem->idSoiree, $panierItem->idPanier, $panierItem->tarif, $panierItem->tarifTotal, $valeur);
-
-                        $this->UtilisateursRepository->updatePanier($panierItem);
-                    }
+            foreach ($panierItemsRes as $panierItem) {
+                if ($panierItem->idSoiree == $idSoiree && $panierItem->tarif == $tarif) {
+                    echo "caca";
+                    $update = true;
+                    $panierItem->setQte($panierItem->qte + $qte);
+                    $this->UtilisateursRepository->updatePanier($panierItem);
                 }
             }
+
             if(!$update){
                 $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif, $qte);
             }

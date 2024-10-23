@@ -23,6 +23,10 @@ class PanierItem extends Entity
         $this->qte = $qte;
     }
 
+    public function setQte(int $qte) {
+        $this->qte = $qte;
+    }
+
     public function toDTO(): PanierItemDTO
     {
         return new PanierItemDTO($this);
