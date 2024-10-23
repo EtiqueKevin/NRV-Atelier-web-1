@@ -1,14 +1,15 @@
 @use 'config' as *;
 
-// Define mixins
 @mixin form-container($padding, $margin-bottom, $bg-color, $border-radius) {
+    box-sizing: border-box;
+
     padding: $padding;
     margin-bottom: $margin-bottom;
     background-color: $bg-color;
     border-radius: $border-radius;
 }
 
-@mixin input-style($padding, $border, $border-radius, $font-size) {
+@mixin input-style($padding, $border, $border-radius, $font-size, $bg-color : white) {
     padding: $padding;
     border: $border;
     border-radius: $border-radius;
@@ -16,6 +17,7 @@
     width: 100%;
     box-sizing: border-box;
     transition: border-color 0.3s;
+    background-color: $bg-color;
 
     &:focus {
         border-color: none;
@@ -34,7 +36,6 @@
     color: black;
 }
 
-// Apply mixins
 .search-form {
     @include form-container(2rem, 1rem, $secondary-bg-color, 0.5em);
     position: relative;
@@ -73,26 +74,21 @@
     select {
         @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
     }
-}
 
-@media (max-width: 768px) {
-    .search-form {
+    @media (max-width: 768px) {
         form {
             flex-direction: column;
             gap: 2rem;
         }
-
         label {
             font-size: 0.875rem;
         }
-
         input {
             padding: 0.5rem;
             font-size: 0.875rem;
         }
     }
 }
-
 
 .connexion-card {
     @include form-container(2rem, 1rem, $secondary-bg-color, 0.5em);
@@ -115,14 +111,43 @@
             display: flex;
             flex-direction: column;
             position: relative;
-
-            label {
-                @include label-style(absolute, -0.75rem, 0, white, 0 0.5rem, 1, 0.25em);
-            }
-
-            input {
-                @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
-            }
         }
+
+        label {
+            @include label-style(absolute, -0.75rem, 0, white, 0 0.5rem, 1, 0.25em);
+        }
+
+        input {
+            @include input-style(0.75rem, 1px solid #ccc, 4px, 1rem);
+        }
+    }
+}
+
+#add-to-cart-form{
+    @include form-container(2rem, 1rem, $highlight-bg-color, 0.5em);
+    color: black;
+
+    form{
+        display: flex;
+        flex-direction: column;
+        gap : 2rem;
+    }
+
+    .input-container {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    label {
+        @include label-style(absolute, -0.75rem, 0, #f1f1f1, 0 0.5rem, 1, 0.25em);
+    }
+
+    input {
+        @include input-style(0.75rem, 0px solid #ccc, 4px, 1rem, #f1f1f1);
+    }
+
+    select {
+        @include input-style(0.75rem, 0px solid #ccc, 4px, 1rem, #f1f1f1);
     }
 }

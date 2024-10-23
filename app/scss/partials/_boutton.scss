@@ -41,6 +41,16 @@
     @include button($main-bg-color);
 }
 
+.boutton-nav {
+    @include button($main-bg-color);
+
+    @media screen and (max-width: 550px) {
+        span {
+            display: none;
+        }
+    }
+}
+
 .color-button {
     @include button($gradient: true);
 }
