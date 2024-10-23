@@ -6,7 +6,7 @@ use nrv\core\services\Panier\PanierServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class GetPanierAction extends AbstractAction
+class AddPanierAction extends AbstractAction
 {
 
     private PanierServiceInterface $panierService;
@@ -18,10 +18,14 @@ class GetPanierAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idUser = $rq->getAttribute("UtiOutDTO");
+        $params = $rq->getParsedBody();
+        $idSoiree = $params['idSoiree'];
+        $tarif = $params['tarif'];
+        $qte = $params['qte'];
+        $idUser = $rq->getAttribute('UtiOutDTO');
 
-        $panier = $this->panierService->getPanier($idUser);
 
+        $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $qte);
         $res = [
             'type' => 'resource',
             'panier' => $panier
@@ -29,6 +33,5 @@ class GetPanierAction extends AbstractAction
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
-
     }
 }

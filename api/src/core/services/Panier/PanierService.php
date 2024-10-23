@@ -19,10 +19,40 @@ class PanierService implements PanierServiceInterface
     {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser);
+            $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
+
+            foreach ($panierItemsRes as $panierItem){
+                $panier->addPanierItem($panierItem->toDTO());
+            }
+
         }catch (\Exception $e){
             throw new PanierException($e->getMessage());
         }
         return new PanierDTO($panier);
 
+    }
+
+    public function addPanier($idUser, $idSoiree, $tarif, $qte) :PanierDTO
+    {
+        $retour = null;
+        try {
+            $panier = $this->getPanier($idUser);
+            foreach ($panier->panierItems as $panierItem){
+                if($panierItem->idSoiree == $idSoiree){
+                    if ($panierItem->tarif != $tarif){
+                       $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif, $qte);
+                    }else {
+                        $panierItem->qte += $qte;
+                        $this->UtilisateursRepository->updatePanier($panierItem);
+                    }
+                }else{
+                    $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif, $qte);
+                }
+                $retour =  $this->getPanier($idUser);
+            }
+        }catch (\Exception $e){
+            throw new PanierException($e->getMessage());
+        }
+        return $retour;
     }
 }

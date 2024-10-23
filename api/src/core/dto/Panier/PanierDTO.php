@@ -2,22 +2,24 @@
 
 namespace nrv\core\dto\Panier;
 
+use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\dto\DTO;
 
 class PanierDTO extends DTO
 {
     private string $id;
     private string $idUtilisateur;
-    private string $idSoiree;
-    private float $tarif;
+    private string $idPanier;
+
+    private array $panierItems;
     private bool $valide;
 
     public function __construct($panier)
     {
         $this->id = $panier->ID;
         $this->idUtilisateur = $panier->idUtilisateur;
-        $this->idSoiree = $panier->idSoiree;
-        $this->tarif = $panier->tarif;
+        $this->idPanier = $panier->idPanier;
+        $this->panierItems = $panier->panierItems;
         $this->valide = $panier->valide;
     }
 
@@ -26,8 +28,7 @@ class PanierDTO extends DTO
         return [
             'id' => $this->id,
             'idUtilisateur' => $this->idUtilisateur,
-            'idSoiree' => $this->idSoiree,
-            'tarif' => $this->tarif,
+            'panierItems' => $this->panierItems,
             'valide' => $this->valide
         ];
     }

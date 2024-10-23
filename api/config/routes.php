@@ -1,8 +1,10 @@
 <?php
 declare(strict_types=1);
 
+use nrv\application\actions\AddPanierAction;
 use nrv\application\actions\GetArtisteByIdAction;
 use nrv\application\actions\GetLieuxAction;
+use nrv\application\actions\GetPanierAction;
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
