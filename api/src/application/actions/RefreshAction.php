@@ -22,14 +22,12 @@ class RefreshAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $authHeader = $rq->getHeaderLine('Authorization');
-        $authHeaderTab = explode(' ', $authHeader);
-        if ($authHeaderTab[0] !== 'Basic') {
-            throw new HttpUnauthorizedException($rq, 'Authorization header absent ou mal formé');
-        }
+
+        $h = $rq->getHeader('Authorization')[0];
+        $tokenstring = sscanf($h, "Bearer %s")[0];
 
         try {
-            $authRes = $this->authProvider->refresh();
+            $authRes = $this->authProvider->refresh($tokenstring);
         }catch (UtilisateurException $e){
             throw new HttpUnauthorizedException($rq, 'Identifiants incorrects ' . $e->getMessage());
         }
@@ -37,7 +35,6 @@ class RefreshAction extends AbstractAction
         $response = [
             'type' => 'ressource',
             'atoken' => $authRes->accessToken,
-            'rtoken' => $authRes->refreshToken
         ];
 
         $rs->getBody()->write(json_encode($response));

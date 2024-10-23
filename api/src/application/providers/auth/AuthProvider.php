@@ -53,7 +53,20 @@ class AuthProvider implements AuthProviderInterface{
     }
 
     public function refresh(string $token): UtilisateurRefreshDTO{
-        // TODO a continuer
-        return new UtilisateurRefreshDTO("");
+        $arrayToken = $this->jwtManager->decodeToken($token);
+
+        $payload = [
+            'iat'=>time(),
+            'exp'=>time()+3600,
+            'sub' => $arrayToken['sub'],
+            'data' => [
+                'role' => $arrayToken['data']->role,
+                'email'=> $arrayToken['data']->email,
+            ]
+        ];
+
+        $accessToken = $this->jwtManager->createAccessToken($payload);
+
+        return new UtilisateurRefreshDTO($accessToken);
     }
 }
