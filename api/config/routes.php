@@ -54,7 +54,7 @@ return function( App $app): App {
 
     $app->get('/utilisateur/signin[/]', SignInAction::class);
 
-    $app->get('/utilisateur/signup[/]', SignUpAction::class);
+    $app->post('/utilisateur/signup[/]', SignUpAction::class);
 
     $app->get('/utilisateur/refresh[/]',RefreshAction::class)->add(AuthMiddleware::class);
 
