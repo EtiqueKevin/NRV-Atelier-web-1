@@ -7,6 +7,7 @@ use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\application\actions\SignInAction;
+use nrv\application\actions\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
 use nrv\application\providers\auth\AuthProvider;
 use nrv\application\providers\auth\AuthProviderInterface;
@@ -96,6 +97,10 @@ return [
 
     SignInAction::class => function(ContainerInterface $c){
         return new SignInAction($c->get(AuthProviderInterface::class));
+    },
+
+    SignUpAction::class => function (ContainerInterface $c) {
+        return new SignUpAction($c->get(UtilisateurServiceInterface::class));
     },
 
     // MIDDLEWARES

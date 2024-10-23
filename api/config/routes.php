@@ -11,6 +11,7 @@ use nrv\application\actions\GetSpectaclesByIdAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\actions\RefreshAction;
 use nrv\application\actions\SignInAction;
+use nrv\application\actions\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
 use nrv\application\middlewares\Cors;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -51,7 +52,7 @@ return function( App $app): App {
 
     $app->get('/utilisateur/signin[/]', SignInAction::class);
 
-    $app->get('/utilisateur/signup[/]', HomeAction::class);
+    $app->get('/utilisateur/signup[/]', SignUpAction::class);
 
     $app->get('/utilisateur/refresh[/]',RefreshAction::class)->add(AuthMiddleware::class);
 

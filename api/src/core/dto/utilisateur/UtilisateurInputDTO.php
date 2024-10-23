@@ -8,7 +8,6 @@ use nrv\core\dto\DTO;
 class UtilisateurInputDTO extends DTO{
 
     protected string $email;
-
     protected string $mdp;
 
     public function __construct($email,$mdp){

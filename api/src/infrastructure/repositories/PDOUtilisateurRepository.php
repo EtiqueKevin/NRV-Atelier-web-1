@@ -8,6 +8,9 @@ use nrv\core\domain\entities\utilisateur\Utilisateur;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use nrv\core\services\utilisateur\UtilisateurException;
+use PDO;
+use Ramsey\Uuid\Uuid;
 
 class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
 
@@ -30,6 +33,8 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
 
             $utilisateurEntity = new Utilisateur($utilisateur['nom'],$utilisateur['prenom'],$utilisateur['email'],$utilisateur['mdp'],$utilisateur['role']);
             $utilisateurEntity->setID($utilisateur['id']);
+        }catch (RepositoryEntityNotFoundException $e) {
+            throw new RepositoryEntityNotFoundException('utilisateur inconnue');
         }catch (\Exception $e){
             throw new RepositoryException('UtilisateurByEmail : erreur lors du chargemement utilisateur '.$e->getMessage());
         }
@@ -107,5 +112,30 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         } catch (\Exception $e) {
             throw new RepositoryException('updatePanier : erreur lors de la mise à jour du panier '. $panierItem->idPanier ." " . $e->getMessage());
         }
+    }
+
+    public function saveUtilisateur(Utilisateur $uti): string{
+        $id = Uuid::uuid4()->toString();
+        $nom = $uti->nom;
+        $prenom = $uti->prenom;
+        $email = $uti->email;
+        $mdp = $uti->mdp;
+        $role = $uti->role;
+
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO utilisateurs (id, nom, prenom, email, mdp,role) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt->bindParam(1, $id, PDO::PARAM_STR);
+            $stmt->bindParam(2, $nom, PDO::PARAM_STR);
+            $stmt->bindParam(3, $prenom, PDO::PARAM_STR);
+            $stmt->bindParam(4, $email, PDO::PARAM_STR);
+            $stmt->bindParam(5, $mdp, PDO::PARAM_STR);
+            $stmt->bindParam(6, $role, PDO::PARAM_STR);
+            $stmt->execute();
+        }catch (\Exception $e){
+            throw new UtilisateurException('erreur insertion utilisateur : '.$e->getMessage());
+        }
+
+
+        return $id;
     }
 }
