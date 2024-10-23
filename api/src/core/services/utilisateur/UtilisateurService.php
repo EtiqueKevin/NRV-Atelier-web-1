@@ -57,6 +57,10 @@ class UtilisateurService implements UtilisateurServiceInterface{
         }
     }
 
+    public function getUtilisateurById(string $id):UtilisateurDTO{
+        $utiEntity = $this->utilisateursRepository->UtilisateurById($id);
+        return new UtilisateurDTO($utiEntity);
+    }
 
 
 }

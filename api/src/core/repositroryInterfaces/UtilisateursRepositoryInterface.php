@@ -2,6 +2,7 @@
 
 namespace nrv\core\repositroryInterfaces;
 
+use nrv\core\domain\entities\billet\Billet;
 use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\Panier\PanierItem;
 use nrv\core\domain\entities\soiree\Lieu;
@@ -24,4 +25,8 @@ interface UtilisateursRepositoryInterface{
     public function saveUtilisateur(Utilisateur $uti):string;
 
     public function validerPanier(string $idUser): void;
+
+    public function getBilletById(string $id): Billet;
+
+    public function UtilisateurById(string $id): Utilisateur;
 }

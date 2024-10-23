@@ -22,7 +22,7 @@ class GetBilletsByIdUtilisateur{
 
             $res = [
                 'type' => 'collection',
-                'billets' => $billetOutDTO
+                'billets' => $billetOutDTO,
             ];
         } catch (\Exception $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());

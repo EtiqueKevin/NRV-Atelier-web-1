@@ -44,6 +44,27 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $utilisateurEntity;
     }
 
+    public function UtilisateurById(string $id): Utilisateur{
+        try{
+            $stmt = $this->pdo->prepare('SELECT * FROM utilisateurs WHERE id = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            $utilisateur = $stmt->fetch();
+
+            if(!$utilisateur){
+                throw new RepositoryEntityNotFoundException('utilisateur inconnue');
+            }
+
+            $utilisateurEntity = new Utilisateur($utilisateur['nom'],$utilisateur['prenom'],$utilisateur['email'],$utilisateur['mdp'],$utilisateur['role']);
+            $utilisateurEntity->setID($utilisateur['id']);
+        }catch (RepositoryEntityNotFoundException $e) {
+            throw new RepositoryEntityNotFoundException('utilisateur inconnue');
+        }catch (\Exception $e){
+            throw new RepositoryException('UtilisateurByEmail : erreur lors du chargemement utilisateur '.$e->getMessage());
+        }
+        return $utilisateurEntity;
+    }
+
 
     public function getPanier(string $idUser) : Panier
     {
@@ -161,7 +182,6 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             $billetEnity->setID($b['id']);
             $billetTab[] = $billetEnity;
         }
-        //'Y-m-d H:i:s'
 
         return $billetTab;
     }
@@ -184,5 +204,19 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         } catch (\Exception $e) {
             throw new RepositoryException('ajouterPanierUtilisateur : erreur creation panier'. $id ." " . $e->getMessage());
         }
+    }
+
+    public function getBilletById(string $id): Billet{
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM billets WHERE id = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('getBilletById : erreur lors du chargement du biller : '. $id ." " . $e->getMessage());
+        }
+        $billet = $stmt->fetch();
+        $billetEntity = new Billet($billet['id_utilisateur'],$billet['id_soiree'], DateTime::createFromFormat('Y-m-d H:i:s',$billet['date_heure_soiree']), $billet['categorie_tarif']);
+        $billetEntity->setID($billet['id']);
+        return $billetEntity;
     }
 }
