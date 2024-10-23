@@ -95,4 +95,35 @@ async function loadData(url) {
     }
 };
 
-export { loadData, connexionRequest, inscriptionRequest };
+async function postData(url, body) {
+    try {
+        let accessToken = jwt.getAccessToken();
+        const headers = {};
+
+        if (accessToken) {
+            headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+
+        headers['Content-Type'] = 'application/json';
+
+        const response = await fetch(apiUrl + url, {
+            method: 'POST',
+            mode: 'cors',
+            headers: headers,
+            body: JSON.stringify(body),
+        });
+
+        if (!response.ok) {
+            if (response.status === 401 && accessToken) {
+                accessToken = await refreshAccessToken();
+                return await loadData(url);
+            }
+            throw new Error(`HTTP error, status: ${response.status}, message: ${response.statusText}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export { loadData, postData, connexionRequest, inscriptionRequest };

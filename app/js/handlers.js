@@ -142,3 +142,18 @@ export function handlePanier(){
         modal.innerHTML = '';
     });
 }
+
+export function handleSoiree(){
+    const submitButton = document.getElementById('submit-button');
+    if (submitButton) {
+        submitButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const soireeId = document.getElementById('soiree-id').value;
+            const qte = document.getElementById('quantite').value;
+            const tarif = document.getElementById('tarif').value;
+            await users.addToPanier(soireeId, qte, tarif);
+            ui.displayPanier();
+        });
+    }
+
+}

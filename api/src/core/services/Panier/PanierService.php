@@ -24,6 +24,10 @@ class PanierService implements PanierServiceInterface
             $panier = $this->UtilisateursRepository->getPanier($idUser);
             $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
 
+            if(empty($panierItemsRes)){
+                return new PanierDTO($panier);
+            }
+
             foreach ($panierItemsRes as $panierItem){
                 $panierItem->setSoiree($this->SoireesRepository->getSoireeById($panierItem->idSoiree));
                 $panier->addPanierItem($panierItem->toDTO());
