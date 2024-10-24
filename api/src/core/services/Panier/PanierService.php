@@ -45,7 +45,7 @@ class PanierService implements PanierServiceInterface
     {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
-            if($panier->valide){
+            if(!$panier->valide){
                 $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
                 $update = false; //booléen pour savoir si l'item est déjà dans le panier et si ça fait une update
                 foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
@@ -76,7 +76,7 @@ class PanierService implements PanierServiceInterface
     public function modifierPanier(string $idUser, string $idSoiree, string $typeTarif, int $qte) : PanierDTO {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
-            if($panier->valide) {
+            if(!$panier->valide) {
                 $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
                 foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
                     if ($panierItem->idSoiree == $idSoiree) { //si la soiree est la même
