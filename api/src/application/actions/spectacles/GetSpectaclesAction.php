@@ -1,8 +1,8 @@
 <?php
 
-namespace nrv\application\actions;
+namespace nrv\application\actions\spectacles;
 
-use nrv\core\services\spectacle\SpectacleService;
+use nrv\application\actions\AbstractAction;
 use nrv\core\services\spectacle\SpectacleServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

@@ -1,15 +1,14 @@
 <?php
 
-namespace nrv\application\actions;
+namespace nrv\application\actions\spectacles;
 
-use nrv\core\services\spectacle\SpectacleService;
+use nrv\application\actions\AbstractAction;
 use nrv\core\services\spectacle\SpectacleServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 
-class GetSpectaclesByIdAction extends AbstractAction
+class GetArtisteByIdAction extends AbstractAction
 {
     private SpectacleServiceInterface $spectacleService;
 
@@ -20,23 +19,13 @@ class GetSpectaclesByIdAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $id = $args['ID-SPECTACLE'];
+        $id = $args['ID-ARTISTE'];
         try {
-            $spectacleDTO = $this->spectacleService->getSpectacleById($id);
-            $artistesIds = $this->spectacleService->getArtistesBySpectacle($id);
-
-            $artistesLinks = array_map(function($artisteId) {
-                return [
-                    'href' => "artiste/{$artisteId}"
-                ];
-            }, $artistesIds);
+            $artisteDTO = $this->spectacleService->getArtisteById($id);
 
             $res = [
                 'type' => 'ressource',
-                'spectacle' => $spectacleDTO,
-                'links' => [
-                    'artistes' => $artistesLinks
-                ]
+                'artiste' => $artisteDTO,
             ];
         }catch (\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());

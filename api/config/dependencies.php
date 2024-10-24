@@ -1,17 +1,17 @@
 <?php
 
-use nrv\application\actions\AddPanierAction;
-use nrv\application\actions\GetArtisteByIdAction;
-use nrv\application\actions\GetBilletsById;
-use nrv\application\actions\GetBilletsByIdUtilisateur;
-use nrv\application\actions\GetLieuxAction;
-use nrv\application\actions\GetPanierAction;
-use nrv\application\actions\GetSoireeByIdAction;
-use nrv\application\actions\GetSpectaclesAction;
-use nrv\application\actions\GetSpectaclesByIdAction;
-use nrv\application\actions\SignInAction;
-use nrv\application\actions\SignUpAction;
-use nrv\application\actions\ValiderPanierAction;
+use nrv\application\actions\billets\GetBilletsById;
+use nrv\application\actions\billets\GetBilletsByIdUtilisateur;
+use nrv\application\actions\panier\AddPanierAction;
+use nrv\application\actions\panier\GetPanierAction;
+use nrv\application\actions\panier\ValiderPanierAction;
+use nrv\application\actions\soirees\GetLieuxAction;
+use nrv\application\actions\soirees\GetSoireeByIdAction;
+use nrv\application\actions\spectacles\GetArtisteByIdAction;
+use nrv\application\actions\spectacles\GetSpectaclesAction;
+use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
+use nrv\application\actions\utilisateur\SignInAction;
+use nrv\application\actions\utilisateur\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
 use nrv\application\providers\auth\AuthProvider;
 use nrv\application\providers\auth\AuthProviderInterface;

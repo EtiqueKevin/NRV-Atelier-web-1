@@ -1,13 +1,14 @@
 <?php
 
-namespace nrv\application\actions;
+namespace nrv\application\actions\billets;
 
+use nrv\application\actions\AbstractAction;
 use nrv\core\dto\billet\BilletInputDTO;
 use nrv\core\services\billet\BilletServiceInterface;
+use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
-use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 
 class GetBilletsById extends AbstractAction {
 

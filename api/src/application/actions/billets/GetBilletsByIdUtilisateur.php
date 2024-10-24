@@ -1,6 +1,6 @@
 <?php
 
-namespace nrv\application\actions;
+namespace nrv\application\actions\billets;
 
 use nrv\core\services\billet\BilletServiceInterface;
 use Psr\Http\Message\ResponseInterface;
