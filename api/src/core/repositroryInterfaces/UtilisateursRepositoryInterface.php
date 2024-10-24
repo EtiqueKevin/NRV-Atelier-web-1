@@ -36,4 +36,8 @@ interface UtilisateursRepositoryInterface{
     public function getNbBilletByIdSoiree(string $id): int;
 
     public function getRole(string $id): int;
+
+    public function addBillets(string $insertions) : void;
+
+    public function viderPanier(string $idPanier): void;
 }

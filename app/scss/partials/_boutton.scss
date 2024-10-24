@@ -63,3 +63,10 @@
     padding: 10px 20px;
     text-decoration: underline;
 }
+
+.modify-qte-button {
+    @include button($gradient: true);
+    height: 35px;
+    padding: 0 2px;
+    font-size: 0.875rem; // Adjust font size if necessary
+}

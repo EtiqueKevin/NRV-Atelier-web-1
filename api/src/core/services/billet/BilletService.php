@@ -43,8 +43,26 @@ class BilletService implements BilletServiceInterface{
         return $billetEntity->toDTO();
     }
 
-    public function payerCommande(PanierDTO $panierDTO) {
-        $billets = [];
+    public function payerCommande(string $idUser) {
+        $panier = $this->utilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
+        $panierItemsRes = $this->utilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
+        $items = "";
+        foreach ($panierItemsRes as $panierItem) { //pour tous les items du panier
 
+            //on récupère l'heure de début de la soirée parce que relou la bd
+            $spectacles = $this->soireesRepository->getSpectacleByIdSoiree($panierItem->idSoiree); //on récupère les spectacles de la soirée
+            $heureDebut = $this->soireesRepository->getSpectacleById($spectacles[0])->heure; //on initialise l'heure de début à la première heure de spectacle du tableau
+            foreach ($spectacles as $spectacle) { // pour tous les spectacles
+                if ($spectacle < $heureDebut) { //si le spectacle est plus tôt que l'heure de début deja definie
+                    $heureDebut = $this->soireesRepository->getSpectacleById($spectacle)->heure;; //on le met en tant qu'heure de début
+                }
+            }
+            for ($i = 0; $i < $panierItem->qte; $i++) { //pour chaque billet
+                $items .= "('$idUser','{$panierItem->idSoiree}','{$heureDebut->format('Y-m-d H:i:s')}','{$panierItem->typeTarif}'),\n"; // je crée un tableau pour requêtes multiples
+            }
+        }
+        $items = substr($items, 0, -2); //je retire la dernière virgule
+        $this->utilisateursRepository->addBillets($items); //j'ajoute les billets
+        $this->utilisateursRepository->viderPanier($panier->idPanier);
     }
 }

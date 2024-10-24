@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use nrv\application\actions\billets\GetBilletsById;
 use nrv\application\actions\billets\GetBilletsByIdUtilisateur;
+use nrv\application\actions\billets\PostPayerCommandeAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\actions\panier\AddPanierAction;
 use nrv\application\actions\panier\GetPanierAction;
@@ -81,6 +82,8 @@ return function( App $app): App {
     $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
 
     $app->post('/panier/update[/]',HomeAction::class)->add(AuthMiddleware::class);
+
+    $app->post('/panier/payer[/]', PostPayerCommandeAction::class)->add(AuthMiddleware::class);
 
     // backoffice
 

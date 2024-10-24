@@ -45,7 +45,7 @@ class PanierService implements PanierServiceInterface
     {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
-            if($panier->valide){
+            if(!$panier->valide){
                 $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
                 $update = false; //booléen pour savoir si l'item est déjà dans le panier et si ça fait une update
                 foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
@@ -76,7 +76,7 @@ class PanierService implements PanierServiceInterface
     public function modifierPanier(string $idUser, string $idSoiree, string $typeTarif, int $qte) : PanierDTO {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
-            if($panier->valide) {
+            if(!$panier->valide) {
                 $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
                 foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
                     if ($panierItem->idSoiree == $idSoiree) { //si la soiree est la même
@@ -109,11 +109,11 @@ class PanierService implements PanierServiceInterface
 
     public function verifier(string $numero, string $dateExpiration, string $code, PanierDTO $panierDTO) : bool
     {
-        $date = \DateTime::createFromFormat('m/Y', $dateExpiration);
+        $date = \DateTime::createFromFormat('m/y', $dateExpiration);
         $dateActuellle = new \DateTime();
-        $dateActuellle = $dateActuellle->format('m/Y');
+        $dateActuellle = $dateActuellle->format('m/y');
 
-        if (!preg_match('/^d{16}$/', $numero)) {
+        if (!preg_match('/^\d{16}$/', $numero)) {
             throw new PanierException('Numero invalide');
         }
 
@@ -121,8 +121,12 @@ class PanierService implements PanierServiceInterface
             throw new PanierException('Date d\'expiration invalide');
         }
 
-        if(!preg_match('/^d{3}$/', $code) ){
+        if(!preg_match('/^\d{3}$/', $code) ){
             throw new PanierException('Code invalide');
+        }
+
+        if (!$panierDTO->valide){
+            throw new PanierException('Panier invalidé');
         }
 
         try {
