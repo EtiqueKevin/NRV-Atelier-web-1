@@ -40,7 +40,8 @@ class SignInAction extends AbstractAction
         $response = [
             'type' => 'ressource',
             'atoken' => $authRes->accessToken,
-            'rtoken' => $authRes->refreshToken
+            'rtoken' => $authRes->refreshToken,
+            'role' => $authRes->role
         ];
 
         $rs->getBody()->write(json_encode($response));

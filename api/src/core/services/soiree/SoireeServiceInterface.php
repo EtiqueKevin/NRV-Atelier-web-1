@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\soiree;
 
+use nrv\core\dto\soiree\SoireeDetailBackofficeDTO;
 use nrv\core\dto\soiree\SoireeDTO;
 
 interface SoireeServiceInterface{
@@ -13,4 +14,6 @@ interface SoireeServiceInterface{
 
     public function getLieux(): array;
     public function getStyles(): array;
+
+    public function gestionPlaceBackOffice(string $idSoiree):SoireeDetailBackofficeDTO;
 }
