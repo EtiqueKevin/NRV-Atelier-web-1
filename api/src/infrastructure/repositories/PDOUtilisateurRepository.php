@@ -233,4 +233,16 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         $nb = $stmt->fetch();
         return $nb;
     }
+
+    public function getRole(string $id): int{
+        try {
+            $stmt = $this->pdo->prepare('SELECT role FROM utilisateurs WHERE id = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('getRole : erreur lors du chargement du role : '. $id ." " . $e->getMessage());
+        }
+        $role = $stmt->fetch();
+        return $role;
+    }
 }

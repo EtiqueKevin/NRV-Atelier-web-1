@@ -23,6 +23,3 @@ composer.lock
 api.nrv.env
 app.nrv.env
 nrv.db.env
-# ini
-api/config/iniconf/soirees.ini
-*/utilisateurs.ini
