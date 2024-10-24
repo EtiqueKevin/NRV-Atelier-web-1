@@ -80,6 +80,8 @@ return function( App $app): App {
 
     $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
 
+    $app->post('/panier/update[/]',HomeAction::class)->add(AuthMiddleware::class);
+
     // backoffice
 
     $app->get('/backoffice/soirees/{ID-SOIREE}[/]',GetSoireeByIdBackofficeAction::class)->add(AuthMiddleware::class);

@@ -4,6 +4,7 @@ use nrv\application\actions\billets\GetBilletsById;
 use nrv\application\actions\billets\GetBilletsByIdUtilisateur;
 use nrv\application\actions\panier\AddPanierAction;
 use nrv\application\actions\panier\GetPanierAction;
+use nrv\application\actions\panier\UpdatePanierAction;
 use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
@@ -14,11 +15,14 @@ use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
 use nrv\application\actions\utilisateur\SignInAction;
 use nrv\application\actions\utilisateur\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
+use nrv\application\middlewares\AuthorizationBackMiddleware;
+use nrv\application\middlewares\AuthorizationLambdaMiddleware;
 use nrv\application\providers\auth\AuthProvider;
 use nrv\application\providers\auth\AuthProviderInterface;
 use nrv\application\providers\auth\JWTManager;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use nrv\core\services\authorization\AuthzUtilisateurInterface;
 use nrv\core\services\billet\BilletService;
 use nrv\core\services\billet\BilletServiceInterface;
 use nrv\core\services\Panier\PanierService;
@@ -31,10 +35,7 @@ use nrv\core\services\utilisateur\UtilisateurService;
 use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 use nrv\infrastructure\repositories\PDOSoireeRepository;
 use nrv\infrastructure\repositories\PDOUtilisateurRepository;
-use nrv\application\middlewares\AuthorisationBackMiddleware;
-use nrv\application\middlewares\AuthorisationLambdaMiddleware;
 use nrv\core\services\authorization\AuthorizationService;
-use nrv\core\services\authorization\AuthzUtilisateurServiceInterface;
 use Psr\Container\ContainerInterface;
 
 
@@ -78,7 +79,7 @@ return [
     return new BilletService($c->get(UtilisateursRepositoryInterface::class),$c->get(SoireesRepositoryInterface::class));
     },
 
-    AuthzUtilisateurServiceInterface::class => function (ContainerInterface $c) {
+    AuthzUtilisateurInterface::class => function (ContainerInterface $c) {
         return new AuthorizationService($c->get(UtilisateursRepositoryInterface::class));
     },
 
@@ -142,17 +143,21 @@ return [
         return new GetSoireeByIdBackofficeAction($c->get(SoireeServiceInterface::class));
     },
 
+    UpdatePanierAction::class => function (ContainerInterface $c) {
+        return new UpdatePanierAction($c->get(PanierServiceInterface::class));
+    },
+
     // MIDDLEWARES
 
     AuthMiddleware::class => function (ContainerInterface $c) {
         return new AuthMiddleware($c->get(AuthProviderInterface::class));
     },
 
-    AuthorisationBackMiddleware::class => function (ContainerInterface $c) {
-        return new AuthorisationBackMiddleware($c->get(AuthzUtilisateurServiceInterface::class));
+    AuthorizationBackMiddleware::class => function (ContainerInterface $c) {
+        return new AuthorizationBackMiddleware($c->get(AuthzUtilisateurInterface::class));
     },
 
-    AuthorisationLambdaMiddleware::class => function (ContainerInterface $c) {
-        return new AuthorisationLambdaMiddleware($c->get(AuthzUtilisateurServiceInterface::class));
+    AuthorizationLambdaMiddleware::class => function (ContainerInterface $c) {
+        return new AuthorizationLambdaMiddleware($c->get(AuthzUtilisateurInterface::class));
     },
 ];
