@@ -9,4 +9,6 @@ interface PanierServiceInterface
     public function addPanier(string $idUser,string $idSoiree,int $tarif,int $qte);
 
     public function validerPanier(string $idUser);
+
+    public function verifier(string $numero, string $dateExpiration, string $code) : bool;
 }

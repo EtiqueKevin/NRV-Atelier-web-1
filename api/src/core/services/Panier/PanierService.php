@@ -73,4 +73,25 @@ class PanierService implements PanierServiceInterface
             throw new PanierException($e->getMessage());
         }
     }
+
+    public function verifier(string $numero, string $dateExpiration, string $code) : bool
+    {
+        $date = \DateTime::createFromFormat('m/Y', $dateExpiration);
+        $dateActuellle = new \DateTime();
+        $dateActuellle = $dateActuellle->format('m/Y');
+
+        if (!preg_match('/^d{16}$/', $numero)) {
+            throw new PanierException('Numero invalide');
+        }
+
+        if($date < $dateActuellle){
+            throw new PanierException('Date d\'expiration invalide');
+        }
+
+        if(!preg_match('/^d{3}$/', $code) ){
+            throw new PanierException('Code invalide');
+        }
+
+        return true;
+    }
 }

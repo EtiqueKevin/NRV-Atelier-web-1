@@ -4,6 +4,7 @@ namespace nrv\core\domain\entities\soiree;
 
 use DateTime;
 use nrv\core\domain\entities\Entity;
+use nrv\core\domain\entities\lieu\Lieu;
 use nrv\core\dto\soiree\SoireeDTO;
 
 class Soiree extends Entity {
