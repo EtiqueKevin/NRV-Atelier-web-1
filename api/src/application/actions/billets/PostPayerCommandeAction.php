@@ -33,17 +33,12 @@ class PostPayerCommandeAction extends AbstractAction
             $valide = $this->panierService->verifier($numero, $date, $code, $panierDTO);
 
             if ($valide) {
-                $billetDTO = $this->billetService->payerCommande($panierDTO);
+                $billetDTO = $this->billetService->payerCommande($idUser);
             }
 
-            $res = [
-                'type' => 'ressource',
-                'billet' => $billetDTO,
-            ];
         }catch (\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
-        $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
     }
 }

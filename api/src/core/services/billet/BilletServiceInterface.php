@@ -13,4 +13,6 @@ interface BilletServiceInterface{
 
     public function getBilletById(BilletInputDTO $biInputDTO): BilletDTO;
 
+    public function payerCommande(string $idUser);
+
 }

@@ -243,4 +243,29 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         $role = $stmt->fetch();
         return $role;
     }
+
+    public function addBillets(string $insertions): void
+    {
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO billets (id_utilisateur, id_soiree, date_heure_soiree, categorie_tarif) VALUES ' . $insertions);
+            $stmt->execute();
+        }catch (\Exception $e){
+            throw new RepositoryException('addBillets : erreur lors de l\'ajout des billets : ' . $e->getMessage());
+        }
+    }
+
+    public function viderPanier(string $idPanier): void{
+        try {
+            $id = $idPanier;
+
+            $stmt = $this->pdo->prepare('DELETE FROM paniers WHERE id_panier = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            $stmt = $this->pdo->prepare('UPDATE paniers_utilisateurs SET valide = FALSE WHERE id_panier = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('viderPanier : erreur lors de la suppression du panier '. $id ." " . $e->getMessage());
+        }
+    }
 }

@@ -109,11 +109,11 @@ class PanierService implements PanierServiceInterface
 
     public function verifier(string $numero, string $dateExpiration, string $code, PanierDTO $panierDTO) : bool
     {
-        $date = \DateTime::createFromFormat('m/Y', $dateExpiration);
+        $date = \DateTime::createFromFormat('m/y', $dateExpiration);
         $dateActuellle = new \DateTime();
-        $dateActuellle = $dateActuellle->format('m/Y');
+        $dateActuellle = $dateActuellle->format('m/y');
 
-        if (!preg_match('/^d{16}$/', $numero)) {
+        if (!preg_match('/^\d{16}$/', $numero)) {
             throw new PanierException('Numero invalide');
         }
 
@@ -121,8 +121,12 @@ class PanierService implements PanierServiceInterface
             throw new PanierException('Date d\'expiration invalide');
         }
 
-        if(!preg_match('/^d{3}$/', $code) ){
+        if(!preg_match('/^\d{3}$/', $code) ){
             throw new PanierException('Code invalide');
+        }
+
+        if (!$panierDTO->valide){
+            throw new PanierException('Panier invalidé');
         }
 
         try {
