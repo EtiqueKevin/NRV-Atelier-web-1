@@ -356,21 +356,21 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $imgs = $spectacle->imgs;
 
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO spectacles (titre, description, heure,url_video) VALUES (?, ?, ?, ?)');
+            $stmt = $this->pdo->prepare('INSERT INTO spectacles (titre, description, heure,url_video) VALUES (?, ?, ?, ?) RETURNING id');
             $stmt->bindParam(1, $titre, PDO::PARAM_STR);
             $stmt->bindParam(2, $description, PDO::PARAM_STR);
             $stmt->bindParam(3, $heure, PDO::PARAM_STR);
             $stmt->bindParam(4, $url_video, PDO::PARAM_STR);
             $stmt->execute();
+            $idSpec = $stmt->fetchColumn();
 
-            $idSpec = $this->pdo->lastInsertId('id');
             $this->liaisonImageSpectacle($imgs,$idSpec);
 
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion spectacle : '.$e->getMessage());
         }
 
-        $specEntity = new Spectacle($titre,$description,$heure,$url_video,$imgs);
+        $specEntity = new Spectacle($titre,$description,\DateTime::createFromFormat('H:i:s',$heure),$url_video,$imgs);
         $specEntity->setID($idSpec);
         return $specEntity;
     }
@@ -383,6 +383,20 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $lieu = $soiree->lieu->ID;
         $tarif_normal = $soiree->tarif_normal;
         $tarif_reduit = $soiree->tarif_reduit;
+
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO soirees (nom, thematique, date, id_lieu, tarif_normal, tarif_reduit) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+            $stmt->bindParam(2, $thematique, PDO::PARAM_STR);
+            $stmt->bindParam(3, $date, PDO::PARAM_STR);
+            $stmt->bindParam(4, $lieu->id, PDO::PARAM_STR);
+            $stmt->bindParam(5, $tarif_normal, PDO::PARAM_STR);
+            $stmt->bindParam(6, $tarif_reduit, PDO::PARAM_STR);
+            $stmt->execute();
+
+        }catch (\Exception $e){
+            throw new UtilisateurException('erreur insertion soiree : '.$e->getMessage());
+        }
 
     }
 
@@ -398,20 +412,6 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion image : '.$e->getMessage());
-        }
-
-        try {
-            $stmt = $this->pdo->prepare('INSERT INTO soirees (nom, thematique, date, id_lieu, tarif_normal, tarif_reduit) VALUES (?, ?, ?, ?, ?, ?)');
-            $stmt->bindParam(1, $nom, PDO::PARAM_STR);
-            $stmt->bindParam(2, $thematique, PDO::PARAM_STR);
-            $stmt->bindParam(3, $date, PDO::PARAM_STR);
-            $stmt->bindParam(4, $lieu->id, PDO::PARAM_STR);
-            $stmt->bindParam(5, $tarif_normal, PDO::PARAM_STR);
-            $stmt->bindParam(6, $tarif_reduit, PDO::PARAM_STR);
-            $stmt->execute();
-
-        }catch (\Exception $e){
-            throw new UtilisateurException('erreur insertion soiree : '.$e->getMessage());
         }
     }
 }

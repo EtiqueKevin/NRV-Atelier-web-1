@@ -2,9 +2,12 @@
 
 namespace nrv\core\services\spectacle;
 
+use nrv\core\domain\entities\spectacle\Spectacle;
 use nrv\core\dto\artiste\ArtisteDTO;
+use nrv\core\dto\spectacle\SpectacleCreerDTO;
 use nrv\core\dto\spectacle\SpectacleDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
+use nrv\core\services\soiree\SoireeException;
 
 class SpectacleService implements SpectacleServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
@@ -64,6 +67,18 @@ class SpectacleService implements SpectacleServiceInterface{
             return $artiste->toDTO();
         } catch (\Exception $e) {
             throw new spectacleException($e->getMessage());
+        }
+    }
+
+    public function putSpectacle(SpectacleCreerDTO $spectacleDTO) : void{
+        try{
+            $spectacleEnity = new Spectacle($spectacleDTO->titre,$spectacleDTO->description,\DateTime::createFromFormat('H:i:s',$spectacleDTO->heure),$spectacleDTO->url_video,$spectacleDTO->imgs);
+            $spectacleEnity->setIdSoiree($spectacleDTO->idSoiree);
+
+            $this->soireeRepository->saveSpectacle($spectacleEnity);
+
+        }catch (\Exception $e){
+            throw new SoireeException("put spectacle" . $e->getMessage());
         }
     }
 }

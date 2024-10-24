@@ -38,4 +38,8 @@ interface SoireesRepositoryInterface{
     public function getStyles(): array;
 
     public function saveSoiree(Soiree $soiree): void;
+
+    public function liaisonImageSpectacle(array $imgs, string $idSpec):void;
+
+    public function saveSpectacle(Spectacle $spectacle): Spectacle;
 }

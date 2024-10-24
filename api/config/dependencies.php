@@ -13,6 +13,7 @@ use nrv\application\actions\soirees\PutSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
+use nrv\application\actions\spectacles\PutSpectacleAction;
 use nrv\application\actions\utilisateur\SignInAction;
 use nrv\application\actions\utilisateur\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
@@ -150,6 +151,10 @@ return [
 
     PutSoireeAction::class => function (ContainerInterface $c) {
         return new PutSoireeAction($c->get(SoireeServiceInterface::class));
+    },
+
+    PutSpectacleAction::class => function (ContainerInterface $c) {
+        return new PutSpectacleAction($c->get(SpectacleServiceInterface::class));
     },
 
     // MIDDLEWARES

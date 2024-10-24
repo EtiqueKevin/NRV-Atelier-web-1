@@ -3,6 +3,7 @@
 namespace nrv\core\services\spectacle;
 
 use nrv\core\dto\artiste\ArtisteDTO;
+use nrv\core\dto\spectacle\SpectacleCreerDTO;
 use nrv\core\dto\spectacle\SpectacleDTO;
 
 interface SpectacleServiceInterface
@@ -17,5 +18,5 @@ interface SpectacleServiceInterface
 
     public function getArtisteById(string $idArtiste): ArtisteDTO;
 
-
+    public function putSpectacle(SpectacleCreerDTO $spectacleDTO) : void;
 }

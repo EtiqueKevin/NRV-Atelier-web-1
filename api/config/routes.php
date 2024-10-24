@@ -7,6 +7,7 @@ use nrv\application\actions\billets\PostPayerCommandeAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\actions\panier\AddPanierAction;
 use nrv\application\actions\panier\GetPanierAction;
+use nrv\application\actions\panier\UpdatePanierAction;
 use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
@@ -16,6 +17,7 @@ use nrv\application\actions\soirees\PutSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
+use nrv\application\actions\spectacles\PutSpectacleAction;
 use nrv\application\actions\utilisateur\RefreshAction;
 use nrv\application\actions\utilisateur\SignInAction;
 use nrv\application\actions\utilisateur\SignUpAction;
@@ -42,6 +44,8 @@ return function( App $app): App {
 
     $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
 
+    $app->put('/spectacle[/]',PutSpectacleAction::class);
+
     // artiste
 
     $app->get('/artiste/{ID-ARTISTE}[/]',GetArtisteByIdAction::class);
@@ -50,7 +54,7 @@ return function( App $app): App {
 
     $app->get('/soirees/{ID-SOIREE}[/]', GetSoireeByIdAction::class);
 
-    $app->put('/soirees[/]', PutSoireeAction::class);
+    $app->put('/soiree[/]', PutSoireeAction::class);
 
     //lieux
 
@@ -70,8 +74,6 @@ return function( App $app): App {
 
     // billet
 
-    $app->get('/billets[/]', HomeAction::class);
-
     $app->get('/utilisateur/billets[/]', GetBilletsByIdUtilisateur::class)->add(AuthMiddleware::class);
 
     $app->get('/utilisateur/billet/{ID-BILLET}', GetBilletsById::class)->add(AuthMiddleware::class);
@@ -84,7 +86,7 @@ return function( App $app): App {
 
     $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
 
-    $app->post('/panier/update[/]',HomeAction::class)->add(AuthMiddleware::class);
+    $app->post('/panier/update[/]',UpdatePanierAction::class)->add(AuthMiddleware::class);
 
     $app->post('/panier/payer[/]', PostPayerCommandeAction::class)->add(AuthMiddleware::class);
 
