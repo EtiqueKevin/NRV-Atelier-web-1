@@ -1,3 +1,9 @@
+function storeData(accessToken, refreshToken, role) {
+    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('role', role);
+}
+
 function storeTokens(accessToken, refreshToken) {
     localStorage.setItem('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
@@ -16,4 +22,4 @@ function wipeTokens(){
     localStorage.removeItem('refreshToken');
 }
 
-export { storeTokens, getAccessToken, getRefreshToken, wipeTokens };
+export { storeData, getAccessToken, getRefreshToken, wipeTokens, storeTokens };

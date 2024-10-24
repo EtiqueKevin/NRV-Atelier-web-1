@@ -2,6 +2,7 @@ import {loadData} from "./loader.js";
 import { apiUrl } from "./data.js";
 
 let lieux = [];
+let styles = [];
 
 export async function getSpectacles() {
     const data = await loadData('/spectacles');
@@ -78,6 +79,15 @@ export async function getLieux() {
     });
 }
 
+export async function getStyles() {
+    if (styles.length > 0) {
+        return styles;
+    }
+
+    const data = await loadData('/styles');
+    return data.styles;
+}
+
 export async function searchSpectacles(date, style, lieu){
     let query = "";
     if (date) {
@@ -103,4 +113,13 @@ export async function searchSpectacles(date, style, lieu){
             image: spectacle.imgs && spectacle.imgs.length > 0 ? spectacle.imgs.map(img => apiUrl + img) : null
         };
     });
+}
+
+export async function getReservations(id) {
+    const data = await loadData(`/backoffice/soirees/${id}`);
+
+    return {
+        reserver : data.placeSoiree.nbPlaceReserve,
+        total : data.placeSoiree.nbPlacett
+    }
 }

@@ -1,0 +1,26 @@
+@use 'config' as *;
+
+%alert {
+    position:fixed; 
+    z-index: 100;
+    top:10px; 
+    right: 10px; 
+    padding:10px; 
+    border-radius:5px;
+    transition: all 0.5s;
+}
+
+.alert-ok {
+    @extend %alert;
+    background-color: $success-bg-color;
+}
+
+.alert-error {
+    @extend %alert;
+    background-color: $error-bg-color;
+}
+
+.alert-warning {
+    @extend %alert;
+    background-color: $warning-bg-color;
+}

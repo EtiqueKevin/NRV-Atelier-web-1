@@ -9,17 +9,18 @@ export function displayHome() {
     eventHandler.handleHomeSpectacleButton();
 }
 
-export function displaySpectacleList(data, lieux) {
+export function displaySpectacleList(data, lieux, styles) {
     const template = Handlebars.compile(templates.listeSpectacleTemplate);
-    const html = template({ spectacles: data, lieu: lieux });
+    const html = template({ spectacles: data, lieu: lieux, styles: styles });
     document.getElementById('main-content').innerHTML = html;
     eventHandler.handleSpectacleList();
     eventHandler.handleSearchForm();
 }
 
-export function displaySoiree(data, connected) {
+export function displaySoiree(data, connected, backOffice) {
+    console.log(backOffice);
     const template = Handlebars.compile(templates.soireeTemplate);
-    const html = template({ soiree: data, connected: connected });
+    const html = template({ soiree: data, connected: connected, backoffice: backOffice});
     document.getElementById('main-content').innerHTML = html;
     eventHandler.handleSoiree();
 }
@@ -52,6 +53,7 @@ export function displayPanier(data) {
     modal.innerHTML = html;
 
     eventHandler.handleModal();
+    eventHandler.handlePanier();
 
     modal.style.display = 'block';
 }
@@ -73,4 +75,14 @@ export function displayBillet(data) {
     eventHandler.handleBillet();
 
     modal.style.display = 'block';
+}
+
+export function displayPaiement(){
+    const template = Handlebars.compile(templates.payerTemplate);
+    const html = template();
+    document.getElementById('main-content').innerHTML = html;
+    eventHandler.handlePaiement();
+
+    const modal = document.getElementById('myModal');
+    modal.style.display = 'none';
 }

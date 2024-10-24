@@ -1,5 +1,6 @@
 import { apiUrl } from "./data.js";
 import * as jwt from './jwt.js';
+import * as alert from './alert.js';
 
 async function refreshAccessToken() {
     const refreshToken = jwt.getRefreshToken();
@@ -16,8 +17,8 @@ async function refreshAccessToken() {
 
     if (response.ok) {
         const data = await response.json();
-        jwt.storeTokens(data.accessToken, refreshToken);
-        return data.accessToken;
+        jwt.storeTokens(data.atoken, refreshToken);
+        return data.atoken;
     } else {
         throw new Error('Failed to refresh token');
     }
@@ -37,7 +38,7 @@ async function connexionRequest(email, password) {
     }
 
     const data = await response.json();
-    jwt.storeTokens(data.atoken, data.rtoken);
+    jwt.storeData(data.atoken, data.rtoken, data.role);
     return data;
 };
 
@@ -67,7 +68,6 @@ async function inscriptionRequest(email, password, password2, nom, prenom) {
     return data.ok;
     
 };
-
 async function loadData(url) {
     try {
         let accessToken = jwt.getAccessToken();
@@ -83,17 +83,28 @@ async function loadData(url) {
         });
 
         if (!response.ok) {
-            if (response.status === 401 && accessToken) {
-                accessToken = await refreshAccessToken();
-                return await loadData(url);
+            if (response.status === 401) {
+                let accessToken = await refreshAccessToken();
+                headers['Authorization'] = `Bearer ${accessToken}`;
+                const newResponse = await fetch(apiUrl + url, {
+                    mode: 'cors',
+                    headers: headers,
+                });
+
+                if (!newResponse.ok) {
+                    throw new Error(`HTTP error, status: ${newResponse.status}, message: ${newResponse.statusText}`);
+                }
+                let data = await newResponse.json();
+                return data;
             }
             throw new Error(`HTTP error, status: ${response.status}, message: ${response.statusText}`);
         }
+
         return await response.json();
     } catch (error) {
-        console.error(error);
+        alert.showAlert('Erreur lors du chargement des données: ' + error.message, 'error');
     }
-};
+}
 
 async function postData(url, body) {
     try {
@@ -122,7 +133,7 @@ async function postData(url, body) {
         }
         return await response.json();
     } catch (error) {
-        console.error(error);
+        alert.showAlert('Erreur lors de l\'envoi des données: ' + error.message, 'error');
     }
 }
 
