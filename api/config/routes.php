@@ -36,63 +36,92 @@ return function( App $app): App {
             return $rs;
         });
 
-    $app->get('/', HomeAction::class);
+    $app->get('/', HomeAction::class)->setName('home');
 
     // spectacle
 
-    $app->get('/spectacles[/]', GetSpectaclesAction::class);
+    $app->get('/spectacles[/]', GetSpectaclesAction::class)
+        ->setName('get_spectacles');
 
-    $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
+    $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class)
+        ->setName('get_spectacle_by_id');
 
-    $app->put('/spectacle[/]',PutSpectacleAction::class);
+    $app->put('/spectacle[/]',PutSpectacleAction::class)
+        ->setName('put_spectacle');;
+
 
     // artiste
 
-    $app->get('/artiste/{ID-ARTISTE}[/]',GetArtisteByIdAction::class);
+    $app->get('/artiste/{ID-ARTISTE}[/]', GetArtisteByIdAction::class)
+        ->setName('get_artiste_by_id');
 
     // soiree
 
-    $app->get('/soirees/{ID-SOIREE}[/]', GetSoireeByIdAction::class);
+    $app->get('/soirees/{ID-SOIREE}[/]', GetSoireeByIdAction::class)
+        ->setName('get_soiree_by_id');
 
-    $app->put('/soiree[/]', PutSoireeAction::class);
+    $app->put('/soiree[/]', PutSoireeAction::class)
+        ->setName('put_soiree');
 
     //lieux
 
-    $app->get('/lieux[/]', GetLieuxAction::class);
+    $app->get('/lieux[/]', GetLieuxAction::class)
+        ->setName('get_lieux');
 
     //styles
 
-    $app->get('/styles[/]', GetStylesAction::class);
+    $app->get('/styles[/]', GetStylesAction::class)
+        ->setName('get_styles');
 
     // utilisateur
 
-    $app->get('/utilisateur/signin[/]', SignInAction::class);
+    $app->get('/utilisateur/signin[/]', SignInAction::class)
+        ->setName('sign_in');
 
-    $app->post('/utilisateur/signup[/]', SignUpAction::class);
+    $app->post('/utilisateur/signup[/]', SignUpAction::class)
+        ->setName('sign_up');
 
-    $app->get('/utilisateur/refresh[/]',RefreshAction::class)->add(AuthMiddleware::class);
+    $app->get('/utilisateur/refresh[/]', RefreshAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('refresh_token');
 
     // billet
 
-    $app->get('/utilisateur/billets[/]', GetBilletsByIdUtilisateur::class)->add(AuthMiddleware::class);
+    $app->get('/utilisateur/billets[/]', GetBilletsByIdUtilisateur::class)
+        ->add(AuthMiddleware::class)
+        ->setName('get_billets_by_user');
 
-    $app->get('/utilisateur/billet/{ID-BILLET}', GetBilletsById::class)->add(AuthMiddleware::class);
+    $app->get('/utilisateur/billet/{ID-BILLET}', GetBilletsById::class)
+        ->add(AuthMiddleware::class)
+        ->setName('get_billet_by_id');
 
     //panier
 
-    $app->get('/panier[/]', GetPanierAction::class)->add(AuthMiddleware::class);
+    $app->get('/panier[/]', GetPanierAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('get_panier');
 
-    $app->post('/panier[/]', AddPanierAction::class)->add(AuthMiddleware::class);
+    $app->post('/panier[/]', AddPanierAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('add_to_panier');
 
-    $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
+    $app->post('/panier/valider[/]', ValiderPanierAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('validate_panier');
 
-    $app->post('/panier/update[/]',UpdatePanierAction::class)->add(AuthMiddleware::class);
+    $app->post('/panier/update[/]', UpdatePanierAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('update_panier');
 
-    $app->post('/panier/payer[/]', PostPayerCommandeAction::class)->add(AuthMiddleware::class);
+    $app->post('/panier/payer[/]', PostPayerCommandeAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('pay_order');
 
     // backoffice
 
-    $app->get('/backoffice/soirees/{ID-SOIREE}[/]',GetSoireeByIdBackofficeAction::class)->add(AuthMiddleware::class);
+    $app->get('/backoffice/soirees/{ID-SOIREE}[/]', GetSoireeByIdBackofficeAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('get_backoffice_soiree_by_id');
 
     return $app;
 };
