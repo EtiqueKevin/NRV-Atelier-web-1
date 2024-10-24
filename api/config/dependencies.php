@@ -31,6 +31,11 @@ use nrv\core\services\utilisateur\UtilisateurService;
 use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 use nrv\infrastructure\repositories\PDOSoireeRepository;
 use nrv\infrastructure\repositories\PDOUtilisateurRepository;
+use nrv\application\middlewares\AuthorisationBackMiddleware;
+use nrv\application\middlewares\AuthorisationLambdaMiddleware;
+use nrv\core\services\authorization\AuthorizationService;
+use nrv\core\services\authorization\AuthorizationServiceInterface;
+use nrv\core\services\authorization\AuthzUtilisateurServiceInterface;
 use Psr\Container\ContainerInterface;
 
 

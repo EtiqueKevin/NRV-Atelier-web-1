@@ -10,7 +10,7 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Routing\RouteContext;
 use nrv\core\services\authorization\AuthzUtilisateurServiceInterface;
 
-class AuthorisationBackMiddleware{
+class AuthorizationLambdaMiddleware{
 
     protected AuthzUtilisateurServiceInterface $authServInter;
 
@@ -25,7 +25,7 @@ class AuthorisationBackMiddleware{
         $user_id = $rq->getAttribute('user_id'); // ou getArgument
         $operation = $route->getArgument('operation');
 
-        if($this->authServInter->isGranted($user_id, $operation) == 2){
+        if($this->authServInter->isGranted($user_id, $operation) == 1){
             return $next->handle($rq);
         }else{
             throw new HttpForbiddenException($rq, 'Vous n\'avez pas les droits pour effectuer cette action');
