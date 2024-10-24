@@ -22,60 +22,90 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     }
 
     //getSpectacles
-    public function getAllSpectacles(): array{
+    public function getAllSpectacles(int $page): array {
         try {
-            $stmt = $this->pdo->prepare('SELECT * FROM spectacles');
+            $offset = ($page - 1) * 12;
+            
+            // Utilisation de la substitution de variable pour OFFSET
+            $stmt = $this->pdo->prepare('SELECT * FROM spectacles LIMIT 10 OFFSET :offset');
+            
+            // Cast explicite de l'offset en entier
+            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
             $stmt->execute();
+    
             $spectacles = $stmt->fetchAll();
-            if( !$spectacles){
-                throw new RepositoryEntityNotFoundException('pas de spectacle');
+            
+            if (!$spectacles) {
+                throw new RepositoryEntityNotFoundException('Pas de spectacle');
             }
+    
             $specTab = [];
-            foreach ($spectacles as $spe){
+            foreach ($spectacles as $spe) {
                 $specEntity = $this->getSpectacleById($spe['id']);
-                $specTab[]=$specEntity;
+                $specTab[] = $specEntity;
             }
+    
             return $specTab;
-
-        }catch (\Exception $e){
-            throw new RepositoryException('erreur lors du chargement de la collection AllSpectacle : '. $e->getMessage());
+    
+        } catch (\Exception $e) {
+            throw new RepositoryException('Erreur lors du chargement de la collection AllSpectacle : ' . $e->getMessage());
         }
     }
-
-    public function getSpectacles( array $date, array $style,array $lieu): array{
-        //le 1=1 c'est pour que je puisse mettre AND au début de chaque condition
-        $sql = 'SELECT * FROM spectacles inner join soirees_spectacles on spectacles.id = id_spectacle inner join soirees on id_soiree = soirees.id  WHERE 1=1 ';
+    public function getSpectacles(array $date, array $style, array $lieu, int $page): array {
+        $sql = 'SELECT * FROM spectacles 
+                INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 
+                INNER JOIN soirees ON id_soiree = soirees.id 
+                WHERE 1=1 ';
+        
         $params = [];
-        if(!empty($date)){
+        
+        if (!empty($date)) {
             $placeholders = implode(',', array_fill(0, count($date), '?'));
             $sql .= "AND date IN (" . $placeholders . ")";
             $params = array_merge($params, $date);
         }
-        if(!empty($style)){
+        
+        if (!empty($style)) {
             $placeholders = implode(',', array_fill(0, count($style), '?'));
             $sql .= "AND thematique IN (" . $placeholders . ")";
             $params = array_merge($params, $style);
         }
-        if(!empty($lieu)){
+        
+        if (!empty($lieu)) {
             $placeholders = implode(',', array_fill(0, count($lieu), '?'));
             $sql .= "AND id_lieu IN (" . $placeholders . ")";
             $params = array_merge($params, $lieu);
         }
-
+        
+        // Calcul de l'offset
+        $offset = ($page - 1) * 12; // 10 spectacles par page
+        $sql .= " LIMIT 10 OFFSET ?"; // Ajout du LIMIT et OFFSET
+        
+        // Préparation de la requête
         $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
+        
+        // Ajoutez l'offset aux paramètres
+        $params[] = $offset; // Ajouter l'offset aux paramètres positionnels
+        
+        // Exécution avec les autres paramètres
+        $stmt->execute($params); // Executez maintenant avec tous les paramètres
+    
         $spectacles = $stmt->fetchAll();
         $specTab = [];
-        try{
-            foreach ($spectacles as $spe){
+        
+        try {
+            foreach ($spectacles as $spe) {
                 $specEntity = $this->getSpectacleById($spe['id_spectacle']);
-                $specTab[]=$specEntity;
+                $specTab[] = $specEntity;
             }
-        }catch (\Exception $e){
-            throw new RepositoryException('erreur lors du get des spectacles avec filtres : '. $e->getMessage());
+        } catch (\Exception $e) {
+            throw new RepositoryException('erreur lors du get des spectacles avec filtres : ' . $e->getMessage());
         }
+        
         return $specTab;
     }
+    
+        
 
     public function getSpectacleById(string $id) : Spectacle{
         try{

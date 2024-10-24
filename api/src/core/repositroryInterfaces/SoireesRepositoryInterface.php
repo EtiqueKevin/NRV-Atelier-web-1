@@ -9,7 +9,7 @@ use nrv\core\domain\entities\spectacle\Spectacle;
 
 interface SoireesRepositoryInterface{
 
-    public function getAllSpectacles(): array;
+    public function getAllSpectacles(int $page): array;
 
     public function getSpectacleByIdSoiree(string $idSoiree): array;
 
@@ -33,7 +33,7 @@ interface SoireesRepositoryInterface{
 
     public function getNbPlaceByIdSoiee(string $idSoiee): int;
 
-    public function getSpectacles(array $date,array $style,array $lieu): array;
+    public function getSpectacles(array $date,array $style,array $lieu, int $page): array;
 
     public function getStyles(): array;
 }

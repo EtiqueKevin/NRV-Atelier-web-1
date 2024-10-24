@@ -13,9 +13,9 @@ class SpectacleService implements SpectacleServiceInterface{
         $this->soireeRepository = $soireeRepository;
     }
 
-    public function getAllSpectacles(): array{
+    public function getAllSpectacles(int $page): array{
         try {
-            $spectacles = $this->soireeRepository->getAllSpectacles();
+            $spectacles = $this->soireeRepository->getAllSpectacles($page);
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
@@ -27,9 +27,9 @@ class SpectacleService implements SpectacleServiceInterface{
     }
 
 
-    public function getSpectacles(array $date,array $style,array $lieu): array{
+    public function getSpectacles(array $date,array $style,array $lieu, int $page): array{
         try {
-            $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu);
+            $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu, $page);
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);

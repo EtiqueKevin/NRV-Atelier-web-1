@@ -22,11 +22,12 @@ class GetSpectaclesAction extends AbstractAction
     {
 
         $params = $rq->getQueryParams();
+        $page = (int)($params['page'] ?? 1);  // Toujours s'assurer que la page est un entier
 
+        $dates = [];
+        $styles = [];
+        $lieux = [];
         if (!empty($params)) {
-            $dates = [];
-            $styles = [];
-            $lieux = [];
             if (isset($params['dates'])) {
                 $dates = explode(";" ,$params['dates']);
                 foreach ($dates as $d) {
@@ -46,7 +47,9 @@ class GetSpectaclesAction extends AbstractAction
             }
 
             try {
-                $spectacles = $this->spectacleService->getSpectacles($dates, $styles, $lieux);
+                // On récupère les spectacles avec pagination
+                $spectacles = $this->spectacleService->getSpectacles($dates, $styles, $lieux, $page);
+
                 $spectaclesWithHref = array_map(function($spectacle) {
                     return [
                         'spectacle' => $spectacle,
@@ -61,13 +64,15 @@ class GetSpectaclesAction extends AbstractAction
                     'type' => 'collection',
                     'spectacles' => $spectaclesWithHref,
                 ];
-            }catch (\Exception $e){
+
+            } catch (\Exception $e) {
                 throw new HttpBadRequestException($rq, $e->getMessage());
             }
 
         } else {
             try {
-                $spectacles = $this->spectacleService->getAllSpectacles();
+                // Récupérer les spectacles avec pagination sans filtres
+                $spectacles = $this->spectacleService->getAllSpectacles($page);
                 $spectaclesWithHref = array_map(function($spectacle) {
                     return [
                         'spectacle' => $spectacle,
@@ -82,13 +87,25 @@ class GetSpectaclesAction extends AbstractAction
                     'type' => 'collection',
                     'spectacles' => $spectaclesWithHref,
                 ];
-            }catch (\Exception $e){
+            } catch (\Exception $e) {
                 throw new HttpBadRequestException($rq, $e->getMessage());
             }
         }
 
+        // Ajouter des liens vers la page suivante et la page précédente
+        $res['links'] = [];
+        if ($page > 1) {
+            $res['links']['previous'] = [
+                'href' => '/spectacles?page=' . ($page - 1)
+            ];
+        }
 
-
+        // Vérifier s'il y a encore une page suivante (seulement s'il y a exactement 10 résultats)
+        if (count($spectacles) == 12) {
+            $res['links']['next'] = [
+                'href' => '/spectacles?page=' . ($page + 1)
+            ];
+        }
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');

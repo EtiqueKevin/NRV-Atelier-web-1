@@ -7,9 +7,9 @@ use nrv\core\dto\spectacle\SpectacleDTO;
 
 interface SpectacleServiceInterface
 {
-    public function getAllSpectacles(): array;
+    public function getAllSpectacles(int $page): array;
 
-    public function getSpectacles(array $date,array $style,array $lieu): array;
+    public function getSpectacles(array $date,array $style,array $lieu, int $page): array;
 
     public function getSpectacleById(string $id): SpectacleDTO;
 
