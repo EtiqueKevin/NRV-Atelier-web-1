@@ -3,6 +3,7 @@
 namespace nrv\core\services\Panier;
 
 use nrv\core\dto\Panier\PanierDTO;
+use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 
@@ -44,23 +45,28 @@ class PanierService implements PanierServiceInterface
     {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
-            $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
-            $update = false; //booléen pour savoir si l'item est déjà dans le panier et si ça fait une update
-            foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
-                if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) { //si la soiree et le type de tarif sont les mêmes ça veut dire que c'est déjà dans le panier
-                    $update = true; //on met à jour le booléen
-                    $panierItem->setQte($panierItem->qte + $qte); //on ajoute la quantité a la soiree deja existante
-                    if($this->verificationDisponibilite($panierItem->qte,$idSoiree)){ //on vérifie si la quantité est disponible
-                        $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+            if($panier->valide){
+                $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
+                $update = false; //booléen pour savoir si l'item est déjà dans le panier et si ça fait une update
+                foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
+                    if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) { //si la soiree et le type de tarif sont les mêmes ça veut dire que c'est déjà dans le panier
+                        $update = true; //on met à jour le booléen
+                        $panierItem->setQte($panierItem->qte + $qte); //on ajoute la quantité a la soiree deja existante
+                        if($this->verificationDisponibilite($panierItem->qte,$idSoiree)){ //on vérifie si la quantité est disponible
+                            $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+                        }
                     }
                 }
-            }
-            if(!$update){ //si l'item n'est pas dans le panier
-                if($this->verificationDisponibilite($qte,$idSoiree)) { //on vérifie si la quantité est disponible
-                    $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif, $typeTarif, $qte); //on ajoute l'item au panier
+                if(!$update){ //si l'item n'est pas dans le panier
+                    if($this->verificationDisponibilite($qte,$idSoiree)) { //on vérifie si la quantité est disponible
+                        $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif, $typeTarif, $qte); //on ajoute l'item au panier
+                    }
                 }
+                $retour = $this->getPanier($idUser); //on retourne le panier
+            }else{
+                throw new PanierException('erreur panier déjà valider');
             }
-            $retour = $this->getPanier($idUser); //on retourne le panier
+
         }catch (\Exception $e){
             throw new PanierException($e->getMessage());
         }
@@ -70,16 +76,21 @@ class PanierService implements PanierServiceInterface
     public function modifierPanier(string $idUser, string $idSoiree, string $typeTarif, int $qte) : PanierDTO {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
-            $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
-            foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
-                if ($panierItem->idSoiree == $idSoiree) { //si la soiree est la même
-                    $panierItem->setQte($qte); //on met à jour la quantité
-                    if($this->verificationDisponibilite($panierItem->qte,$idSoiree)){ //on vérifie si la quantité est disponible
-                        $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+            if($panier->valide) {
+                $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
+                foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
+                    if ($panierItem->idSoiree == $idSoiree) { //si la soiree est la même
+                        $panierItem->setQte($qte); //on met à jour la quantité
+                        if ($this->verificationDisponibilite($panierItem->qte, $idSoiree)) { //on vérifie si la quantité est disponible
+                            $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+                        }
                     }
                 }
+
+                $retour = $this->getPanier($idUser); //on retourne le panier
+            }else{
+                throw new PanierException('erreur panier déjà valider');
             }
-            $retour = $this->getPanier($idUser); //on retourne le panier
         }catch (\Exception $e){
             throw new PanierException($e->getMessage());
         }
