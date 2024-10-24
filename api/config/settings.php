@@ -19,22 +19,29 @@ return  [
         return $log;
     },
 
+    'SECRET_KEY' => getenv('JWT_SECRET_KEY'),
+    'DRIVER' => getenv('DRIVER'),
+    'HOST' => getenv('HOST'),
+    'PORT' => getenv('PORT'),
+    'DATABASEUSER' => getenv('DATABASEUSER'),
+    'DATABASESOIRREES' => getenv('DATABASESOIREES'),
+    'USERNAME' => getenv('USERNAME'),
+    'PASSWORD' => getenv('PASSWORD'),
+
     'soirees.pdo' => function( ContainerInterface $c) {
-        $config = parse_ini_file('iniconf/soirees.ini');
-        $dsn = "{$config['driver']}:host={$config['host']};port={$config['port']};dbname={$config['database']};";
-        $user = $config['username'];
-        $password = $config['password'];
+        $dsn = getenv('DRIVER') . ":host=" . getenv('HOST') . ";port=" . getenv('PORT') . ";dbname=" . getenv('DATABASESOIREES') . ";";
+        $user = getenv('USERNAME');
+        $password = getenv('PASSWORD');
         return new \PDO($dsn, $user, $password, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     },
 
     'utilisateurs.pdo' => function( ContainerInterface $c) {
-        $config = parse_ini_file('iniconf/utilisateurs.ini');
-        $dsn = "{$config['driver']}:host={$config['host']};port={$config['port']};dbname={$config['database']};";
-        $user = $config['username'];
-        $password = $config['password'];
+        $dsn = getenv('DRIVER') . ":host=" . getenv('HOST') . ";port=" . getenv('PORT') . ";dbname=" . getenv('DATABASEUSER') . ";";
+        $user = getenv('USERNAME');
+        $password = getenv('PASSWORD');
         return new \PDO($dsn, $user, $password, [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]);
     },
 
-    'SECRET_KEY' => getenv('JWT_SECRET_KEY'),
+    
 
     ];

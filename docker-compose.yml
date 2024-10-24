@@ -26,7 +26,6 @@ services:
 
   app.nrv:
     image: ubuntu/apache2:latest
-    env_file: ./env/app.nrv.env
     ports:
       - '35611:80'
     volumes:

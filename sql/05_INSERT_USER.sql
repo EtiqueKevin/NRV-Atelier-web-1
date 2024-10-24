@@ -39,11 +39,11 @@ INSERT INTO paniers_utilisateurs (id_utilisateur,id_panier,valide) VALUES
 ('68a2a594-2d3b-4737-8de9-188fdcc8d5b7','7881a0f9-4d40-428e-99e7-eb8081cf7a84',FALSE),
 ('ea42019b-8a6e-420a-a743-4063e176694f','9c3deb2d-1e3c-49f4-bc17-c0c81e3b1aee',FALSE);
 
-INSERT INTO paniers (id_panier, id_soiree, tarif, quantite) VALUES
-('300ab149-3ee7-446a-bbe1-c86e2c961398','b7b2e51e-5d34-4a83-b16c-33f8122de220',28.00,3),
-('7881a0f9-4d40-428e-99e7-eb8081cf7a84','dcaa5019-76eb-4424-9c91-d8720f6b89cc',18.00,10),
-('9c3deb2d-1e3c-49f4-bc17-c0c81e3b1aee','4f9d8891-bb95-4a3a-8c91-1600f74c3621',25.00,1),
-('300ab149-3ee7-446a-bbe1-c86e2c961398','e46d5253-4d5d-4a6b-94c0-fc84217dc42d',12.00,20);
+INSERT INTO paniers (id_panier, id_soiree, tarif, quantite, categorie_tarif) VALUES
+('300ab149-3ee7-446a-bbe1-c86e2c961398','b7b2e51e-5d34-4a83-b16c-33f8122de220',28.00,3,'N'),
+('7881a0f9-4d40-428e-99e7-eb8081cf7a84','dcaa5019-76eb-4424-9c91-d8720f6b89cc',18.00,10,'R'),
+('9c3deb2d-1e3c-49f4-bc17-c0c81e3b1aee','4f9d8891-bb95-4a3a-8c91-1600f74c3621',25.00,1,'N'),
+('300ab149-3ee7-446a-bbe1-c86e2c961398','e46d5253-4d5d-4a6b-94c0-fc84217dc42d',12.00,20,'R');
 
 
 -- CREATE TABLE billets (

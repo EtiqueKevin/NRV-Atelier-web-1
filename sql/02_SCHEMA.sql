@@ -85,6 +85,7 @@ CREATE TABLE paniers (
     tarif numeric NOT NULL,
     quantite integer DEFAULT 1 NOT NULL,
     tarif_total numeric DEFAULT 0 NOT NULL,
+    categorie_tarif text NOT NULL,
     FOREIGN KEY (id_panier) REFERENCES paniers_utilisateurs(id_panier)
 );
 
