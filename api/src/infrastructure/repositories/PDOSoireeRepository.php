@@ -289,4 +289,30 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             throw new RepositoryException('erreur lors du chargement des styles : '. $e->getMessage());
         }
     }
+
+    public function getIdLieuByIdSoiree(string $idSoiee): string{
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM soirees WHERE id = ?');
+            $stmt->bindParam(1, $idSoiee, \PDO::PARAM_STR);
+            $stmt->execute();
+            $soireeRes = $stmt->fetch();
+            if(!$soireeRes){
+                throw new RepositoryEntityNotFoundException('getNbPlaceByIdSoiee : pas place trouvé pour spectacle : ' . $idSoiee );
+            }
+        }catch (\Exception $e){
+            throw new RepositoryException('getIdLieuByIdSoiree : erreur lors du chargement des lieux : '. $e->getMessage() );
+        }
+        return $soireeRes->id_lieu;
+    }
+
+    public function getNbPlaceByIdSoiee(string $idSoiee): int{
+        try {
+            $idLieu = $this->getIdLieuByIdSoiree($idSoiee);
+            $lieuEntity = $this->getLieuById($idLieu);
+            $nbPlacett = $lieuEntity->places_assise + $lieuEntity->places_debout;
+            return $nbPlacett;
+        }catch (\Exception $e){
+            throw new RepositoryException('getNbPlaceByIdSoiee : erreur lors du chargement des places lieu : '. $e->getMessage() );
+        }
+    }
 }

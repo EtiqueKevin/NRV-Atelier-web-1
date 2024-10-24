@@ -218,4 +218,17 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         $billetEntity->setID($billet['id']);
         return $billetEntity;
     }
+
+    public function getNbBilletByIdSoiree(string $id): int{
+        try {
+            $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM billets WHERE id_utilisateur = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+
+        } catch (\Exception $e) {
+            throw new RepositoryException('getNbBilletByIdSoiree : erreur lors du chargement du biller : id soiree : '. $id ." " . $e->getMessage());
+        }
+        $nb = $stmt->fetch();
+        return $nb;
+    }
 }

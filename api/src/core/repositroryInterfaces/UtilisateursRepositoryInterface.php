@@ -32,4 +32,6 @@ interface UtilisateursRepositoryInterface{
     public function getBilletsByIdUtilisateur(string $id):array;
 
     public function ajouterPanierUtilisateur(string $id);
+
+    public function getNbBilletByIdSoiree(string $id): int;
 }

@@ -11,4 +11,6 @@ interface PanierServiceInterface
     public function validerPanier(string $idUser);
 
     public function verifier(string $numero, string $dateExpiration, string $code) : bool;
+
+    public function verificationDisponibilite(int $qte, string $idSoiree):bool;
 }

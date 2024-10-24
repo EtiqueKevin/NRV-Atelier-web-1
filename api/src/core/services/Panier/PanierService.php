@@ -94,4 +94,25 @@ class PanierService implements PanierServiceInterface
 
         return true;
     }
+
+    public function verificationDisponibilite(int $qte, string $idSoiree):bool{
+        try {
+            $nbPlacett = $this->SoireesRepository->getNbPlaceByIdSoiee($idSoiree);
+            $nbBillettt = $this->UtilisateursRepository->getNbBilletByIdSoiree($idSoiree);
+        }catch (\Exception){
+            throw new PanierException('erreur lors du chargement des places');
+        }
+
+        $nbPlacesRestantes = $nbPlacett - $nbBillettt;
+
+        if(($qte < 0) || ($qte > $nbPlacett)){
+            throw new PanierException('nombre de place incorrect : '.$qte . ' nombre de place total : '.$nbPlacett);
+        }
+
+        if($qte > $nbPlacesRestantes){
+            throw new PanierException('nombre de place incorrect : '.$qte. ' pas assez de place disponible : '.$nbPlacesRestantes);
+        }
+
+        return true;
+    }
 }
