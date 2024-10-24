@@ -3,7 +3,7 @@
 namespace nrv\core\dto\soiree;
 
 use DateTime;
-use nrv\core\domain\entities\soiree\Lieu;
+use nrv\core\domain\entities\lieu\Lieu;
 use nrv\core\dto\DTO;
 
 class SoireeDTO extends DTO{

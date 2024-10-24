@@ -4,7 +4,7 @@ namespace nrv\core\repositroryInterfaces;
 
 use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\Panier\PanierItem;
-use nrv\core\domain\entities\soiree\Lieu;
+use nrv\core\domain\entities\lieu\Lieu;
 use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\domain\entities\utilisateur\Utilisateur;
 use nrv\core\dto\utilisateur\UtilisateurInputCreationSaveDTO;

@@ -5,7 +5,7 @@ namespace nrv\core\domain\entities\billet;
 use DateTime;
 use nrv\core\domain\entities\Entity;
 use nrv\core\dto\billet\BilletDTO;
-use nrv\core\dto\soiree\LieuDTO;
+use nrv\core\dto\lieu\LieuDTO;
 use Respect\Validation\Rules\Date;
 
 class Billet extends Entity{

@@ -4,7 +4,7 @@ namespace nrv\infrastructure\repositories;
 
 use DateTime;
 use nrv\core\domain\entities\artiste\Artiste;
-use nrv\core\domain\entities\soiree\Lieu;
+use nrv\core\domain\entities\lieu\Lieu;
 use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\domain\entities\spectacle\Spectacle;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;

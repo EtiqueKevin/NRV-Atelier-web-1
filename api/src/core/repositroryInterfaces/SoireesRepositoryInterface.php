@@ -2,7 +2,7 @@
 
 namespace nrv\core\repositroryInterfaces;
 
-use nrv\core\domain\entities\soiree\Lieu;
+use nrv\core\domain\entities\lieu\Lieu;
 use nrv\core\domain\entities\soiree\Soiree;
 
 interface SoireesRepositoryInterface{
