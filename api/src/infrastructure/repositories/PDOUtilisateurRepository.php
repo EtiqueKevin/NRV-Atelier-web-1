@@ -126,8 +126,6 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
 
     public function updatePanier(PanierItem $panierItem) : void{
         try {
-
-            //$stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND tarif = ?');
             $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND categorie_tarif = ?');
             $qte = $panierItem->qte;
             $idPanier = $panierItem->idPanier;

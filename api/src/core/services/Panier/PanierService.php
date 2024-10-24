@@ -67,8 +67,23 @@ class PanierService implements PanierServiceInterface
         return $retour;
     }
 
-    public function modifierPanier(){
-
+    public function modifierPanier(string $idUser, string $idSoiree, string $typeTarif, int $qte) : PanierDTO {
+        try {
+            $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
+            $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
+            foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
+                if ($panierItem->idSoiree == $idSoiree) { //si la soiree est la même
+                    $panierItem->setQte($qte); //on met à jour la quantité
+                    if($this->verificationDisponibilite($panierItem->qte,$idSoiree)){ //on vérifie si la quantité est disponible
+                        $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+                    }
+                }
+            }
+            $retour = $this->getPanier($idUser); //on retourne le panier
+        }catch (\Exception $e){
+            throw new PanierException($e->getMessage());
+        }
+        return $retour;
     }
 
     public function validerPanier(string $idUser) : PanierDTO
