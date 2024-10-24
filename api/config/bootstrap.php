@@ -28,6 +28,9 @@ $errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler(
     function (Request $request, Throwable $exception, bool $displayErrorDetails, bool $logErrors, bool $logErrorDetails) {
         $statusCode = $exception->getCode();
+        if($statusCode === 0){
+            $statusCode = 500;
+        }
         $errorMessage = $exception->getMessage();
 
         $response = new SlimResponse();

@@ -2,6 +2,8 @@
 
 namespace nrv\core\services\soiree;
 
+use nrv\core\domain\entities\soiree\Soiree;
+use nrv\core\dto\soiree\SoireeCreerDTO;
 use nrv\core\dto\soiree\SoireeDetailBackofficeDTO;
 use nrv\core\dto\soiree\SoireeDetailDTO;
 use nrv\core\dto\soiree\SoireeDTO;
@@ -82,5 +84,21 @@ class SoireeService implements SoireeServiceInterface{
             throw new PanierException('gestionPlaceBackOffice : erreur lors du chargement des place : soiree : '. $idSoiree . " ".$e->getMessage());
         }
         return new SoireeDetailBackofficeDTO($nbPlacett,$nbPlaceReserve);
+    }
+
+    public function putSoiree(SoireeCreerDTO $soireeCreerDTO): void{
+        try{
+            $nom = $soireeCreerDTO->nom;
+            $thematique = $soireeCreerDTO->thematique;
+            $tarif_normal = $soireeCreerDTO->tarif_normal;
+            $tarif_reduit = $soireeCreerDTO->tarif_reduit;
+            $lieu = $this->soireeRepository->getLieuById($soireeCreerDTO->lieu);
+            $date = \DateTime::createFromFormat('Y-m-d', $soireeCreerDTO->date);
+
+            $soiree = new Soiree($nom, $thematique, $date, $lieu, $tarif_normal, $tarif_reduit);
+            $this->soireeRepository->saveSoiree($soiree);
+        }catch (\Exception $e){
+            throw new SoireeException("put soiree" . $e->getMessage());
+        }
     }
 }

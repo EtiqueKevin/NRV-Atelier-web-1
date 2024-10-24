@@ -2,6 +2,7 @@
 
 namespace nrv\infrastructure\repositories;
 
+use _PHPStan_c875e8309\Nette\Neon\Entity;
 use DateTime;
 use nrv\core\domain\entities\artiste\Artiste;
 use nrv\core\domain\entities\lieu\Lieu;
@@ -350,7 +351,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     public function saveSpectacle(Spectacle $spectacle): Spectacle{
         $titre = $spectacle->titre;
         $description = $spectacle->description;
-        $heure = $spectacle->heure;
+        $heure = $spectacle->heure->format('H:i:s');
         $url_video = $spectacle->url_video;
         $imgs = $spectacle->imgs;
 
@@ -363,15 +364,54 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $stmt->execute();
 
             $idSpec = $this->pdo->lastInsertId('id');
+            $this->liaisonImageSpectacle($imgs,$idSpec);
 
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion spectacle : '.$e->getMessage());
         }
 
+        $specEntity = new Spectacle($titre,$description,$heure,$url_video,$imgs);
+        $specEntity->setID($idSpec);
+        return $specEntity;
+    }
+
+    public function saveSoiree(Soiree $soiree): void
+    {
+        $nom = $soiree->nom;
+        $thematique = $soiree->thematique;
+        $date = $soiree->date->format('Y-m-d');
+        $lieu = $soiree->lieu->ID;
+        $tarif_normal = $soiree->tarif_normal;
+        $tarif_reduit = $soiree->tarif_reduit;
 
     }
 
-    public function saveSoiree(Soiree $soiree):Soiree{
+    public function liaisonImageSpectacle(array $imgs, string $idSpec):void{
+        try {
 
+            foreach ($imgs as $i){
+                $stmt = $this->pdo->prepare('INSERT INTO img_spectacles (id_spectacle , url_img) VALUES (?, ?)');
+                $stmt->bindParam(1, $idSpec, PDO::PARAM_STR);
+                $stmt->bindParam(2, $i, PDO::PARAM_STR);
+                $stmt->execute();
+            }
+
+        }catch (\Exception $e){
+            throw new UtilisateurException('erreur insertion image : '.$e->getMessage());
+        }
+
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO soirees (nom, thematique, date, id_lieu, tarif_normal, tarif_reduit) VALUES (?, ?, ?, ?, ?, ?)');
+            $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+            $stmt->bindParam(2, $thematique, PDO::PARAM_STR);
+            $stmt->bindParam(3, $date, PDO::PARAM_STR);
+            $stmt->bindParam(4, $lieu->id, PDO::PARAM_STR);
+            $stmt->bindParam(5, $tarif_normal, PDO::PARAM_STR);
+            $stmt->bindParam(6, $tarif_reduit, PDO::PARAM_STR);
+            $stmt->execute();
+
+        }catch (\Exception $e){
+            throw new UtilisateurException('erreur insertion soiree : '.$e->getMessage());
+        }
     }
 }
