@@ -10,6 +10,7 @@ use nrv\core\domain\entities\spectacle\Spectacle;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
+use nrv\core\services\utilisateur\UtilisateurException;
 use PDO;
 use PHPUnit\Exception;
 
@@ -344,5 +345,33 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }catch (\Exception $e){
             throw new RepositoryException('getNbPlaceByIdSoiee : erreur lors du chargement des places lieu : '. $e->getMessage() );
         }
+    }
+
+    public function saveSpectacle(Spectacle $spectacle): Spectacle{
+        $titre = $spectacle->titre;
+        $description = $spectacle->description;
+        $heure = $spectacle->heure;
+        $url_video = $spectacle->url_video;
+        $imgs = $spectacle->imgs;
+
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO spectacles (titre, description, heure,url_video) VALUES (?, ?, ?, ?)');
+            $stmt->bindParam(1, $titre, PDO::PARAM_STR);
+            $stmt->bindParam(2, $description, PDO::PARAM_STR);
+            $stmt->bindParam(3, $heure, PDO::PARAM_STR);
+            $stmt->bindParam(4, $url_video, PDO::PARAM_STR);
+            $stmt->execute();
+
+            $idSpec = $this->pdo->lastInsertId('id');
+
+        }catch (\Exception $e){
+            throw new UtilisateurException('erreur insertion spectacle : '.$e->getMessage());
+        }
+
+
+    }
+
+    public function saveSoiree(Soiree $soiree):Soiree{
+
     }
 }
