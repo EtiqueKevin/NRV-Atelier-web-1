@@ -12,15 +12,16 @@ class PanierItem extends Entity
     protected Soiree $soiree;
     protected string $idPanier;
     protected int $tarif;
-
+    protected string $typeTarif;
     protected int $tarifTotal;
     protected int $qte;
 
-    public function __construct(string $idSoiree, $idPanier, int $tarif, int $tarifTotal, int $qte)
+    public function __construct(string $idSoiree, $idPanier, int $tarif,string $typeTarif, int $tarifTotal, int $qte)
     {
         $this->idSoiree = $idSoiree;
         $this->idPanier = $idPanier;
         $this->tarif = $tarif;
+        $this->typeTarif = $typeTarif;
         $this->tarifTotal = $tarifTotal;
         $this->qte = $qte;
     }

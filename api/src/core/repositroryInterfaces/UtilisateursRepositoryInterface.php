@@ -17,7 +17,7 @@ interface UtilisateursRepositoryInterface{
 
     public function getPanierItems(string $idPanier) : array;
 
-    public function addPanier(string $idPanier,string $idSoiree,int $tarif,int $qte) : void;
+    public function addPanier(string $idPanier,string $idSoiree,int $tarif, string $typeTarif, int $qte) : void;
 
     public function updatePanier(PanierItem $panierItem) : void;
 

@@ -23,12 +23,16 @@ class PostPayerCommandeAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $idUser = $args['ID-USER'];
+        $idUser = $rq->getAttribute('UtiOutDTO')->id;
+        $numero = $rq->getParsedBody()['numero'];
+        $date = $rq->getParsedBody()['date'];
+        $code = $rq->getParsedBody()['code'];
+
         try {
-            $valide = $this->panierService->verifier();
+            $panierDTO = $this->panierService->getPanier($idUser);
+            $valide = $this->panierService->verifier($numero, $date, $code, $panierDTO);
 
             if ($valide) {
-                $panierDTO = $this->panierService->getPanier($idUser);
                 $billetDTO = $this->billetService->payerCommande($panierDTO);
             }
 

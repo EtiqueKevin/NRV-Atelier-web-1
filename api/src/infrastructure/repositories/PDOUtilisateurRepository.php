@@ -98,7 +98,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             }
 
             foreach ($panierItems as $panierItem) {
-                $panierItemEntity = new PanierItem($panierItem['id_soiree'], $panierItem['id_panier'], $panierItem['tarif'], $panierItem['tarif_total'], $panierItem['quantite']);
+                $panierItemEntity = new PanierItem($panierItem['id_soiree'], $panierItem['id_panier'], $panierItem['tarif'],$panierItem['categorie_tarif'], $panierItem['tarif_total'], $panierItem['quantite']);
                 $panierItemEntity->setID($panierItem['id']);
                 $panierItemsRes[] = $panierItemEntity;
             }
@@ -109,14 +109,15 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $panierItemsRes;
     }
 
-    public function addPanier(string $idPanier,string $idSoiree,int $tarif,int $qte) : void
+    public function addPanier(string $idPanier,string $idSoiree,int $tarif, string $typeTarif, int $qte) : void
     {
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO paniers (id_panier ,id_soiree, tarif, quantite) VALUES (?, ?, ?, ?)');
+            $stmt = $this->pdo->prepare('INSERT INTO paniers (id_panier ,id_soiree, tarif, categorie_tarif, quantite) VALUES (?, ?, ?, ?)');
             $stmt->bindParam(1, $idPanier);
             $stmt->bindParam(2, $idSoiree);
             $stmt->bindParam(3, $tarif);
-            $stmt->bindParam(4, $qte);
+            $stmt->bindParam(4, $typeTarif);
+            $stmt->bindParam(5, $qte);
             $stmt->execute();
         } catch (\Exception $e) {
             throw new RepositoryException('addPanier : erreur lors de l\'ajout au panier '. $idPanier ." " . $e->getMessage());
@@ -126,11 +127,11 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
     public function updatePanier(PanierItem $panierItem) : void
     {
         try {
-            $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND tarif = ?');
+            $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND categorie_tarif = ?');
             $qte = $panierItem->qte;
             $idPanier = $panierItem->idPanier;
             $idSoiree = $panierItem->idSoiree;
-            $tarif = $panierItem->tarif;
+            $tarif = $panierItem->typeTarif;
             $stmt->bindParam(1, $qte);
             $stmt->bindParam(2, $idPanier);
             $stmt->bindParam(3, $idSoiree);

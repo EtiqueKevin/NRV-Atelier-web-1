@@ -23,12 +23,13 @@ class AddPanierAction extends AbstractAction
         $params = $rq->getParsedBody();
         $idSoiree = $params['idSoiree'];
         $tarif = $params['tarif'];
+        $typeTarif = $params['typeTarif'];
         $qte = $params['qte'];
         $idUser = $rq->getAttribute('UtiOutDTO')->id;
 
 
         try {
-            $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $qte);
+            $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $typeTarif, $qte);
         }catch(\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }

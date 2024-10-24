@@ -5,6 +5,7 @@ namespace nrv\core\services\billet;
 use nrv\core\dto\billet\BilletDTO;
 use nrv\core\dto\billet\BilletInputDTO;
 use nrv\core\dto\billet\BilletOutputDTO;
+use nrv\core\dto\Panier\PanierDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 
@@ -40,5 +41,10 @@ class BilletService implements BilletServiceInterface{
 
         }
         return $billetEntity->toDTO();
+    }
+
+    public function payerCommande(PanierDTO $panierDTO) {
+        $billets = [];
+
     }
 }

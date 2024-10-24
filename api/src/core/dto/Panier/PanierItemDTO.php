@@ -14,6 +14,7 @@ class PanierItemDTO extends DTO
     protected string $idSoiree;
     protected Soiree $soiree;
     protected int $tarif;
+    protected string $typeTarif;
     protected int $qte;
     protected int $tarifTotal;
 
@@ -24,6 +25,7 @@ class PanierItemDTO extends DTO
         $this->soiree = $panierItem->soiree;
         $this->idPanier = $panierItem->idPanier;
         $this->tarif = $panierItem->tarif;
+        $this->typeTarif = $panierItem->typeTarif;
         $this->tarifTotal = $panierItem->tarifTotal;
         $this->qte = $panierItem->qte;
     }
@@ -36,6 +38,7 @@ class PanierItemDTO extends DTO
             'idSoiree' => $this->idSoiree,
             'soiree' => $this->soiree->toDTO(),
             'tarif' => $this->tarif,
+            'typeTarif' => $this->typeTarif,
             'tarifTotal' => $this->tarifTotal,
             'qte' => $this->qte
         ];

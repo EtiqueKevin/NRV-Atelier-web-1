@@ -40,14 +40,14 @@ class PanierService implements PanierServiceInterface
 
     }
 
-    public function addPanier(string $idUser,string $idSoiree,int $tarif,int $qte) :PanierDTO
+    public function addPanier(string $idUser,string $idSoiree,int $tarif, string $typeTarif, int $qte) :PanierDTO
     {
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser);
             $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
             $update = false;
             foreach ($panierItemsRes as $panierItem) {
-                if ($panierItem->idSoiree == $idSoiree && $panierItem->tarif == $tarif) {
+                if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) {
                     $update = true;
                     $panierItem->setQte($panierItem->qte + $qte);
                     $this->UtilisateursRepository->updatePanier($panierItem);
@@ -55,7 +55,7 @@ class PanierService implements PanierServiceInterface
             }
 
             if(!$update){
-                $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif, $qte);
+                $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif,$typeTarif, $qte);
             }
             $retour = $this->getPanier($idUser);
         }catch (\Exception $e){
@@ -74,7 +74,7 @@ class PanierService implements PanierServiceInterface
         }
     }
 
-    public function verifier(string $numero, string $dateExpiration, string $code) : bool
+    public function verifier(string $numero, string $dateExpiration, string $code, PanierDTO $panierDTO) : bool
     {
         $date = \DateTime::createFromFormat('m/Y', $dateExpiration);
         $dateActuellle = new \DateTime();
@@ -90,6 +90,15 @@ class PanierService implements PanierServiceInterface
 
         if(!preg_match('/^d{3}$/', $code) ){
             throw new PanierException('Code invalide');
+        }
+
+        try {
+
+            foreach ($panierDTO->panierItems as $panierItem) {
+                $this->verificationDisponibilite($panierItem->qte, $panierItem->idSoiree);
+            }
+        }catch (\Exception $e){
+            throw new PanierException($e->getMessage());
         }
 
         return true;
