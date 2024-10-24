@@ -10,7 +10,7 @@ use Slim\Exception\HttpForbiddenException;
 use Slim\Routing\RouteContext;
 use nrv\core\services\authorization\AuthzUtilisateurServiceInterface;
 
-class AuthorisationAdminMiddleware{
+class AuthorisationBackMiddleware{
 
     protected AuthzUtilisateurServiceInterface $authServInter;
 

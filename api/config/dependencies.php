@@ -74,6 +74,10 @@ return [
     return new BilletService($c->get(UtilisateursRepositoryInterface::class),$c->get(SoireesRepositoryInterface::class));
     },
 
+    AuthzUtilisateurServiceInterface::class => function (ContainerInterface $c) {
+        return new AuthorizationService($c->get(UtilisateursRepositoryInterface::class));
+    },
+
     // PROVIDERS
 
     AuthProviderInterface::class => function(ContainerInterface $c){
@@ -138,5 +142,13 @@ return [
 
     AuthMiddleware::class => function (ContainerInterface $c) {
         return new AuthMiddleware($c->get(AuthProviderInterface::class));
+    },
+
+    AuthorisationBackMiddleware::class => function (ContainerInterface $c) {
+        return new AuthorisationBackMiddleware($c->get(AuthzUtilisateurServiceInterface::class));
+    },
+
+    AuthorisationLambdaMiddleware::class => function (ContainerInterface $c) {
+        return new AuthorisationLambdaMiddleware($c->get(AuthzUtilisateurServiceInterface::class));
     },
 ];
