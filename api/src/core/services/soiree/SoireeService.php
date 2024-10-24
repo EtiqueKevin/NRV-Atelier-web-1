@@ -5,13 +5,17 @@ namespace nrv\core\services\soiree;
 use nrv\core\dto\soiree\SoireeDetailDTO;
 use nrv\core\dto\soiree\SoireeDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
+use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use nrv\core\services\spectacle\spectacleException;
 
 class SoireeService implements SoireeServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
-    public function __construct(SoireesRepositoryInterface $soireeRepository){
+    private UtilisateursRepositoryInterface $utilisateursRepository;
+
+    public function __construct(SoireesRepositoryInterface $soireeRepository, UtilisateursRepositoryInterface $utilisateursRepository){
         $this->soireeRepository = $soireeRepository;
+        $this->utilisateursRepository = $utilisateursRepository;
     }
 
     public function getSoireeById(string $id): SoireeDTO{
@@ -66,5 +70,9 @@ class SoireeService implements SoireeServiceInterface{
         } catch (\Exception $e) {
             throw new spectacleException($e->getMessage());
         }
+    }
+
+    public function getNbPlaceByIdSoiee(string $idSoiree){
+        $this->utilisateursRepository->getNbBilletByIdSoiree($idSoiree);
     }
 }

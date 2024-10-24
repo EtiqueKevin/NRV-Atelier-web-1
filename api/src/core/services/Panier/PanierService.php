@@ -43,21 +43,23 @@ class PanierService implements PanierServiceInterface
     public function addPanier(string $idUser,string $idSoiree,int $tarif, string $typeTarif, int $qte) :PanierDTO
     {
         try {
-            $panier = $this->UtilisateursRepository->getPanier($idUser);
-            $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
-            $update = false;
-            foreach ($panierItemsRes as $panierItem) {
-                if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) {
-                    $update = true;
-                    $panierItem->setQte($panierItem->qte + $qte);
-                    $this->UtilisateursRepository->updatePanier($panierItem);
+            if($this->verificationDisponibilite($qte,$idSoiree)){
+                $panier = $this->UtilisateursRepository->getPanier($idUser);
+                $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
+                $update = false;
+                foreach ($panierItemsRes as $panierItem) {
+                    if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == typeTarif) {
+                        $update = true;
+                        $panierItem->setQte($panierItem->qte + $qte);
+                        $this->UtilisateursRepository->updatePanier($panierItem);
+                    }
                 }
-            }
 
-            if(!$update){
-                $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $tarif,$typeTarif, $qte);
+                if(!$update){
+                    $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $typeTarif, $qte);
+                }
+                $retour = $this->getPanier($idUser);
             }
-            $retour = $this->getPanier($idUser);
         }catch (\Exception $e){
             throw new PanierException($e->getMessage());
         }

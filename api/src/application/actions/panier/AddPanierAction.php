@@ -3,7 +3,7 @@
 namespace nrv\application\actions\panier;
 
 use nrv\application\actions\AbstractAction;
-use nrv\core\services\panier\PanierServiceInterface;
+use nrv\core\services\Panier\PanierServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
