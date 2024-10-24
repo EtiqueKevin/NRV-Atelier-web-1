@@ -56,7 +56,7 @@ class PanierService implements PanierServiceInterface
                 }
 
                 if(!$update){
-                    $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree, $typeTarif, $qte);
+                    $this->UtilisateursRepository->addPanier($panier->idPanier, $idSoiree,$tarif, $typeTarif, $qte);
                 }
                 $retour = $this->getPanier($idUser);
             }
@@ -64,6 +64,10 @@ class PanierService implements PanierServiceInterface
             throw new PanierException($e->getMessage());
         }
         return $retour;
+    }
+
+    public function modifierPanier(){
+
     }
 
     public function validerPanier(string $idUser) : PanierDTO
