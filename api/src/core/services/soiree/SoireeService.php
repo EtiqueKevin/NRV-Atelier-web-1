@@ -7,17 +7,14 @@ use nrv\core\dto\soiree\SoireeDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\services\spectacle\spectacleException;
 
-class SoireeService implements SoireeServiceInterface
-{
+class SoireeService implements SoireeServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
-    public function __construct($soireeRepository)
-    {
+    public function __construct(SoireesRepositoryInterface $soireeRepository){
         $this->soireeRepository = $soireeRepository;
     }
 
-    public function getSoireeById($id): SoireeDTO
-    {
+    public function getSoireeById(string $id): SoireeDTO{
         try{
             $soiree = $this->soireeRepository->getSoireeById($id);
             return new SoireeDTO($soiree);
@@ -26,8 +23,7 @@ class SoireeService implements SoireeServiceInterface
         }
     }
 
-    public function getSoireeDetail($idSoiree): SoireeDTO
-    {
+    public function getSoireeDetail(string $idSoiree): SoireeDTO{
         try{
             $soiree = $this->soireeRepository->getSoireeById($idSoiree);
             return new SoireeDTO($soiree);
@@ -36,8 +32,7 @@ class SoireeService implements SoireeServiceInterface
         }
     }
 
-    public function getSpectacleByIdSoiree($idSoiree): array
-    {
+    public function getSpectacleByIdSoiree(string $idSoiree): array{
         try{
             $tabIdSoiree = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
 
@@ -47,8 +42,7 @@ class SoireeService implements SoireeServiceInterface
         return $tabIdSoiree;
     }
 
-    public function getLieux(): array
-    {
+    public function getLieux(): array{
         try {
             $lieux = $this->soireeRepository->getLieux();
             $tabDTO = [];

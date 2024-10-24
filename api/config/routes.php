@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 use nrv\application\actions\AddPanierAction;
 use nrv\application\actions\GetArtisteByIdAction;
+use nrv\application\actions\GetBilletsById;
 use nrv\application\actions\GetBilletsByIdUtilisateur;
 use nrv\application\actions\GetLieuxAction;
 use nrv\application\actions\GetPanierAction;
@@ -36,7 +37,7 @@ return function( App $app): App {
 
     $app->get('/spectacles[/]', GetSpectaclesAction::class);
 
-    $app->get('/spectacles/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
+    $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class);
 
     // artiste
 
@@ -62,9 +63,12 @@ return function( App $app): App {
 
     $app->get('/billets[/]', HomeAction::class);
 
-    $app->get('/billets/{ID-UTILISATEUR}[/]', GetBilletsByIdUtilisateur::class)->add(AuthMiddleware::class);
+    $app->get('/utilisateur/billets[/]', GetBilletsByIdUtilisateur::class)->add(AuthMiddleware::class);
+
+    $app->get('/utilisateur/billet/{ID-BILLET}', GetBilletsById::class)->add(AuthMiddleware::class);
 
     //panier
+
     $app->get('/panier[/]', GetPanierAction::class)->add(AuthMiddleware::class);
 
     $app->post('/panier[/]', AddPanierAction::class)->add(AuthMiddleware::class);

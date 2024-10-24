@@ -1,8 +1,6 @@
 import Handlebars from 'handlebars';
 import * as eventHandler from './handlers.js';
 import * as templates from './templates.js';
-import * as spectacle from './spectacle.js';
-import * as users from './users.js';
 
 export function displayHome() {
     const template = Handlebars.compile(templates.homeTemplate);
@@ -11,7 +9,7 @@ export function displayHome() {
     eventHandler.handleHomeSpectacleButton();
 }
 
-export async function displaySpectacleList(data, lieux) {
+export function displaySpectacleList(data, lieux) {
     const template = Handlebars.compile(templates.listeSpectacleTemplate);
     const html = template({ spectacles: data, lieu: lieux });
     document.getElementById('main-content').innerHTML = html;
@@ -19,45 +17,60 @@ export async function displaySpectacleList(data, lieux) {
     eventHandler.handleSearchForm();
 }
 
-export async function displaySoiree(id) {
-    const connected = users.isConnected();
-    const data = await spectacle.getSoiree(id);
+export function displaySoiree(data, connected) {
     const template = Handlebars.compile(templates.soireeTemplate);
-    const html = template({soiree : data, connected : connected});
+    const html = template({ soiree: data, connected: connected });
     document.getElementById('main-content').innerHTML = html;
+    eventHandler.handleSoiree();
 }
 
-export async function displayConnexion() {
+export function displayConnexion() {
     const template = Handlebars.compile(templates.connexionTemplate);
     const html = template();
     document.getElementById('main-content').innerHTML = html;
     eventHandler.handleConnexionForm();
 }
 
-export async function displayInscription() {
+export function displayInscription() {
     const template = Handlebars.compile(templates.inscriptionTemplate);
     const html = template();
     document.getElementById('main-content').innerHTML = html;
     eventHandler.handleInscriptionForm();
 }
 
-export async function displayNav() {
-    const connected = users.isConnected();
+export function displayNav(connected) {
     const template = Handlebars.compile(templates.navRightTemplate);
     const html = template({ connected });
     document.getElementsByClassName('nav-right')[0].innerHTML = html;
     eventHandler.handleNavButtons();
 }
 
-export async function displayPanier() {
-    const data = await users.getPanier();
-    
+export function displayPanier(data) {
     const template = Handlebars.compile(templates.panierTemplate);
-    const html = template({data});
-    var modal = document.getElementById('myModal');
+    const html = template({ data });
+    const modal = document.getElementById('myModal');
     modal.innerHTML = html;
 
-    eventHandler.handlePanier();
+    eventHandler.handleModal();
+
+    modal.style.display = 'block';
+}
+
+export function displayBilletsList(data) {
+    const template = Handlebars.compile(templates.listeBilletTemplate);
+    const html = template({ billets: data.billets });
+    document.getElementById('main-content').innerHTML = html;
+    eventHandler.handleBilletsList();
+}
+
+export function displayBillet(data) {
+    const template = Handlebars.compile(templates.billetDetailTemplate);
+    const html = template({ billet: data.billet, acheteur: data.acheteur });
+    const modal = document.getElementById('myModal');
+    modal.innerHTML = html;
+
+    eventHandler.handleModal();
+    eventHandler.handleBillet();
 
     modal.style.display = 'block';
 }

@@ -2,6 +2,7 @@
 
 use nrv\application\actions\AddPanierAction;
 use nrv\application\actions\GetArtisteByIdAction;
+use nrv\application\actions\GetBilletsById;
 use nrv\application\actions\GetBilletsByIdUtilisateur;
 use nrv\application\actions\GetLieuxAction;
 use nrv\application\actions\GetPanierAction;
@@ -122,6 +123,10 @@ return [
 
     GetBilletsByIdUtilisateur::class => function (ContainerInterface $c) {
         return new GetBilletsByIdUtilisateur($c->get(BilletServiceInterface::class));
+    },
+
+    GetBilletsById::class =>function (ContainerInterface $c) {
+        return new GetBilletsById($c->get(BilletServiceInterface::class),$c->get(UtilisateurServiceInterface::class));
     },
 
     // MIDDLEWARES

@@ -2,6 +2,7 @@
 
 namespace nrv\core\dto\artiste;
 
+use nrv\core\domain\entities\artiste\Artiste;
 use nrv\core\dto\DTO;
 
 class ArtisteDTO extends DTO {
@@ -13,7 +14,7 @@ class ArtisteDTO extends DTO {
 
     private string $description;
 
-    public function __construct($artiste){
+    public function __construct(Artiste $artiste){
         $this->id = $artiste->ID;
         $this->nom = $artiste->nom;
         $this->prenom = $artiste->prenom;

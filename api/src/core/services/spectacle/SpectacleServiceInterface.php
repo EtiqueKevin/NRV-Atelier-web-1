@@ -2,17 +2,20 @@
 
 namespace nrv\core\services\spectacle;
 
+use nrv\core\dto\artiste\ArtisteDTO;
+use nrv\core\dto\spectacle\SpectacleDTO;
+
 interface SpectacleServiceInterface
 {
-    public function getAllSpectacles();
+    public function getAllSpectacles(): array;
 
-    public function getSpectacles($date, $style, $lieu);
+    public function getSpectacles($date, $style, $lieu): array;
 
-    public function getSpectacleById($id);
+    public function getSpectacleById(string $id): SpectacleDTO;
 
-    public function getArtistesBySpectacle($idSpectacle);
+    public function getArtistesBySpectacle(string $idSpectacle): array;
 
-    public function getArtisteById($idArtiste);
+    public function getArtisteById(string $idArtiste): ArtisteDTO;
 
 
 }

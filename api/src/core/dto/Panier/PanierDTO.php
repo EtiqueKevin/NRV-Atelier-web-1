@@ -2,6 +2,7 @@
 
 namespace nrv\core\dto\Panier;
 
+use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\dto\DTO;
 
@@ -14,7 +15,7 @@ class PanierDTO extends DTO
     protected array $panierItems;
     protected bool $valide;
 
-    public function __construct($panier)
+    public function __construct(Panier $panier)
     {
         $this->id = $panier->ID;
         $this->idUtilisateur = $panier->idUtilisateur;

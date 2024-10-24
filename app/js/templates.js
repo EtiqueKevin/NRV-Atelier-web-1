@@ -58,46 +58,46 @@ export const listeSpectacleTemplate = `
 `;
 
 export const soireeTemplate = `
-      <section class="soiree-card">
-        <div id="soiree-info">
-          <h2>{{soiree.nom}}</h2>
-          <p>Thématique: {{soiree.thematique}}</p>
-          <p>Date : {{soiree.date}}</p>
-          <p>Lieu: {{soiree.lieu.nom}}, {{soiree.lieu.adresse}}</p>
-          <p>Tarifs:</p>
-          <ul>
-            <li>Normal: {{soiree.tarif_normal}} €</li>
-            <li>Réduit: {{soiree.tarif_reduit}} €</li>
-          </ul>
-        </div>
-      {{#if connected}}
-        <div id="add-to-cart-form">
-          <form>
-            <div class="input-container">
-              <label for="ticket-quantity">Nombre de billets:</label>
-              <input type="number" id="ticket-quantity" name="quantity" value="1" min="1" required>
-            </div>
-            <div class="input-container">
-            <label for="ticket-tarif">Sélectionnez le tarif:</label>
-              <select id="ticket-tarif" name="tarif" required>
-                <option value="{{soiree.tarif_normal}}">Normal</option>
-                <option value="{{soiree.tarif_reduit}}">Réduit</option>
-              </select>
-            </div>
-
-            <button type="button" class="boutton">Ajouter au panier</button>
-          </form>
-        </div>
-      {{/if}}
-      </section>
+  <section class="soiree-card">
+    <div id="soiree-info">
+      <h2>{{soiree.nom}}</h2>
+      <p>Thématique: {{soiree.thematique}}</p>
+      <p>Date : {{soiree.date}}</p>
+      <p>Lieu: {{soiree.lieu.nom}}, {{soiree.lieu.adresse}}</p>
+      <p>Tarifs:</p>
+      <ul>
+        <li>Normal: {{soiree.tarif_normal}} €</li>
+        <li>Réduit: {{soiree.tarif_reduit}} €</li>
+      </ul>
+    </div>
+    {{#if connected}}
+      <div id="add-to-cart-form">
+        <form>
+          <input type="hidden" id="soiree-id" name="soiree-id" value="{{soiree.id}}">
+          <div class="input-container">
+            <label for="quantite">Nombre de billets:</label>
+            <input type="number" id="quantite" name="quantity" value="1" min="1" required>
+          </div>
+          <div class="input-container">
+            <label for="tarif">Sélectionnez le tarif:</label>
+            <select id="tarif" name="tarif" required>
+              <option value="{{soiree.tarif_normal}}">Normal</option>
+              <option value="{{soiree.tarif_reduit}}">Réduit</option>
+            </select>
+          </div>
+          <button type="button" class="boutton" id="submit-button">Ajouter au panier</button>
+        </form>
+      </div>
+    {{/if}}
+  </section>
 
   <section class="grid grid-col-3-l grid-col-2-m grid-col-1-xs gap-4" id="liste-spectacle">
     {{#each soiree.spectacles}}
       <div data-id="{{this.spectacle.id}}" class="spectacle-card spectacle">
         {{#if this.spectacle.image.length}}
-          <img src="{{this.spectacle.image.[0]}}" alt="Spectacle Image"  loading="lazy">
+          <img src="{{this.spectacle.image.[0]}}" alt="Spectacle Image" loading="lazy">
         {{else}}
-          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image"  loading="lazy">
+          <img src="/public/default-spectacle.jpg" alt="Default Spectacle Image" loading="lazy">
         {{/if}}
         <article>
           <h2>{{this.spectacle.titre}}</h2>
@@ -226,5 +226,48 @@ export const panierTemplate = `
     {{else}}
       <button class="boutton" id="valider-panier-button">Valider Panier</button>
     {{/if}}
+  </div>
+`;
+
+export const listeBilletTemplate = `
+  <section class="grid grid-col-2 grid-col-1-xs gap-2">
+    {{#each billets}}
+      <div class="billet" data-id="{{id}}">
+        <h2>Billet n°{{id}}</h2>
+        <div class="billet-info">
+          <p>Soirée: {{nomSoiree}}</p>
+          <p>Date: {{dateDebut}}</p>
+          <p>
+            {{#eq categorie_tarif "N"}}
+              <p>Catégorie Tarif: normal</p>
+            {{else}}
+              <p>Catégorie Tarif: réduit</p>
+            {{/eq}}
+          </p>
+        </div>
+      </div>
+    {{/each}}
+  </section>
+`;
+
+export const billetDetailTemplate = `
+  <div class="modal-billet">
+    <span id="close-button">&times;</span>
+    <div class="billet-content">
+      <h1>Billet n°{{billet.id}}</h1>
+      <h3>Billet pour la soirée {{billet.nomSoiree}}</h3>
+      <p>Nom de l'acheteur: {{acheteur.nom}} {{acheteur.prenom}}</p>
+      <p>Date et horaire de la soirée: {{billet.dateDebut}}</p>
+      <p>
+        {{#eq billet.categorie_tarif "N"}}
+          <p>Catégorie Tarif: normal</p>
+        {{else}}
+          <p>Catégorie Tarif: réduit</p>
+        {{/eq}}
+      </p>
+      <button id="print" class="boutton">
+        <i class="fa-solid fa-print"></i> Imprimer
+      </button>
+    </div>
   </div>
 `;

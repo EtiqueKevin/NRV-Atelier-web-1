@@ -1,14 +1,26 @@
 @use 'config' as *;
 
-@mixin modal-content($margin: 9% auto){
+@mixin modal-content-mixin($margin: 9% auto){
+  box-sizing: border-box;
   position: relative;
   background-color: $highlight-bg-color;
   margin: $margin;
   padding: 20px;
   border: 1px solid black;
-  width : clamp(200px, 50%, 500px);
+  width : clamp(200px, 50%, 800px);
 }
 
+%modal-content {
+  @include modal-content-mixin(5% 2% auto auto);
+  display: flex;
+  gap: 2rem;
+  flex-direction: column;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+  }
+}
 
 .modal {
   display: none;
@@ -23,18 +35,22 @@
 }
 
 .modal-panier {
-  @include modal-content(5% 2% auto auto);
-  display: flex;
-  gap : 2rem;
-  flex-direction: column;
-  justify-content: center;
-
-  h1{
-    margin: 0;
-  }
+  @include modal-content-mixin(5% 2% auto auto);
+  @extend %modal-content;
 
   @media screen and (max-width: 768px) {
-    margin : 5% auto;
+    margin: 5% 5%;
+    width: 90%;
+  }
+}
+
+.modal-billet {
+  @include modal-content-mixin(5% auto);
+  @extend %modal-content;
+
+  @media screen and (max-width: 768px) {
+    margin: 5% 5%;
+    width: 90%;
   }
 }
 
@@ -45,4 +61,21 @@
   font-size: 36px;
   margin-left: 50px;
   cursor: pointer;
+}
+
+@media print {
+  .modal-billet {
+    display: block;
+    position: static;
+    width: 100%;
+    height: auto;
+    background: white;
+    color: black;
+  }
+  #close-button {
+    display: none;
+  }
+  #print{
+    display: none;
+  }
 }

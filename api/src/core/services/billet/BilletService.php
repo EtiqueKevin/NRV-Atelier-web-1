@@ -2,6 +2,8 @@
 
 namespace nrv\core\services\billet;
 
+use nrv\core\dto\billet\BilletDTO;
+use nrv\core\dto\billet\BilletInputDTO;
 use nrv\core\dto\billet\BilletOutputDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
@@ -16,7 +18,7 @@ class BilletService implements BilletServiceInterface{
         $this->soireesRepository = $soireesRepository;
     }
 
-    public function getBilletsByIdUtilisateur($id): BilletOutputDTO{
+    public function getBilletsByIdUtilisateur(string $id): BilletOutputDTO{
         $billetsTab = $this->utilisateursRepository->getBilletsByIdUtilisateur($id);
         $billetsTabRes = [];
         foreach ($billetsTab as $b){
@@ -26,5 +28,17 @@ class BilletService implements BilletServiceInterface{
             $billetsTabRes[] = $b;
         }
         return new BilletOutputDTO($billetsTabRes);
+    }
+
+    public function getBilletById(BilletInputDTO $biInputDTO): BilletDTO{
+        $billetEntity = $this->utilisateursRepository->getBilletById($biInputDTO->idBillet);
+        $ids = $billetEntity->id_soiree;
+        $soiree = $this->soireesRepository->getSoireeById($ids);
+        $billetEntity->setNomSoiree($soiree->nom);
+        if(!($biInputDTO->id_utilisateur === $billetEntity->id_utilisateur)){
+            throw new BilletException('access refused');
+
+        }
+        return $billetEntity->toDTO();
     }
 }

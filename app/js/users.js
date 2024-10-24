@@ -1,8 +1,8 @@
-import { connexionRequest, loadData, inscriptionRequest } from "./loader.js";
+import * as loader from "./loader.js";
 import * as jwt from './jwt.js';
 
 export async function connexion(email, password) {
-    const data = await connexionRequest(email, password);
+    const data = await loader.connexionRequest(email, password);
     if (data){
         return true;
     }
@@ -22,7 +22,25 @@ export function deconnexion(){
 }
 
 export async function getPanier(){
-    const data = await loadData('/panier');
+    const data = await loader.loadData('panier');
+
+    let total = 0;
+    data.panier.panierItems.forEach(item => {
+        total += item.tarifTotal;
+    });
+    return {
+        panier: data.panier,
+        total: total
+    };
+}
+
+export async function addToPanier(idSoiree, qte, tarif){
+    const body = {
+        "idSoiree": idSoiree,
+        "qte": qte,
+        "tarif": tarif
+    };
+    const data = await loader.postData('panier', body);
 
     let total = 0;
     data.panier.panierItems.forEach(item => {
@@ -35,10 +53,20 @@ export async function getPanier(){
 }
 
 export async function inscription(email, password, password2, nom, prenom) {
-    const data = await inscriptionRequest(email, password, password2, nom, prenom);
+    const data = await loader.inscriptionRequest(email, password, password2, nom, prenom);
 
     if(data){
         await connexion(email, password);
     }
+    return data;
+}
+
+export async function getBillets(){
+    const data = await loader.loadData('utilisateur/billets');
+    return data;
+}
+
+export async function getBillet(id){
+    const data = await loader.loadData(`utilisateur/billet/${id}`);
     return data;
 }

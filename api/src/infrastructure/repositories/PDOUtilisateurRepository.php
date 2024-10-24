@@ -7,7 +7,6 @@ use nrv\core\domain\entities\billet\Billet;
 use nrv\core\domain\entities\Panier\Panier;
 use nrv\core\domain\entities\Panier\PanierItem;
 use nrv\core\domain\entities\utilisateur\Utilisateur;
-use nrv\core\dto\Panier\PanierItemDTO;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
@@ -44,6 +43,27 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $utilisateurEntity;
     }
 
+    public function UtilisateurById(string $id): Utilisateur{
+        try{
+            $stmt = $this->pdo->prepare('SELECT * FROM utilisateurs WHERE id = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            $utilisateur = $stmt->fetch();
+
+            if(!$utilisateur){
+                throw new RepositoryEntityNotFoundException('utilisateur inconnue');
+            }
+
+            $utilisateurEntity = new Utilisateur($utilisateur['nom'],$utilisateur['prenom'],$utilisateur['email'],$utilisateur['mdp'],$utilisateur['role']);
+            $utilisateurEntity->setID($utilisateur['id']);
+        }catch (RepositoryEntityNotFoundException $e) {
+            throw new RepositoryEntityNotFoundException('utilisateur inconnue');
+        }catch (\Exception $e){
+            throw new RepositoryException('UtilisateurByEmail : erreur lors du chargemement utilisateur '.$e->getMessage());
+        }
+        return $utilisateurEntity;
+    }
+
 
     public function getPanier(string $idUser) : Panier
     {
@@ -52,7 +72,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             $stmt->bindParam(1, $idUser);
             $stmt->execute();
             $panier = $stmt->fetch();
-
+            
             if (!$panier) {
                 throw new RepositoryEntityNotFoundException('panier inconnu');
             }
@@ -74,7 +94,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             $panierItems = $stmt->fetchAll();
 
             if (!$panierItems) {
-                throw new RepositoryEntityNotFoundException('panier inconnue');
+                return [];
             }
 
             foreach ($panierItems as $panierItem) {
@@ -84,7 +104,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             }
 
         } catch (\Exception $e) {
-            throw new RepositoryException('getPanierItems : erreur lors du chargemement panier '. $idPanier ." " . $e->getMessage());
+            throw new RepositoryException('getPanierItems : erreur lors du chargemement panier'. $idPanier ." " . $e->getMessage());
         }
         return $panierItemsRes;
     }
@@ -103,7 +123,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
-    public function updatePanier( PanierItem $panierItem) : void
+    public function updatePanier(PanierItem $panierItem) : void
     {
         try {
             $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND tarif = ?');
@@ -161,7 +181,6 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             $billetEnity->setID($b['id']);
             $billetTab[] = $billetEnity;
         }
-        //'Y-m-d H:i:s'
 
         return $billetTab;
     }
@@ -184,5 +203,19 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         } catch (\Exception $e) {
             throw new RepositoryException('ajouterPanierUtilisateur : erreur creation panier'. $id ." " . $e->getMessage());
         }
+    }
+
+    public function getBilletById(string $id): Billet{
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM billets WHERE id = ?');
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('getBilletById : erreur lors du chargement du biller : '. $id ." " . $e->getMessage());
+        }
+        $billet = $stmt->fetch();
+        $billetEntity = new Billet($billet['id_utilisateur'],$billet['id_soiree'], DateTime::createFromFormat('Y-m-d H:i:s',$billet['date_heure_soiree']), $billet['categorie_tarif']);
+        $billetEntity->setID($billet['id']);
+        return $billetEntity;
     }
 }

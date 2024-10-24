@@ -31,14 +31,23 @@ export function handleNavButtons() {
         navDeconnexion.addEventListener('click', () => {
             users.deconnexion();
             ui.displayHome();
-            ui.displayNav();
+            ui.displayNav(users.isConnected());
         });
     }
 
     const navPanier = document.getElementById('nav-panier');
     if (navPanier) {
-        navPanier.addEventListener('click', () => {
-            ui.displayPanier();
+        navPanier.addEventListener('click', async () => {
+            const data = await users.getPanier();
+            ui.displayPanier(data);
+        });
+    }
+    
+    const navBillets = document.getElementById('nav-billets');
+    if (navBillets) {
+        navBillets.addEventListener('click', async () => {
+            const data = await users.getBillets();
+            ui.displayBilletsList(data);
         });
     }
 }
@@ -57,10 +66,12 @@ export function handleHomeSpectacleButton() {
 export function handleSpectacleList(){
     const spectacles = document.getElementsByClassName('spectacle');
     for (const spectacle of spectacles) {
-        const dataId = spectacle.getAttribute('data-id');
+        const id = spectacle.getAttribute('data-id');
 
-        spectacle.addEventListener('click', () => {
-            ui.displaySoiree(dataId);
+        spectacle.addEventListener('click', async () => {
+            const data = await spectacle.getSoiree(id);
+            const connected = users.isConnected();
+            ui.displaySoiree(data, connected);
         });
     }
 }
@@ -89,7 +100,7 @@ export function handleConnexionForm() {
             const password = document.getElementById('password').value;
             const user = await users.connexion(email, password);
             if (user) {
-                ui.displayNav();
+                ui.displayNav(users.isConnected());
                 ui.displayHome();
             }
         });
@@ -116,7 +127,7 @@ export function handleInscriptionForm() {
             const user = await users.inscription(email, password, password2, nom, prenom);
             if (user) {
                 ui.displayHome();
-                ui.displayNav();
+                ui.displayNav(users.isConnected());
             }
         });
     }
@@ -129,7 +140,7 @@ export function handleInscriptionForm() {
     }
 }
 
-export function handlePanier(){
+export function handleModal(){
     document.getElementById("myModal").addEventListener('click', function(event) {
         if (event.target === this) {
             this.style.display = "none";
@@ -141,4 +152,42 @@ export function handlePanier(){
         modal.style.display = "none";
         modal.innerHTML = '';
     });
+}
+
+export function handleSoiree(){
+    const submitButton = document.getElementById('submit-button');
+    if (submitButton) {
+        submitButton.addEventListener('click', async (event) => {
+            event.preventDefault();
+            const soireeId = document.getElementById('soiree-id').value;
+            const qte = document.getElementById('quantite').value;
+            const tarif = document.getElementById('tarif').value;
+            const data = await users.addToPanier(soireeId, qte, tarif);
+            ui.displayPanier(data);
+        });
+    }
+}
+
+export function handleBilletsList(){
+    const billets = document.getElementsByClassName('billet');
+    for (const billet of billets) {
+        const id = billet.getAttribute('data-id');
+
+        billet.addEventListener('click', async () => {
+            const data = await users.getBillet(id);
+            ui.displayBillet(data);
+        });
+    }
+}
+
+export function handleBillet(){
+    const printButton = document.getElementById('print');
+    if (printButton) {
+        printButton.addEventListener('click', () => {
+            const billetElement = document.querySelector('.modal-billet');
+            if (billetElement) {
+                window.print();
+            }
+        });
+    }
 }

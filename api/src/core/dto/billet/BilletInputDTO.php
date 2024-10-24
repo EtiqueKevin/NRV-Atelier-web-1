@@ -6,12 +6,14 @@ use DateTime;
 use nrv\core\domain\entities\billet\Billet;
 use nrv\core\dto\DTO;
 
-class BilletOutputDTO extends DTO{
+class BilletInputDTO extends DTO{
 
-    protected array $billets;
+    protected string $idBillet;
+    protected string $id_utilisateur;
 
-    public function __construct(array $bs){
-        $this->billets = $bs;
+    public function __construct(string $idB, string $uti){
+        $this->idBillet = $idB;
+        $this->id_utilisateur = $uti;
     }
 
     public function jsonSerialize(): array{
@@ -22,7 +24,9 @@ class BilletOutputDTO extends DTO{
             $tab[] = $b->toDTO();
         }
 
-        return $tab;
+        return
+            $tab;
+
     }
 
 }
