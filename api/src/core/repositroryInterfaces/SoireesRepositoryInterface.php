@@ -36,4 +36,6 @@ interface SoireesRepositoryInterface{
     public function getSpectacles(array $date,array $style,array $lieu, int $page): array;
 
     public function getStyles(): array;
+
+    public function saveSoiree(Soiree $soiree): void;
 }
