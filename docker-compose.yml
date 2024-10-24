@@ -11,7 +11,7 @@ services:
     build:
       context: build
       dockerfile: 8.3-cli.Dockerfile
-    env_file: ./api.nrv.env
+    env_file: ./env/api.nrv.env
     ports:
       - '35610:80'
     volumes:
@@ -26,7 +26,6 @@ services:
 
   app.nrv:
     image: ubuntu/apache2:latest
-    env_file: ./app.nrv.env
     ports:
       - '35611:80'
     volumes:
@@ -39,7 +38,7 @@ services:
 
   nrv.db:
     image: 'postgres:latest'
-    env_file: ./nrv.db.env
+    env_file: ./env/nrv.db.env
     ports:
       - '35612:5432'
     networks:
