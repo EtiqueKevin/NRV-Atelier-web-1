@@ -28,7 +28,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $offset = ($page - 1) * 12;
             
             // Utilisation de la substitution de variable pour OFFSET
-            $stmt = $this->pdo->prepare('SELECT * FROM spectacles LIMIT 10 OFFSET :offset');
+            $stmt = $this->pdo->prepare('SELECT * FROM spectacles LIMIT 12 OFFSET :offset');
             
             // Cast explicite de l'offset en entier
             $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
@@ -79,8 +79,8 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
         
         // Calcul de l'offset
-        $offset = ($page - 1) * 12; // 10 spectacles par page
-        $sql .= " LIMIT 10 OFFSET ?"; // Ajout du LIMIT et OFFSET
+        $offset = ($page - 1) * 12; // 12 spectacles par page
+        $sql .= " LIMIT 12 OFFSET ?"; // Ajout du LIMIT et OFFSET
         
         // Préparation de la requête
         $stmt = $this->pdo->prepare($sql);

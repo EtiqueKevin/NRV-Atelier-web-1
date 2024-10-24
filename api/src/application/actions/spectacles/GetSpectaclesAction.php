@@ -100,7 +100,7 @@ class GetSpectaclesAction extends AbstractAction
             ];
         }
 
-        // Vérifier s'il y a encore une page suivante (seulement s'il y a exactement 10 résultats)
+        // Vérifier s'il y a encore une page suivante (seulement s'il y a exactement 12 résultats)
         if (count($spectacles) == 12) {
             $res['links']['next'] = [
                 'href' => '/spectacles?page=' . ($page + 1)
