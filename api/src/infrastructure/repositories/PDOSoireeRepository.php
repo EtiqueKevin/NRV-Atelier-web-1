@@ -302,7 +302,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }catch (\Exception $e){
             throw new RepositoryException('getIdLieuByIdSoiree : erreur lors du chargement des lieux : '. $e->getMessage() );
         }
-        return $soireeRes->id_lieu;
+        return $soireeRes['id_lieu'];
     }
 
     public function getNbPlaceByIdSoiee(string $idSoiee): int{

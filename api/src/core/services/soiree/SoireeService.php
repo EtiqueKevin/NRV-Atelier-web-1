@@ -2,10 +2,12 @@
 
 namespace nrv\core\services\soiree;
 
+use nrv\core\dto\soiree\SoireeDetailBackofficeDTO;
 use nrv\core\dto\soiree\SoireeDetailDTO;
 use nrv\core\dto\soiree\SoireeDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use nrv\core\services\Panier\PanierException;
 use nrv\core\services\spectacle\spectacleException;
 
 class SoireeService implements SoireeServiceInterface{
@@ -72,7 +74,13 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
-    public function getNbPlaceByIdSoiee(string $idSoiree){
-        $this->utilisateursRepository->getNbBilletByIdSoiree($idSoiree);
+    public function gestionPlaceBackOffice(string $idSoiree):SoireeDetailBackofficeDTO{
+        try{
+            $nbPlacett = $this->soireeRepository->getNbPlaceByIdSoiee($idSoiree);
+            $nbPlaceReserve = $this->utilisateursRepository->getNbBilletByIdSoiree($idSoiree);
+        }catch (\Exception $e){
+            throw new PanierException('gestionPlaceBackOffice : erreur lors du chargement des place : soiree : '. $idSoiree . " ".$e->getMessage());
+        }
+        return new SoireeDetailBackofficeDTO($nbPlacett,$nbPlaceReserve);
     }
 }

@@ -230,7 +230,9 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         } catch (\Exception $e) {
             throw new RepositoryException('getNbBilletByIdSoiree : erreur lors du chargement du biller : id soiree : '. $id ." " . $e->getMessage());
         }
+
+
         $nb = $stmt->fetch();
-        return $nb;
+        return $nb['count'];
     }
 }

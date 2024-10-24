@@ -7,6 +7,7 @@ use nrv\application\actions\panier\GetPanierAction;
 use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
+use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
@@ -71,7 +72,7 @@ return [
 
     BilletServiceInterface::class => function (ContainerInterface $c) {
     return new BilletService($c->get(UtilisateursRepositoryInterface::class),$c->get(SoireesRepositoryInterface::class));
-},
+    },
 
     // PROVIDERS
 
@@ -127,6 +128,10 @@ return [
 
     GetBilletsById::class =>function (ContainerInterface $c) {
         return new GetBilletsById($c->get(BilletServiceInterface::class),$c->get(UtilisateurServiceInterface::class));
+    },
+
+    GetSoireeByIdBackofficeAction::class=> function (ContainerInterface $c) {
+        return new GetSoireeByIdBackofficeAction($c->get(SoireeServiceInterface::class));
     },
 
     // MIDDLEWARES

@@ -9,6 +9,7 @@ use nrv\application\actions\panier\GetPanierAction;
 use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
+use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
 use nrv\application\actions\soirees\GetStylesAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
@@ -78,6 +79,10 @@ return function( App $app): App {
     $app->post('/panier[/]', AddPanierAction::class)->add(AuthMiddleware::class);
 
     $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
+
+    // backoffice
+
+    $app->get('/backoffice/soirees/{ID-SOIREE}[/]',GetSoireeByIdBackofficeAction::class)->add(AuthMiddleware::class);
 
     return $app;
 };

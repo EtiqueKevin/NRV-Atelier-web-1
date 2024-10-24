@@ -8,12 +8,11 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 
-class GetSoireeByIdAction extends AbstractAction{
+class GetSoireeByIdBackofficeAction extends AbstractAction{
 
     private SoireeServiceInterface $soireeService;
 
-    public function __construct(SoireeServiceInterface $soireeService)
-    {
+    public function __construct(SoireeServiceInterface $soireeService){
         $this->soireeService = $soireeService;
     }
 
@@ -21,26 +20,14 @@ class GetSoireeByIdAction extends AbstractAction{
     {
         $idSoiree = $args['ID-SOIREE'];
         try {
-            $soiree = $this->soireeService->getSoireeDetail($idSoiree);
-            $spectaclesIds = $this->soireeService->getSpectacleByIdSoiree($idSoiree);
-
-            $spectaclesLinks = array_map(function($spectacleId) {
-                return [
-                    'href' => "spectacle/{$spectacleId}"
-                ];
-            }, $spectaclesIds);
-
+            $gestionPlaceSoiree = $this->soireeService->gestionPlaceBackOffice($idSoiree);
             $res = [
                 'type' => 'ressource',
-                'soiree' => $soiree,
-                'links' => [
-                    'spectacles' => $spectaclesLinks
-            ]
+                'placeSoiree' => $gestionPlaceSoiree,
             ];
         } catch (\Exception $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
-
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withHeader('Content-Type', 'application/json');
