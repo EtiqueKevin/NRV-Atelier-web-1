@@ -48,7 +48,7 @@ class PanierService implements PanierServiceInterface
                 $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier);
                 $update = false;
                 foreach ($panierItemsRes as $panierItem) {
-                    if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == typeTarif) {
+                    if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) {
                         $update = true;
                         $panierItem->setQte($panierItem->qte + $qte);
                         $this->UtilisateursRepository->updatePanier($panierItem);
