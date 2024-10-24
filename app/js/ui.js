@@ -11,6 +11,7 @@ export function displayHome() {
 
 export function displaySpectacleList(data, lieux, styles) {
     const template = Handlebars.compile(templates.listeSpectacleTemplate);
+    console.log(data);
     const html = template({ spectacles: data, lieu: lieux, styles: styles });
     document.getElementById('main-content').innerHTML = html;
     eventHandler.handleSpectacleList();

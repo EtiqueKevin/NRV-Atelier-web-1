@@ -6,18 +6,22 @@ let styles = [];
 
 export async function getSpectacles() {
     const data = await loadData('/spectacles');
-    return data.spectacles.map(item => {
-        const spectacle = item.spectacle;
-        return {
-            id: spectacle.id,
-            titre: spectacle.titre,
-            description: spectacle.description,
-            heure: spectacle.heure,
-            urlVideo: spectacle.urlVideo,
-            idSoiree: spectacle.idSoiree,
-            image: spectacle.imgs && spectacle.imgs.length > 0 ? spectacle.imgs.map(img => apiUrl + img) : null
-        };
-    });
+    return {
+        spectacles: data.spectacles.map(item => {
+            const spectacle = item.spectacle;
+            return {
+                id: spectacle.id,
+                titre: spectacle.titre,
+                description: spectacle.description,
+                heure: spectacle.heure,
+                urlVideo: spectacle.urlVideo,
+                idSoiree: spectacle.idSoiree,
+                image: spectacle.imgs && spectacle.imgs.length > 0 ? spectacle.imgs.map(img => apiUrl + img) : null
+            };
+        }),
+        links: data.links,
+        page: data.page
+    };
 }
 
 export async function getSpectacle(href) {

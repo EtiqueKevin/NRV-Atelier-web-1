@@ -105,6 +105,12 @@ body {
   }
 }
 
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
 .nav-menu {
   display: flex;
   justify-content: space-between;
@@ -121,11 +127,7 @@ body {
   gap: 1rem;
 }
 .nav-menu ul li .logo {
-  display: block;
   height: 4rem;
-  width: 4rem;
-  border-radius: 50%;
-  background: linear-gradient(to bottom right, red, orange);
 }
 .nav-menu ul li a {
   text-decoration: none;

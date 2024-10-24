@@ -1,7 +1,7 @@
 export const homeTemplate = `
   <section class="home-section">
     <div id="home-title">
-      <h1>Bienvenue au NRV Festival 2024</h1>
+      <h1>Bienvenue au Nancy Rock Vibration Festival 2024</h1>
     </div>
     <div id="home-description">
       <p>Découvrez les spectacles les plus incroyables et vivez des moments inoubliables.</p>
@@ -41,9 +41,9 @@ export const listeSpectacleTemplate = `
       <button type="submit" class="color-button">Search</button>
     </form>
   </section>
-  {{#if spectacles.length}}
+  {{#if spectacles.spectacles.length}}
     <section class="grid grid-col-4-l grid-col-3-m grid-col-2-s grid-col-1-xs gap-2" id="liste-spectacle">
-      {{#each spectacles}}
+      {{#each spectacles.spectacles}}
         <div data-id="{{this.idSoiree}}" class="spectacle-card-hover spectacle">
           {{#if this.image.length}}
             <img src="{{this.image.[0]}}" alt="Spectacle Image"  loading="lazy">
@@ -57,6 +57,16 @@ export const listeSpectacleTemplate = `
         </div>
       {{/each}}
     </section>
+
+    <div class="pagination">
+      {{#if spectacles.links.previous}}
+        <button class="color-button" id="previous-page" data-url="spectacles.links.previous.href"><i class="fa-solid fa-arrow-right"></i></button>
+      {{/if}}
+      <p> {{spectacles.page}} </p>
+      {{#if spectacles.links.next}}
+        <button class="color-button" id="next-page" data-url="spectacles.links.next.href"><i class="fa-solid fa-arrow-right"></i></button>
+      {{/if}}
+    </div>
   {{else}}
     <p>Aucun spectacle trouvé pour les critères de recherche.</p>
   {{/if}}
