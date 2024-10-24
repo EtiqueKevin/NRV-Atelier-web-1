@@ -10,6 +10,7 @@ use nrv\application\actions\GetPanierAction;
 use nrv\application\actions\GetSoireeByIdAction;
 use nrv\application\actions\GetSpectaclesAction;
 use nrv\application\actions\GetSpectaclesByIdAction;
+use nrv\application\actions\GetStylesAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\actions\RefreshAction;
 use nrv\application\actions\SignInAction;
@@ -50,6 +51,10 @@ return function( App $app): App {
     //lieux
 
     $app->get('/lieux[/]', GetLieuxAction::class);
+
+    //styles
+
+    $app->get('/styles[/]', GetStylesAction::class);
 
     // utilisateur
 
