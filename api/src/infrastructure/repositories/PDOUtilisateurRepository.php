@@ -223,7 +223,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
 
     public function getNbBilletByIdSoiree(string $id): int{
         try {
-            $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM billets WHERE id_utilisateur = ?');
+            $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM billets WHERE id_soiree = ?');
             $stmt->bindParam(1, $id);
             $stmt->execute();
 
