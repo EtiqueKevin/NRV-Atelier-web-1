@@ -1,18 +1,15 @@
 <?php
 
-namespace nrv\application\actions;
+namespace nrv\application\actions\utilisateur;
 
-use Firebase\JWT\JWT;
 use nrv\application\actions\AbstractAction;
 use nrv\application\providers\auth\AuthProviderInterface;
-use nrv\core\dto\utilisateur\UtilisateurInputDTO;
-use nrv\core\dto\utilisateur\UtilisateurOutputDTO;
 use nrv\core\services\utilisateur\UtilisateurException;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 use Slim\Exception\HttpUnauthorizedException;
+
 class RefreshAction extends AbstractAction
 {
     private AuthProviderInterface $authProvider;

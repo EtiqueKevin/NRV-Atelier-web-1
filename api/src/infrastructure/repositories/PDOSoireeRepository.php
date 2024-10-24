@@ -42,7 +42,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
-    public function getSpectacles($date, $style, $lieu): array{
+    public function getSpectacles( string $date,string $style,string $lieu): array{
         //le 1=1 c'est pour que je puisse mettre AND au début de chaque condition
         $sql = 'SELECT * FROM spectacles inner join soirees_spectacles on spectacles.id = id_spectacle inner join soirees on id_soiree = soirees.id  WHERE 1=1 ';
         $params = [];
@@ -270,5 +270,23 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             throw new RepositoryException('getImageBySpectacleId : erreur lors du chargement image : '. $e->getMessage() );
         }
         return $imgTab;
+    }
+
+    public function getStyles() : array {
+        try {
+            $stmt = $this->pdo->prepare('SELECT DISTINCT thematique FROM soirees');
+            $stmt->execute();
+            $styles = $stmt->fetchAll();
+            if(!$styles){
+                throw new RepositoryEntityNotFoundException('pas de style trouvé');
+            }
+            $tabStyle = [];
+            foreach ($styles as $style){
+                $tabStyle[] = $style['thematique'];
+            }
+            return $tabStyle;
+        }catch (\Exception $e){
+            throw new RepositoryException('erreur lors du chargement des styles : '. $e->getMessage());
+        }
     }
 }

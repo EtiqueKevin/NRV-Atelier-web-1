@@ -12,4 +12,5 @@ interface SoireeServiceInterface{
     public function getSpectacleByIdSoiree(string $idSoiree): array;
 
     public function getLieux(): array;
+    public function getStyles(): array;
 }

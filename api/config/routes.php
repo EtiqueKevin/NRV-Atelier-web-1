@@ -1,24 +1,24 @@
 <?php
 declare(strict_types=1);
 
-use nrv\application\actions\AddPanierAction;
-use nrv\application\actions\GetArtisteByIdAction;
-use nrv\application\actions\GetBilletsById;
-use nrv\application\actions\GetBilletsByIdUtilisateur;
-use nrv\application\actions\GetLieuxAction;
-use nrv\application\actions\GetPanierAction;
-use nrv\application\actions\GetSoireeByIdAction;
-use nrv\application\actions\GetSpectaclesAction;
-use nrv\application\actions\GetSpectaclesByIdAction;
+use nrv\application\actions\billets\GetBilletsById;
+use nrv\application\actions\billets\GetBilletsByIdUtilisateur;
 use nrv\application\actions\HomeAction;
-use nrv\application\actions\RefreshAction;
-use nrv\application\actions\SignInAction;
-use nrv\application\actions\SignUpAction;
-use nrv\application\actions\ValiderPanierAction;
+use nrv\application\actions\panier\AddPanierAction;
+use nrv\application\actions\panier\GetPanierAction;
+use nrv\application\actions\panier\ValiderPanierAction;
+use nrv\application\actions\soirees\GetLieuxAction;
+use nrv\application\actions\soirees\GetSoireeByIdAction;
+use nrv\application\actions\soirees\GetStylesAction;
+use nrv\application\actions\spectacles\GetArtisteByIdAction;
+use nrv\application\actions\spectacles\GetSpectaclesAction;
+use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
+use nrv\application\actions\utilisateur\RefreshAction;
+use nrv\application\actions\utilisateur\SignInAction;
+use nrv\application\actions\utilisateur\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
-use nrv\application\middlewares\Cors;
-use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
 
 return function( App $app): App {
@@ -50,6 +50,10 @@ return function( App $app): App {
     //lieux
 
     $app->get('/lieux[/]', GetLieuxAction::class);
+
+    //styles
+
+    $app->get('/styles[/]', GetStylesAction::class);
 
     // utilisateur
 

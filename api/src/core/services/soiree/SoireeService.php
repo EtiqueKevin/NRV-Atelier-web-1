@@ -55,4 +55,16 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
+    public function getStyles(): array{
+        try {
+            $styles = $this->soireeRepository->getStyles();
+            $tabDTO = [];
+            foreach ($styles as $style) {
+                $tabStyle[] = $style;
+            }
+            return $tabStyle;
+        } catch (\Exception $e) {
+            throw new spectacleException($e->getMessage());
+        }
+    }
 }

@@ -9,7 +9,7 @@ interface SpectacleServiceInterface
 {
     public function getAllSpectacles(): array;
 
-    public function getSpectacles($date, $style, $lieu): array;
+    public function getSpectacles(string $date,string $style,string $lieu): array;
 
     public function getSpectacleById(string $id): SpectacleDTO;
 

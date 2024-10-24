@@ -1,7 +1,8 @@
 <?php
 
-namespace nrv\application\actions;
+namespace nrv\application\actions\utilisateur;
 
+use nrv\application\actions\AbstractAction;
 use nrv\core\dto\utilisateur\UtilisateurInputCreationDTO;
 use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 use Psr\Http\Message\ResponseInterface;
