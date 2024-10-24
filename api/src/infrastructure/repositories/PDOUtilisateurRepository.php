@@ -112,7 +112,7 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
     public function addPanier(string $idPanier,string $idSoiree,int $tarif, string $typeTarif, int $qte) : void
     {
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO paniers (id_panier ,id_soiree, tarif, categorie_tarif, quantite) VALUES (?, ?, ?, ?)');
+            $stmt = $this->pdo->prepare('INSERT INTO paniers (id_panier ,id_soiree, tarif, categorie_tarif, quantite) VALUES (?, ?, ?, ?, ?)');
             $stmt->bindParam(1, $idPanier);
             $stmt->bindParam(2, $idSoiree);
             $stmt->bindParam(3, $tarif);
@@ -230,8 +230,6 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         } catch (\Exception $e) {
             throw new RepositoryException('getNbBilletByIdSoiree : erreur lors du chargement du biller : id soiree : '. $id ." " . $e->getMessage());
         }
-
-
         $nb = $stmt->fetch();
         return $nb['count'];
     }
