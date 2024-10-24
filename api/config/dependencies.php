@@ -54,7 +54,7 @@ return [
     // SERVICES
 
     SoireeServiceInterface::class => function (ContainerInterface $c) {
-        return new SoireeService($c->get(SoireesRepositoryInterface::class));
+        return new SoireeService($c->get(SoireesRepositoryInterface::class),$c->get(UtilisateursRepositoryInterface::class));
     },
 
     SpectacleServiceInterface::class => function (ContainerInterface $c) {
