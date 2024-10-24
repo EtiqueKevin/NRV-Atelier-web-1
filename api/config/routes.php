@@ -77,8 +77,6 @@ return function( App $app): App {
 
     $app->post('/panier[/]', AddPanierAction::class)->add(AuthMiddleware::class);
 
-    $app->delete('/panier[/]', DeletePanierAction::class);
-
     $app->post('/panier/valider[/]', ValiderPanierAction::class)->add(AuthMiddleware::class);
 
     return $app;

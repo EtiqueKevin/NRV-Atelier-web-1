@@ -27,7 +27,7 @@ class SpectacleService implements SpectacleServiceInterface{
     }
 
 
-    public function getSpectacles(string $date,string $style,string $lieu): array{
+    public function getSpectacles(array $date,array $style,array $lieu): array{
         try {
             $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu);
             $tabDTO = [];

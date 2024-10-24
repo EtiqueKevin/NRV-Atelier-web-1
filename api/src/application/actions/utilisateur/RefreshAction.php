@@ -24,7 +24,7 @@ class RefreshAction extends AbstractAction
             $h = $rq->getHeader('Authorization')[0];
             $tokenstring = sscanf($h, "Bearer %s")[0];
         }catch (\Exception $e){
-            throw new HttpBadRequestException("erreur lors de la recuperation du token : ".$e->getMessage());
+            throw new HttpBadRequestException($rq, "erreur lors de la recuperation du token : ".$e->getMessage());
         }
 
         try {

@@ -42,7 +42,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
-    public function getSpectacles( string $date,string $style,string $lieu): array{
+    public function getSpectacles( array $date, array $style,array $lieu): array{
         //le 1=1 c'est pour que je puisse mettre AND au début de chaque condition
         $sql = 'SELECT * FROM spectacles inner join soirees_spectacles on spectacles.id = id_spectacle inner join soirees on id_soiree = soirees.id  WHERE 1=1 ';
         $params = [];

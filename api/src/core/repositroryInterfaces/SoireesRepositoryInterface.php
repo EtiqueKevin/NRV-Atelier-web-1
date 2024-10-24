@@ -33,7 +33,7 @@ interface SoireesRepositoryInterface{
 
     public function getNbPlaceByIdSoiee(string $idSoiee): int;
 
-    public function getSpectacles(string $date,string $style,string $lieu): array;
+    public function getSpectacles(array $date,array $style,array $lieu): array;
 
     public function getStyles(): array;
 }

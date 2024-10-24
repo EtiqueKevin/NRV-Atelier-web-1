@@ -11,7 +11,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpUnauthorizedException;
 use nrv\application\providers\auth\AuthProviderInterface;
 use nrv\application\providers\auth\JWTManager;
-use nrv\core\dto\auth\AuthDTO;
 
 class AuthMiddleware{
 
