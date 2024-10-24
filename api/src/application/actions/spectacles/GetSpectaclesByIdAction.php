@@ -43,6 +43,6 @@ class GetSpectaclesByIdAction extends AbstractAction
 
 
         $rs->getBody()->write(json_encode($res));
-        return $rs->withHeader('Content-Type', 'application/json');
+        return $rs->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 }

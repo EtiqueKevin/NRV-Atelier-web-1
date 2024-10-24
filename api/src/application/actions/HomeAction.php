@@ -102,7 +102,7 @@ use Psr\Http\Message\ServerRequestInterface;
         $html .= '</table>';
 
         $rs->getBody()->write($html);
-        return $rs->withHeader('Content-Type', 'text/html');
+        return $rs->withStatus(200)->withHeader('Content-Type', 'text/html');
     }
 
 }

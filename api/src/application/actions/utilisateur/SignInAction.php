@@ -46,6 +46,6 @@ class SignInAction extends AbstractAction
 
         $rs->getBody()->write(json_encode($response));
 
-        return $rs->withHeader('Content-Type', 'application/json');
+        return $rs->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 }

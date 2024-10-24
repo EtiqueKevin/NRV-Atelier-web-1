@@ -39,6 +39,6 @@ class PostPayerCommandeAction extends AbstractAction
         }catch (\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
-        return $rs->withHeader('Content-Type', 'application/json');
+        return $rs->withStatus(200)->withHeader('Content-Type', 'application/json');
     }
 }

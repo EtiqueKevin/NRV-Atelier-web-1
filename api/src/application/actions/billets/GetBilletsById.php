@@ -42,7 +42,7 @@ class GetBilletsById extends AbstractAction {
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
         $rs->getBody()->write(json_encode($res));
-        return $rs->withHeader('Content-Type', 'text/html');
+        return $rs->withStatus(200)->withHeader('Content-Type', 'text/html');
     }
 
 
