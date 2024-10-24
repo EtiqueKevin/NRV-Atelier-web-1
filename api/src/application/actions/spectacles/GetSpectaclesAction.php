@@ -91,6 +91,9 @@ class GetSpectaclesAction extends AbstractAction
                 throw new HttpBadRequestException($rq, $e->getMessage());
             }
         }
+        //numéro de page
+        $res['page'] = $page;
+
 
         // Ajouter des liens vers la page suivante et la page précédente
         $res['links'] = [];
