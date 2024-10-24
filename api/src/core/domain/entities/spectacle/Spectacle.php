@@ -17,7 +17,7 @@ class Spectacle extends Entity {
 
     protected string $url_video;
 
-    protected string $idSoiree;
+    protected ?string $idSoiree;
 
     protected array $imgs;
 
