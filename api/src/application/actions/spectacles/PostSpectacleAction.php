@@ -32,7 +32,8 @@ class PostSpectacleAction extends AbstractAction{
             ->key('heure', Validator::stringType()->notEmpty())
             ->key('url_video', Validator::intType()->notEmpty())
             ->key('idSoiree', Validator::intType()->notEmpty())
-            ->key('imgs',Validator::arrayType()->notEmpty());
+            ->key('imgs',Validator::arrayType()->notEmpty())
+            ->key('artistes',Validator::arrayType());
         try {
             $placeInputValidator->assert($data);
         } catch (NestedValidationException $e) {
@@ -45,8 +46,9 @@ class PostSpectacleAction extends AbstractAction{
         $url_video = $data['url_video'];
         $idSoiree = $data['idSoiree'];
         $imgs = $data['imgs'];
+        $artistes = $data['artistes'];
 
-        $spectacleCreerDTO = new SpectacleCreerDTO($titre,$description,$heure,$url_video,$idSoiree,$imgs);
+        $spectacleCreerDTO = new SpectacleCreerDTO($titre,$description,$heure,$url_video,$idSoiree,$imgs,$artistes);
         try {
             $this->spectacleService->putSpectacle($spectacleCreerDTO);
         }catch (\Exception $e){

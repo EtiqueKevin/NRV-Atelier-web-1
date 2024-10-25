@@ -370,6 +370,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $heure = $spectacle->heure->format('H:i:s');
         $url_video = $spectacle->url_video;
         $imgs = $spectacle->imgs;
+        $artistes = $spectacle->artistes;
 
         try {
             $stmt = $this->pdo->prepare('INSERT INTO spectacles (titre, description, heure,url_video) VALUES (?, ?, ?, ?) RETURNING id');
@@ -381,6 +382,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $idSpec = $stmt->fetchColumn();
 
             $this->liaisonImageSpectacle($imgs,$idSpec);
+            $this->liaisonArtisteSpectacle($artistes,$idSpec);
 
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion spectacle : '.$e->getMessage());
@@ -423,6 +425,21 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
                 $stmt = $this->pdo->prepare('INSERT INTO img_spectacles (id_spectacle , url_img) VALUES (?, ?)');
                 $stmt->bindParam(1, $idSpec, PDO::PARAM_STR);
                 $stmt->bindParam(2, $i, PDO::PARAM_STR);
+                $stmt->execute();
+            }
+
+        }catch (\Exception $e){
+            throw new UtilisateurException('erreur insertion image : '.$e->getMessage());
+        }
+    }
+
+    public function liaisonArtisteSpectacle(array $artistes, string $idSpec):void{
+        try {
+
+            foreach ($artistes as $a){
+                $stmt = $this->pdo->prepare('INSERT INTO artistes_spectacles (id_spectacle , id_artiste) VALUES (?, ?)');
+                $stmt->bindParam(1, $idSpec, PDO::PARAM_STR);
+                $stmt->bindParam(2, $a, PDO::PARAM_STR);
                 $stmt->execute();
             }
 
