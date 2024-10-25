@@ -38,14 +38,14 @@ class UtilisateurService implements UtilisateurServiceInterface{
             $user = $this->utilisateursRepository->UtilisateurByEmail($utiInpuDTO->email);
 
             if ($user && password_verify($utiInpuDTO->mdp, $user->mdp)) {
-                $this->logger->log(Level::Info, "UtilisateurService - verifyCrendentials : " . date('Y-m-d H:i:s'));
+                $this->logger->log(Level::Info, "UtilisateurService - verifyCrendentials ");
                 return $user->toDTO();
             }else{
-                $this->logger->log(Level::Error, "UtilisateurService - verifyCredentials : " . "mot de passe ou identifiant incorrect | " . date('Y-m-d H:i:s'));
+                $this->logger->log(Level::Error, "UtilisateurService - verifyCredentials : " . "mot de passe ou identifiant incorrect " );
                 throw new UtilisateurException('mot de passe ou identifiant incorrect');
             }
         }catch (\Exception $e){
-            $this->logger->log(Level::Error, "UtilisateurService - verifyCredentials : " . "Connexion échoué | " . date('Y-m-d H:i:s'));
+            $this->logger->log(Level::Error, "UtilisateurService - verifyCredentials : " . "Connexion échoué ");
             throw new UtilisateurException('Connexion échoué : '.$e->getMessage());
         }
     }
@@ -63,12 +63,12 @@ class UtilisateurService implements UtilisateurServiceInterface{
         }catch (RepositoryEntityNotFoundException $e){
 
         }catch (Exception $e){
-            $this->logger->log(Level::Error, "UtilisateurService - createUtilisateur : " . "recherche utilisateur echoué | " . date('Y-m-d H:i:s'));
+            $this->logger->log(Level::Error, "UtilisateurService - createUtilisateur : " . "recherche utilisateur echoué ");
             throw new UtilisateurException('createutilisateur : recherche utilisateur',$e->getMessage());
         }
 
         if(!$utiInputCreDTO->mdp == $utiInputCreDTO->mdp2){
-            $this->logger->log(Level::Error, "UtilisateurService - createUtilisateur : " . "mot de passe et mot de passe de confirmation différents | " . date('Y-m-d H:i:s'));
+            $this->logger->log(Level::Error, "UtilisateurService - createUtilisateur : " . "mot de passe et mot de passe de confirmation différents ");
             throw new UtilisateurException("createutilisateur : mot de passe et mot de passe de confirmation differente");
         }
 
@@ -77,10 +77,10 @@ class UtilisateurService implements UtilisateurServiceInterface{
         try {
             $utiEntity = new Utilisateur($utiInputCreDTO->nom,$utiInputCreDTO->prenom,$utiInputCreDTO->email,$mdphash,0);
             $id = $this->utilisateursRepository->saveUtilisateur($utiEntity);
-            $this->logger->log(Level::Info, "UtilisateurService - createUtilisateur : "  . date('Y-m-d H:i:s'));
+            $this->logger->log(Level::Info, "UtilisateurService - createUtilisateur ");
 
         }catch (\Exception $e){
-            $this->logger->log(Level::Error, "UtilisateurService - verifyCredentials : " . "mot de passe ou identifiant incorrect" . date('Y-m-d H:i:s'));
+            $this->logger->log(Level::Error, "UtilisateurService - verifyCredentials : " . "mot de passe ou identifiant incorrect" );
             throw new UtilisateurException('createutilisateur ; erreur insertion bd utilisateur : '.$e->getMessage());
         }
     }
@@ -93,7 +93,7 @@ class UtilisateurService implements UtilisateurServiceInterface{
      */
     public function getUtilisateurById(string $id):UtilisateurDTO{
         $utiEntity = $this->utilisateursRepository->UtilisateurById($id);
-        $this->logger->log(Level::Info, "UtilisateurService - getUtilisateurById : " . date('Y-m-d H:i:s'));
+        $this->logger->log(Level::Info, "UtilisateurService - getUtilisateurById" );
         return new UtilisateurDTO($utiEntity);
     }
 
