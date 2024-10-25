@@ -199,7 +199,7 @@ export function handleConnexionForm() {
                 const password = document.getElementById('password').value;
                 const user = await users.connexion(email, password);
                 if (user) {
-                    ui.displayNav(users.isConnected());
+                    ui.displayNav(users.isConnected(), users.isAdmin());
                     ui.displayHome();
                 }
             } catch (error) {
