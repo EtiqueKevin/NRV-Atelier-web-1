@@ -42,12 +42,14 @@ class PostSpectacleAction extends AbstractAction{
         $directory = __DIR__ . '../../../../public/img';
 
         $uploadedFiles = $rq->getUploadedFiles();
-        $uploadedFile = $uploadedFiles['images'];
 
         $tabNomImage = [];
 
-        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-            $filename = $this->spectacleService->moveUploadedFile($directory, $uploadedFile);
+        foreach ($uploadedFiles['images'] as $uploadedFile) {
+            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                $filename = $this->spectacleService->moveUploadedFile($directory, $uploadedFile);
+                $tabNomImage[] = $filename;
+            }
         }
 
         $tabNomImage[] =$filename;
