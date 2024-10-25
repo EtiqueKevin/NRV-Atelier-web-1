@@ -92,7 +92,13 @@ class UtilisateurService implements UtilisateurServiceInterface{
      * @return UtilisateurDTO
      */
     public function getUtilisateurById(string $id):UtilisateurDTO{
-        $utiEntity = $this->utilisateursRepository->UtilisateurById($id);
+        try {
+            $utiEntity = $this->utilisateursRepository->UtilisateurById($id);
+        }catch (\Exception $e){
+            $this->logger->log(Level::Error, "UtilisateurService - getUtilisateurById erreur ".$e->getMessage() );
+            throw new UtilisateurException("UtilisateurService - getUtilisateurById erreur ".$e->getMessage());
+        }
+
         $this->logger->log(Level::Info, "UtilisateurService - getUtilisateurById" );
         return new UtilisateurDTO($utiEntity);
     }

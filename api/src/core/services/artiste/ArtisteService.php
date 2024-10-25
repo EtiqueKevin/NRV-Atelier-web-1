@@ -26,7 +26,12 @@ class ArtisteService implements ArtisteServiceInterface {
      * @return ArtisteOutputDTO
      */
     public function getArtistes(): ArtisteOutputDTO{
-        $artistes = $this->soireesRepository->getArtistes();
+        try {
+            $artistes = $this->soireesRepository->getArtistes();
+        }catch (\Exception $e){
+            $this->logger->log(Level::Error, "ArtisteService - GetArtiste : erreur ".$e->getMessage());
+            throw new ArtisteException(' ArtisteService : GetArtiste '.$e->getMessage());
+        }
 
         $artisteDTO = [];
 
@@ -34,7 +39,7 @@ class ArtisteService implements ArtisteServiceInterface {
             $artisteDTO[] = $a->toDTO();
         }
 
-        $this->logger->log(Level::Info, "ArtisteService - Get Artiste : ");
+        $this->logger->log(Level::Info, "ArtisteService - GetArtiste : ");
 
         return new ArtisteOutputDTO($artisteDTO);
     }
