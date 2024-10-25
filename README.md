@@ -2,7 +2,7 @@
 
 # GROUPE :
 - [Paul BRUSON](https://github.com/Dr-J-Watson)
-- [Kevin Ethique](https://github.com/EtiqueKevin)
+- [Kevin Etique](https://github.com/EtiqueKevin)
 - [Amaury Quilliec](https://github.com/Aliec-AQ)
 - [Clément Nétange](https://github.com/clem-png)
 
