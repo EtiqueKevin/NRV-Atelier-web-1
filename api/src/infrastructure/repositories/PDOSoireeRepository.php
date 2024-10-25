@@ -53,6 +53,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             throw new RepositoryException('Erreur lors du chargement de la collection AllSpectacle : ' . $e->getMessage());
         }
     }
+
     public function getSpectacles(array $date, array $style, array $lieu, int $page): array {
         $sql = 'SELECT * FROM spectacles 
                 INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 
@@ -107,7 +108,42 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specTab;
     }
     
+    public function getCountSpectacles(array $date, array $style, array $lieu): int {
+        $sql = 'SELECT COUNT(*) FROM spectacles 
+                INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 
+                INNER JOIN soirees ON id_soiree = soirees.id 
+                WHERE 1=1 ';
         
+        $params = [];
+        
+        if (!empty($date)) {
+            $placeholders = implode(',', array_fill(0, count($date), '?'));
+            $sql .= "AND date IN (" . $placeholders . ")";
+            $params = array_merge($params, $date);
+        }
+        
+        if (!empty($style)) {
+            $placeholders = implode(',', array_fill(0, count($style), '?'));
+            $sql .= "AND thematique IN (" . $placeholders . ")";
+            $params = array_merge($params, $style);
+        }
+        
+        if (!empty($lieu)) {
+            $placeholders = implode(',', array_fill(0, count($lieu), '?'));
+            $sql .= "AND id_lieu IN (" . $placeholders . ")";
+            $params = array_merge($params, $lieu);
+        }
+        
+        // Préparation de la requête
+        $stmt = $this->pdo->prepare($sql);
+        
+        // Exécution avec les autres paramètres
+        $stmt->execute($params); // Executez maintenant avec tous les paramètres
+    
+        $count = $stmt->fetchColumn();
+        
+        return $count;
+    }
 
     public function getSpectacleById(string $id) : Spectacle{
         try{

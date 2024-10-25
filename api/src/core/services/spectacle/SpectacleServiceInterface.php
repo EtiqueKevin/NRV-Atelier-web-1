@@ -13,6 +13,8 @@ interface SpectacleServiceInterface
 
     public function getSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array;
 
+    public function getNbSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): int;
+
     public function getSpectacleById(string $id): SpectacleDTO;
 
     public function getArtistesBySpectacle(string $idSpectacle): array;

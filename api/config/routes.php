@@ -22,6 +22,8 @@ use nrv\application\actions\utilisateur\RefreshAction;
 use nrv\application\actions\utilisateur\SignInAction;
 use nrv\application\actions\utilisateur\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
+use nrv\application\middlewares\AuthorizationBackMiddleware;
+use nrv\application\middlewares\AuthorizationLambdaMiddleware;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -122,7 +124,6 @@ return function( App $app): App {
     // backoffice
 
     $app->get('/backoffice/soirees/{ID-SOIREE}[/]', GetSoireeByIdBackofficeAction::class)
-        ->add(AuthorizationBackofficeMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('get_backoffice_soiree_by_id');
 

@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
+use nrv\core\dto\spectacle\InputFiltresSpectaclesDTO;
 
 class GetSpectaclesAction extends AbstractAction
 {
@@ -27,88 +28,68 @@ class GetSpectaclesAction extends AbstractAction
         $dates = [];
         $styles = [];
         $lieux = [];
-        if (!empty($params)) {
-            if (isset($params['dates'])) {
-                $dates = explode(";" ,$params['dates']);
-                foreach ($dates as $d) {
-                    $dateValidator = Validator::date('Y-m-d')->notEmpty();
-                    try {
-                        $dateValidator->assert($d);
-                    } catch (\Exception $e) {
-                        throw new \HttpInvalidParamException($rq, $e->getMessage());
-                    }
+
+        if (isset($params['dates'])) {
+            $dates = explode(";" ,$params['dates']);
+            foreach ($dates as $d) {
+                $dateValidator = Validator::date('Y-m-d')->notEmpty();
+                try {
+                    $dateValidator->assert($d);
+                } catch (\Exception $e) {
+                    throw new \HttpInvalidParamException($rq, $e->getMessage());
                 }
             }
-            if (isset($params['styles'])) {
-                $styles = explode(";" ,$params['styles']);
-            }
-            if (isset($params['lieux'])) {
-                $lieux = explode(";", $params['lieux']);
-            }
-
-            try {
-                // On récupère les spectacles avec pagination
-                $spectacles = $this->spectacleService->getSpectacles($dates, $styles, $lieux, $page);
-
-                $spectaclesWithHref = array_map(function($spectacle) {
-                    return [
-                        'spectacle' => $spectacle,
-                        'links' =>[
-                            'self' =>[
-                                'href' => '/spectacle/' . $spectacle->getId()
-                            ]
-                        ]
-                    ];
-                }, $spectacles);
-                $res = [
-                    'type' => 'collection',
-                    'spectacles' => $spectaclesWithHref,
-                ];
-
-            } catch (\Exception $e) {
-                throw new HttpBadRequestException($rq, $e->getMessage());
-            }
-
-        } else {
-            try {
-                // Récupérer les spectacles avec pagination sans filtres
-                $spectacles = $this->spectacleService->getAllSpectacles($page);
-                $spectaclesWithHref = array_map(function($spectacle) {
-                    return [
-                        'spectacle' => $spectacle,
-                        'links' =>[
-                            'self' =>[
-                                'href' => '/spectacle/' . $spectacle->getId()
-                            ]
-                        ]
-                    ];
-                }, $spectacles);
-                $res = [
-                    'type' => 'collection',
-                    'spectacles' => $spectaclesWithHref,
-                ];
-            } catch (\Exception $e) {
-                throw new HttpBadRequestException($rq, $e->getMessage());
-            }
         }
+        if (isset($params['styles'])) {
+            $styles = explode(";" ,$params['styles']);
+        }
+        if (isset($params['lieux'])) {
+            $lieux = explode(";", $params['lieux']);
+        }
+
+        try {
+            $nbSpectacles = $this->spectacleService->getNbSpectacles(new InputFiltresSpectaclesDTO($dates, $styles, $lieux, $page));
+
+            // On récupère les spectacles avec pagination
+            $spectacles = $this->spectacleService->getSpectacles(new InputFiltresSpectaclesDTO($dates, $styles, $lieux, $page));
+
+            $spectaclesWithHref = array_map(function($spectacle) {
+                return [
+                    'spectacle' => $spectacle,
+                    'links' =>[
+                        'self' =>[
+                            'href' => '/spectacle/' . $spectacle->getId()
+                        ]
+                    ]
+                ];
+            }, $spectacles);
+            $res = [
+                'type' => 'collection',
+                'spectacles' => $spectaclesWithHref,
+            ];
+
+        } catch (\Exception $e) {
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
+
         //numéro de page
         $res['page'] = $page;
 
 
         // Ajouter des liens vers la page suivante et la page précédente
-        $res['links'] = [];
         if ($page > 1) {
             $res['links']['previous'] = [
                 'href' => '/spectacles?page=' . ($page - 1)
             ];
         }
 
-        // Vérifier s'il y a encore une page suivante (seulement s'il y a exactement 12 résultats)
-        if (count($spectacles) == 12) {
+        $dernierePage = ceil($nbSpectacles / 12);
+        if ($page < $dernierePage) {
             $res['links']['next'] = [
                 'href' => '/spectacles?page=' . ($page + 1)
             ];
         }
+
 
         $rs->getBody()->write(json_encode($res));
         return $rs->withStatus(200)->withHeader('Content-Type', 'application/json');

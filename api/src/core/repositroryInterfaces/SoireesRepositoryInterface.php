@@ -13,6 +13,8 @@ interface SoireesRepositoryInterface{
 
     public function getSpectacleByIdSoiree(string $idSoiree): array;
 
+    public function getCountSpectacles(array $date, array $style, array $lieu): int;
+
     public function getSoireeById(string $id): Soiree;
 
     public function getLieuById(string $id): Lieu;

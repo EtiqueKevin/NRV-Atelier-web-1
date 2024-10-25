@@ -30,6 +30,18 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+    public function getNbSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): int{
+        $date = $filtresSpectaclesDTO->date;
+        $style = $filtresSpectaclesDTO->style;
+        $lieu = $filtresSpectaclesDTO->lieu;
+        $page = $filtresSpectaclesDTO->page;
+        try {
+            return $this->soireeRepository->getCountSpectacles($date, $style, $lieu);
+        } catch (\Exception $e) {
+            throw new spectacleException($e->getMessage());
+        }
+    }
+
 
     public function getSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array{
         $date = $filtresSpectaclesDTO->date;

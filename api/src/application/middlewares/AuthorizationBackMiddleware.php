@@ -22,7 +22,7 @@ class AuthorizationBackMiddleware{
         $routeContext = RouteContext::fromRequest($rq);
         $route = $routeContext->getRoute();
 
-        $user_id = $rq->getAttribute('user_id'); // ou getArgument
+        $user_id = $rq->getArgument('user_id');
         $operation = $route->getArgument('operation');
 
         if($this->authServInter->isGranted($user_id, $operation) == 2){
