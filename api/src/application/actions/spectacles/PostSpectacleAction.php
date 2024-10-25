@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 
-class PutSpectacleAction extends AbstractAction{
+class PostSpectacleAction extends AbstractAction{
 
     private SpectacleServiceInterface $spectacleService;
 

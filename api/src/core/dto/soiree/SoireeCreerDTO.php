@@ -6,12 +6,12 @@ use nrv\core\dto\DTO;
 
 class SoireeCreerDTO extends DTO
 {
-    private string $nom;
-    private string $thematique;
-    private string $date;
-    private string $lieu;
-    private float $tarif_normal;
-    private float $tarif_reduit;
+    protected string $nom;
+    protected string $thematique;
+    protected string $date;
+    protected string $lieu;
+    protected float $tarif_normal;
+    protected float $tarif_reduit;
 
     public function __construct($nom, $thematique, $date, $lieu, $tarif_normal, $tarif_reduit)
     {

@@ -13,11 +13,11 @@ use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
 use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
 use nrv\application\actions\soirees\GetStylesAction;
-use nrv\application\actions\soirees\PutSoireeAction;
+use nrv\application\actions\soirees\PostSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
-use nrv\application\actions\spectacles\PutSpectacleAction;
+use nrv\application\actions\spectacles\PostSpectacleAction;
 use nrv\application\actions\utilisateur\RefreshAction;
 use nrv\application\actions\utilisateur\SignInAction;
 use nrv\application\actions\utilisateur\SignUpAction;
@@ -46,8 +46,9 @@ return function( App $app): App {
     $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class)
         ->setName('get_spectacle_by_id');
 
-    $app->put('/spectacle[/]',PutSpectacleAction::class)
-        ->setName('put_spectacle');;
+    $app->post(
+        '/spectacles[/]',PostSpectacleAction::class)
+        ->setName('post_spectacle');
 
 
     // artiste
@@ -60,8 +61,9 @@ return function( App $app): App {
     $app->get('/soirees/{ID-SOIREE}[/]', GetSoireeByIdAction::class)
         ->setName('get_soiree_by_id');
 
-    $app->put('/soiree[/]', PutSoireeAction::class)
-        ->setName('put_soiree');
+    $app->post('/soirees[/]', PostSoireeAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('post_soirees');
 
     //lieux
 

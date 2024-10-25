@@ -17,14 +17,14 @@ use Psr\Http\Message\ServerRequestInterface;
             // Spectacles
             ['method' => 'GET', 'route' => '/spectacles', 'action' => 'GetSpectaclesAction'],
             ['method' => 'GET', 'route' => '/spectacle/{ID-SPECTACLE}', 'action' => 'GetSpectaclesByIdAction'],
-            ['method' => 'PUT', 'route' => '/spectacle', 'action' => 'PutSpectacleAction'],
+            ['method' => 'POST', 'route' => '/spectacles', 'action' => 'PostSpectacleAction'],
 
             // Artiste
             ['method' => 'GET', 'route' => '/artiste/{ID-ARTISTE}', 'action' => 'GetArtisteByIdAction'],
 
             // Soirée
             ['method' => 'GET', 'route' => '/soirees/{ID-SOIREE}', 'action' => 'GetSoireeByIdAction'],
-            ['method' => 'PUT', 'route' => '/soiree', 'action' => 'PutSoireeAction'],
+            ['method' => 'POST', 'route' => '/soiree', 'action' => 'PostSoireeAction'],
 
             // Lieux
             ['method' => 'GET', 'route' => '/lieux', 'action' => 'GetLieuxAction'],

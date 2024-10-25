@@ -9,11 +9,11 @@ use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
 use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
-use nrv\application\actions\soirees\PutSoireeAction;
+use nrv\application\actions\soirees\PostSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
-use nrv\application\actions\spectacles\PutSpectacleAction;
+use nrv\application\actions\spectacles\PostSpectacleAction;
 use nrv\application\actions\utilisateur\SignInAction;
 use nrv\application\actions\utilisateur\SignUpAction;
 use nrv\application\middlewares\AuthMiddleware;
@@ -149,12 +149,12 @@ return [
         return new UpdatePanierAction($c->get(PanierServiceInterface::class));
     },
 
-    PutSoireeAction::class => function (ContainerInterface $c) {
-        return new PutSoireeAction($c->get(SoireeServiceInterface::class));
+    PostSoireeAction::class => function (ContainerInterface $c) {
+        return new PostSoireeAction($c->get(SoireeServiceInterface::class));
     },
 
-    PutSpectacleAction::class => function (ContainerInterface $c) {
-        return new PutSpectacleAction($c->get(SpectacleServiceInterface::class));
+    PostSpectacleAction::class => function (ContainerInterface $c) {
+        return new PostSpectacleAction($c->get(SpectacleServiceInterface::class));
     },
 
     // MIDDLEWARES

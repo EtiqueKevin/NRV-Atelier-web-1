@@ -389,7 +389,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $stmt->bindParam(1, $nom, PDO::PARAM_STR);
             $stmt->bindParam(2, $thematique, PDO::PARAM_STR);
             $stmt->bindParam(3, $date, PDO::PARAM_STR);
-            $stmt->bindParam(4, $lieu->id, PDO::PARAM_STR);
+            $stmt->bindParam(4, $lieu, PDO::PARAM_STR);
             $stmt->bindParam(5, $tarif_normal, PDO::PARAM_STR);
             $stmt->bindParam(6, $tarif_reduit, PDO::PARAM_STR);
             $stmt->execute();
