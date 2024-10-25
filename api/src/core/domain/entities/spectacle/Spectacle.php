@@ -21,6 +21,8 @@ class Spectacle extends Entity {
 
     protected array $imgs;
 
+    protected ?array $artistes;
+
     public function __construct(string $titre, string $desc, \DateTime $h, string $url_video, array $imgs){
         $this->titre = $titre;
         $this->description = $desc;
@@ -31,6 +33,10 @@ class Spectacle extends Entity {
 
     public function setIdSoiree($ids){
         $this->idSoiree = $ids;
+    }
+
+    public function setArtistes(array $artistes){
+        $this->artistes = $artistes;
     }
 
     public function toDTO():SpectacleDTO{

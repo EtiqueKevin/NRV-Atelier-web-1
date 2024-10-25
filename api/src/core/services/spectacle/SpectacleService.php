@@ -79,8 +79,9 @@ class SpectacleService implements SpectacleServiceInterface{
 
     public function putSpectacle(SpectacleCreerDTO $spectacleDTO) : void{
         try{
-            $spectacleEnity = new Spectacle($spectacleDTO->titre,$spectacleDTO->description,\DateTime::createFromFormat('H:i:s',$spectacleDTO->heure),$spectacleDTO->url_video,$spectacleDTO->imgs);
+            $spectacleEnity = new Spectacle($spectacleDTO->titre,$spectacleDTO->description,\DateTime::createFromFormat('H:i:s',$spectacleDTO->heure),$spectacleDTO->url_video,$spectacleDTO->imgs,$spectacleDTO->artistes);
             $spectacleEnity->setIdSoiree($spectacleDTO->idSoiree);
+            $spectacleEnity->setArtistes($spectacleDTO->artistes);
 
             $this->soireeRepository->saveSpectacle($spectacleEnity);
 
