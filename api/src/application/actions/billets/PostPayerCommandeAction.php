@@ -37,13 +37,12 @@ class PostPayerCommandeAction extends AbstractAction
 
         try {
             $panierDTO = $this->panierService->getPanier($idUser);
-            $date = \DateTime::createFromFormat('m/y', $dateExpiration);
 
             if (!$numeroValidator->validate($numero)) {
                 throw new PanierException('Numero invalide');
             }
 
-            if(!$dateExpirationValidator->validate($dateExpiration) ){
+            if($dateExpirationValidator->validate($dateExpiration) ){
                 throw new PanierException('Date d\'expiration invalide');
             }
 
@@ -54,7 +53,7 @@ class PostPayerCommandeAction extends AbstractAction
             if (!$panierDTO->valide){
                 throw new PanierException('Panier invalidé');
             }
-            $verifDTO = new PanierVerifDTO($numero, $date, $code);
+            $verifDTO = new PanierVerifDTO($numero, $dateExpiration, $code);
             $valide = $this->panierService->verifier($verifDTO, $panierDTO);
 
             if ($valide) {

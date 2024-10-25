@@ -122,7 +122,7 @@ class PanierService implements PanierServiceInterface
     public function verifier(PanierVerifDTO $panierVerifDTO, PanierDTO $panierDTO) : bool
     {
         $numero = $panierVerifDTO->numero;
-        $dateExpiration = $panierVerifDTO->dateExpiration;
+        $dateExpiration = $panierVerifDTO->date;
         $code = $panierVerifDTO->code;
 
         try {
