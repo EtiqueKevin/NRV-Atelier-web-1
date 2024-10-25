@@ -24,7 +24,6 @@ export function displaySpectacleList(data) {
 }
 
 export function displaySoiree(data, connected, backOffice) {
-    console.log(backOffice);
     const template = Handlebars.compile(templates.soireeTemplate);
     const html = template({ soiree: data, connected: connected, backoffice: backOffice});
     document.getElementById('main-content').innerHTML = html;
@@ -112,7 +111,6 @@ export function displayBackOfficeAddSoiree(locations, themes){
 }
 
 export function displayBackOfficeAddSpectacle(soirees, artists) {
-    console.log(soirees);
     const template = Handlebars.compile(templates.addSpectacleTemplate);
     const html = template({ soirees: soirees.soirees, artists: artists });
     document.getElementById('backoffice-content').innerHTML = html;
