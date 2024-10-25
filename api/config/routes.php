@@ -69,7 +69,7 @@ return function( App $app): App {
         ->setName('get_soiree_by_id');
 
     $app->post('/soirees[/]', PostSoireeAction::class)
-        // ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('post_soirees');
 
@@ -92,46 +92,46 @@ return function( App $app): App {
         ->setName('sign_up');
 
     $app->get('/utilisateur/refresh[/]', RefreshAction::class)
-        ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('refresh_token');
 
     // billet
 
     $app->get('/utilisateur/billets[/]', GetBilletsByIdUtilisateur::class)
-        ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('get_billets_by_user');
 
     $app->get('/utilisateur/billet/{ID-BILLET}', GetBilletsById::class)
-        ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('get_billet_by_id');
 
     //panier
 
     $app->get('/panier[/]', GetPanierAction::class)
-        ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('get_panier');
 
     $app->post('/panier[/]', AddPanierAction::class)
-        // ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('add_to_panier');
 
     $app->post('/panier/valider[/]', ValiderPanierAction::class)
-        // ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('validate_panier');
 
     $app->post('/panier/payer[/]', PostPayerCommandeAction::class)
-        // ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('pay_order');
 
     $app->put('/panier/modifier[/]', ModifierPanierAction::class)
-        // ->add(AuthorizationLabdaMiddleware::class)
+        ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('update_panier');
 
