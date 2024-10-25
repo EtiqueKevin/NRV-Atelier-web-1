@@ -29,7 +29,7 @@
 |----|----------------|------|-------|--------|---------|
 |1| Pagination de la liste de spectacles | 🌐 🥷🏻 |  | 📷 |  |
 |2| Modification du panier : nombre de billets | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
-|3| Backoffice : ajouter des spectacles et des soirées | 🌐 |  | 📷 | 🥷🏻 |
+|3| Backoffice : ajouter des spectacles et des soirées | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
 |4| Backoffice : gérer les lieux et le nombre de places sur chaque lieu | 🌐 |  | 📷 |  |
 |5| Backoffice : vente de billets à l’entrée des soirées. L‘application est utilisée par l’organisateur du festival pour la vente de billets sur le lieu de chaque soirée | 🌐 |  | 📷 |  |
 |6| Panier persistant : possibilité d’ajouter des réservations qui sont conservées au-delà de la session jusqu’au paiement | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
