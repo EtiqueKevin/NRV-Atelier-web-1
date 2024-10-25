@@ -23,10 +23,12 @@ use Psr\Http\Message\ServerRequestInterface;
             ['method' => 'GET', 'route' => '/artiste/{ID-ARTISTE}', 'action' => 'GetArtisteByIdAction'],
             ['method' => 'GET', 'route' => '/artistes', 'action' => 'GetArtistesAction'],
 
+
             // Soirée
             ['method' => 'GET', 'route' => '/soirees', 'action' => 'GetSoireesAction'],
             ['method' => 'GET', 'route' => '/soirees/{ID-SOIREE}', 'action' => 'GetSoireeByIdAction'],
-            ['method' => 'POST', 'route' => '/soiree', 'action' => 'PostSoireeAction' => 'middleware' => ['AuthMiddleware', 'AuthorizationBackMiddleware']],
+            ['method' => 'POST', 'route' => '/soiree', 'action' => 'PostSoireeAction', 'middleware' => ['AuthMiddleware', 'AuthorizationBackMiddleware']],
+
 
             // Lieux
             ['method' => 'GET', 'route' => '/lieux', 'action' => 'GetLieuxAction'],
