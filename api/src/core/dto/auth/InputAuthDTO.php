@@ -2,6 +2,8 @@
 
 namespace nrv\core\dto\auth;
 
+use nrv\core\dto\DTO;
+
 class InputAuthDTO extends DTO
 {
     protected string $email;

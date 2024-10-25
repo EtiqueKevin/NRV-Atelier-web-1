@@ -4,5 +4,5 @@ namespace nrv\core\services\authorization;
 
 interface AuthzUtilisateurInterface
 {
-    function isGranted(string $user_id, int $operation, string $ressource_id): bool;
+    function isGranted(string $user_id, int $operation, string $ressource_id): int;
 }

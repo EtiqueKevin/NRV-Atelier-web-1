@@ -30,7 +30,7 @@ class SpectacleCreerDTO extends DTO
         return [
             'titre' => $this->titre,
             'description' => $this->description,
-            'heure' => $this->heure->format('Y-m-d H:i:s'),
+            'heure' => $this->heure,
             'urlVideo' => $this->url_video,
             'idSoiree' => $this->idSoiree,
             'imgs' => $this->imgs

@@ -2,19 +2,19 @@
 
 namespace nrv\application\middlewares;
 
+use nrv\core\services\authorization\AuthzUtilisateurInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Ramsey\Uuid\Uuid;
 use Slim\Exception\HttpForbiddenException;
 use Slim\Routing\RouteContext;
-use nrv\core\services\authorization\AuthzUtilisateurServiceInterface;
 
 class AuthorizationLambdaMiddleware{
 
-    protected AuthzUtilisateurServiceInterface $authServInter;
+    protected AuthzUtilisateurInterface $authServInter;
 
-    public function __construct( AuthzUtilisateurServiceInterface $authServInter){
+    public function __construct( AuthzUtilisateurInterface $authServInter){
         $this->authServInter = $authServInter;
     }
 
