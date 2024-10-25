@@ -9,11 +9,9 @@ use nrv\core\domain\entities\spectacle\Spectacle;
 
 interface SoireesRepositoryInterface{
 
-    public function getAllSpectacles(int $page): array;
+    public function getAllSpectacles(array $date, array $style, array $lieu): array;
 
     public function getSpectacleByIdSoiree(string $idSoiree): array;
-
-    public function getCountSpectacles(array $date, array $style, array $lieu): int;
 
     public function getSoireeById(string $id): Soiree;
 

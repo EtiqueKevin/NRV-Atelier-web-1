@@ -64,10 +64,9 @@ class GetSpectaclesAction extends AbstractAction
         }
 
         try {
-            $nbSpectacles = $this->spectacleService->getNbSpectacles(new InputFiltresSpectaclesDTO($dates, $styles, $lieux, $page));
-
+            $inputFiltresSpectaclesDTO = new InputFiltresSpectaclesDTO($dates, $styles, $lieux, $page);
             // On récupère les spectacles avec pagination
-            $spectacles = $this->spectacleService->getSpectacles(new InputFiltresSpectaclesDTO($dates, $styles, $lieux, $page));
+            $spectacles = $this->spectacleService->getSpectacles($inputFiltresSpectaclesDTO);
 
             $spectaclesWithHref = array_map(function($spectacle) {
                 return [
@@ -84,6 +83,7 @@ class GetSpectaclesAction extends AbstractAction
                 'spectacles' => $spectaclesWithHref,
             ];
 
+            $allSpectacles = $this->spectacleService->getAllSpectacles($inputFiltresSpectaclesDTO);
         } catch (\Exception $e) {
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
@@ -91,6 +91,13 @@ class GetSpectaclesAction extends AbstractAction
         //numéro de page
         $res['page'] = $page;
 
+        //nombre de spectacles
+        
+        $nbSpectacles = count($allSpectacles);
+
+        //dernière page
+        $dernierePage = ceil($nbSpectacles / 12);
+        $res['last_page'] = $dernierePage;
 
         // Ajouter des liens vers la page suivante et la page précédente
         if ($page > 1) {
@@ -99,7 +106,6 @@ class GetSpectaclesAction extends AbstractAction
             ];
         }
 
-        $dernierePage = ceil($nbSpectacles / 12);
         if ($page < $dernierePage) {
             $res['links']['next'] = [
                 'href' => '/spectacles?page=' . ($page + 1)
