@@ -35,6 +35,15 @@ class ModifierPanierAction extends AbstractAction
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
 
+        if ((filter_var($idSoiree,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS)!== $idSoiree ||
+            filter_var($typeTarif,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $typeTarif ||
+            filter_var($qte,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $qte)) {
+            throw new HttpBadRequestException($rq, 'data non valide : validator && sanitize');
+        }
+
         $panierModifierDTO = new PanierModifierDTO($idUser, $idSoiree, $typeTarif, $qte);
         try {
             $panier = $this->panierService->modifierPanier($panierModifierDTO);
