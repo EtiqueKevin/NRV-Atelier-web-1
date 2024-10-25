@@ -31,6 +31,7 @@ class PostPayerCommandeAction extends AbstractAction
         $dateExpiration = $rq->getParsedBody()['date'];
         $code = $rq->getParsedBody()['code'];
 
+
         $numeroValidator = Validator::digit()->length(16, 16);
         $codeValidator = Validator::digit()->length(3, 3);
         $dateExpirationValidator = Validator::date('m/y')->min('now');
@@ -48,6 +49,15 @@ class PostPayerCommandeAction extends AbstractAction
 
             if(!$codeValidator->validate($code)){
                 throw new PanierException('Code invalide');
+            }
+
+            if ((filter_var($numero,
+                    FILTER_SANITIZE_FULL_SPECIAL_CHARS)!== $numero ||
+                filter_var($dateExpiration,
+                    FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $dateExpiration ||
+                filter_var($code,
+                    FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $code)) {
+                throw new HttpBadRequestException($rq, 'data non valide : validator && sanitize');
             }
 
             if (!$panierDTO->valide){

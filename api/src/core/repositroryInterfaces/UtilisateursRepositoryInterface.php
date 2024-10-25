@@ -40,4 +40,6 @@ interface UtilisateursRepositoryInterface{
     public function addBillets(string $insertions) : void;
 
     public function viderPanier(string $idPanier): void;
+
+    public function deletePanierItem(PanierItem $panierItem): void;
 }

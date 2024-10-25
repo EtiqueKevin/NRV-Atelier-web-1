@@ -94,7 +94,11 @@ class PanierService implements PanierServiceInterface
                     if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) { //si la soiree est la même
                         $panierItem->setQte($qte); //on met à jour la quantité
                         if ($this->verificationDisponibilite($panierItem->qte, $idSoiree)) { //on vérifie si la quantité est disponible
-                            $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+                            if ($qte == 0) { //si la quantité est 0 on supprime l'item
+                                $this->UtilisateursRepository->deletePanierItem($panierItem);
+                            } else {
+                                $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
+                            }
                         }
                     }
                 }

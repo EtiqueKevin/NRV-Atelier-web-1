@@ -267,4 +267,19 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
             throw new RepositoryException('viderPanier : erreur lors de la suppression du panier '. $id ." " . $e->getMessage());
         }
     }
+
+    public function deletePanierItem(PanierItem $panierItem): void{
+        $id_soiree = $panierItem->idSoiree;
+        $categorie_tarif = $panierItem->typeTarif;
+        $id_panier = $panierItem->idPanier;
+        try {
+            $stmt = $this->pdo->prepare('DELETE FROM paniers WHERE id_soiree = ? AND categorie_tarif = ? AND id_panier = ?');
+            $stmt->bindParam(1, $id_soiree);
+            $stmt->bindParam(2, $categorie_tarif);
+            $stmt->bindParam(3, $id_panier);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new RepositoryException('deletePanierItem : erreur lors de la suppression de l\'item'. $panierItem->idSoiree .' du panier '. $panierItem->idPanier ." " . $e->getMessage());
+        }
+    }
 }

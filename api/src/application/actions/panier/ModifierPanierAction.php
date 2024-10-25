@@ -30,7 +30,7 @@ class ModifierPanierAction extends AbstractAction
         try {
             Validator::stringType()->notEmpty()->assert($idSoiree);
             Validator::stringType()->notEmpty()->assert($typeTarif);
-            Validator::intType()->notEmpty()->assert($qte);
+            Validator::intType()->min(0)->assert($qte);
         }catch (\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
