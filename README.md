@@ -4,7 +4,7 @@
 - [Paul BRUSON](https://github.com/Dr-J-Watson)
 - [Kevin Etique](https://github.com/EtiqueKevin)
 - [Amaury Quilliec](https://github.com/Aliec-AQ)
-- [Clément Nétange](https://github.com/clem-png)
+- [Clément Nétange](https://github.com/clem-png) (nom de commit clem-png et clem.png)
 
 # LISTE DES FONCTIONNALITÉS / TABLEAU DE BORD :
 
