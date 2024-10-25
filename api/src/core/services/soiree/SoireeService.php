@@ -86,7 +86,7 @@ class SoireeService implements SoireeServiceInterface{
         return new SoireeDetailBackofficeDTO($nbPlacett,$nbPlaceReserve);
     }
 
-    public function putSoiree(SoireeCreerDTO $soireeCreerDTO): void{
+    public function postSoiree(SoireeCreerDTO $soireeCreerDTO): void{
         try{
             $nom = $soireeCreerDTO->nom;
             $thematique = $soireeCreerDTO->thematique;

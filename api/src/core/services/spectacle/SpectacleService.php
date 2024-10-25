@@ -4,6 +4,7 @@ namespace nrv\core\services\spectacle;
 
 use nrv\core\domain\entities\spectacle\Spectacle;
 use nrv\core\dto\artiste\ArtisteDTO;
+use nrv\core\dto\spectacle\InputFiltresSpectaclesDTO;
 use nrv\core\dto\spectacle\SpectacleCreerDTO;
 use nrv\core\dto\spectacle\SpectacleDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
@@ -30,7 +31,11 @@ class SpectacleService implements SpectacleServiceInterface{
     }
 
 
-    public function getSpectacles(array $date,array $style,array $lieu, int $page): array{
+    public function getSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array{
+        $date = $filtresSpectaclesDTO->date;
+        $style = $filtresSpectaclesDTO->style;
+        $lieu = $filtresSpectaclesDTO->lieu;
+        $page = $filtresSpectaclesDTO->page;
         try {
             $spectacles = $this->soireeRepository->getSpectacles($date, $style, $lieu, $page);
             $tabDTO = [];

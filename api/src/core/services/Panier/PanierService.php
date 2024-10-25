@@ -2,7 +2,10 @@
 
 namespace nrv\core\services\Panier;
 
+use nrv\core\dto\Panier\PanierAddDTO;
 use nrv\core\dto\Panier\PanierDTO;
+use nrv\core\dto\Panier\PanierModifierDTO;
+use nrv\core\dto\Panier\PanierVerifDTO;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
@@ -41,8 +44,13 @@ class PanierService implements PanierServiceInterface
 
     }
 
-    public function addPanier(string $idUser,string $idSoiree,int $tarif, string $typeTarif, int $qte) :PanierDTO
+    public function addPanier(PanierAddDTO $panierAddDTO) :PanierDTO
     {
+        $idUser = $panierAddDTO->idUser;
+        $idSoiree = $panierAddDTO->idSoiree;
+        $tarif = $panierAddDTO->tarif;
+        $typeTarif = $panierAddDTO->typeTarif;
+        $qte = $panierAddDTO->qte;
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
             if(!$panier->valide){
@@ -73,7 +81,10 @@ class PanierService implements PanierServiceInterface
         return $retour;
     }
 
-    public function modifierPanier(string $idUser, string $idSoiree, string $typeTarif, int $qte) : PanierDTO {
+    public function modifierPanier(PanierModifierDTO $panierModifierDTO) : PanierDTO {
+        $idUser = $panierModifierDTO->idUser;
+        $idSoiree = $panierModifierDTO->idSoiree;
+        $qte = $panierModifierDTO->qte;
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
             if(!$panier->valide) {
@@ -107,8 +118,12 @@ class PanierService implements PanierServiceInterface
         }
     }
 
-    public function verifier(string $numero, string $dateExpiration, string $code, PanierDTO $panierDTO) : bool
+    public function verifier(PanierVerifDTO $panierVerifDTO, PanierDTO $panierDTO) : bool
     {
+        $numero = $panierVerifDTO->numero;
+        $dateExpiration = $panierVerifDTO->dateExpiration;
+        $code = $panierVerifDTO->code;
+
         $date = \DateTime::createFromFormat('m/y', $dateExpiration);
         $dateActuellle = new \DateTime();
         $dateActuellle = $dateActuellle->format('m/y');
