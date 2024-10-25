@@ -17,9 +17,12 @@ class SpectacleService implements SpectacleServiceInterface{
         $this->soireeRepository = $soireeRepository;
     }
 
-    public function getAllSpectacles(int $page): array{
+    public function getAllSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array{
+        $date = $filtresSpectaclesDTO->date;
+        $style = $filtresSpectaclesDTO->style;
+        $lieu = $filtresSpectaclesDTO->lieu;
         try {
-            $spectacles = $this->soireeRepository->getAllSpectacles($page);
+            $spectacles = $this->soireeRepository->getAllSpectacles($date, $style, $lieu);
             $tabDTO = [];
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
@@ -29,19 +32,6 @@ class SpectacleService implements SpectacleServiceInterface{
             throw new spectacleException($e->getMessage());
         }
     }
-
-    public function getNbSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): int{
-        $date = $filtresSpectaclesDTO->date;
-        $style = $filtresSpectaclesDTO->style;
-        $lieu = $filtresSpectaclesDTO->lieu;
-        $page = $filtresSpectaclesDTO->page;
-        try {
-            return $this->soireeRepository->getCountSpectacles($date, $style, $lieu);
-        } catch (\Exception $e) {
-            throw new spectacleException($e->getMessage());
-        }
-    }
-
 
     public function getSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array{
         $date = $filtresSpectaclesDTO->date;

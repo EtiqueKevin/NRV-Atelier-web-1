@@ -24,34 +24,51 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     }
 
     //getSpectacles
-    public function getAllSpectacles(int $page): array {
+    public function getAllSpectacles(array $date, array $style, array $lieu): array {
+        $sql = 'SELECT * FROM spectacles 
+                INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 
+                INNER JOIN soirees ON id_soiree = soirees.id 
+                WHERE 1=1 ';
+        
+        $params = [];
+        
+        if (!empty($date)) {
+            $placeholders = implode(',', array_fill(0, count($date), '?'));
+            $sql .= "AND date IN (" . $placeholders . ")";
+            $params = array_merge($params, $date);
+        }
+        
+        if (!empty($style)) {
+            $placeholders = implode(',', array_fill(0, count($style), '?'));
+            $sql .= "AND thematique IN (" . $placeholders . ")";
+            $params = array_merge($params, $style);
+        }
+        
+        if (!empty($lieu)) {
+            $placeholders = implode(',', array_fill(0, count($lieu), '?'));
+            $sql .= "AND id_lieu IN (" . $placeholders . ")";
+            $params = array_merge($params, $lieu);
+        }
+                
+        // Préparation de la requête
+        $stmt = $this->pdo->prepare($sql);
+        
+        // Exécution avec les autres paramètres
+        $stmt->execute($params); // Executez maintenant avec tous les paramètres
+    
+        $spectacles = $stmt->fetchAll();
+        $specTab = [];
+        
         try {
-            $offset = ($page - 1) * 12;
-            
-            // Utilisation de la substitution de variable pour OFFSET
-            $stmt = $this->pdo->prepare('SELECT * FROM spectacles LIMIT 12 OFFSET :offset');
-            
-            // Cast explicite de l'offset en entier
-            $stmt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
-            $stmt->execute();
-    
-            $spectacles = $stmt->fetchAll();
-            
-            if (!$spectacles) {
-                throw new RepositoryEntityNotFoundException('Pas de spectacle');
-            }
-    
-            $specTab = [];
             foreach ($spectacles as $spe) {
-                $specEntity = $this->getSpectacleById($spe['id']);
+                $specEntity = $this->getSpectacleById($spe['id_spectacle']);
                 $specTab[] = $specEntity;
             }
-    
-            return $specTab;
-    
         } catch (\Exception $e) {
-            throw new RepositoryException('Erreur lors du chargement de la collection AllSpectacle : ' . $e->getMessage());
+            throw new RepositoryException('erreur lors du get des spectacles avec filtres : ' . $e->getMessage());
         }
+        
+        return $specTab;
     }
 
     public function getSpectacles(array $date, array $style, array $lieu, int $page): array {
@@ -106,43 +123,6 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
         
         return $specTab;
-    }
-    
-    public function getCountSpectacles(array $date, array $style, array $lieu): int {
-        $sql = 'SELECT COUNT(*) FROM spectacles 
-                INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 
-                INNER JOIN soirees ON id_soiree = soirees.id 
-                WHERE 1=1 ';
-        
-        $params = [];
-        
-        if (!empty($date)) {
-            $placeholders = implode(',', array_fill(0, count($date), '?'));
-            $sql .= "AND date IN (" . $placeholders . ")";
-            $params = array_merge($params, $date);
-        }
-        
-        if (!empty($style)) {
-            $placeholders = implode(',', array_fill(0, count($style), '?'));
-            $sql .= "AND thematique IN (" . $placeholders . ")";
-            $params = array_merge($params, $style);
-        }
-        
-        if (!empty($lieu)) {
-            $placeholders = implode(',', array_fill(0, count($lieu), '?'));
-            $sql .= "AND id_lieu IN (" . $placeholders . ")";
-            $params = array_merge($params, $lieu);
-        }
-        
-        // Préparation de la requête
-        $stmt = $this->pdo->prepare($sql);
-        
-        // Exécution avec les autres paramètres
-        $stmt->execute($params); // Executez maintenant avec tous les paramètres
-    
-        $count = $stmt->fetchColumn();
-        
-        return $count;
     }
 
     public function getSpectacleById(string $id) : Spectacle{
