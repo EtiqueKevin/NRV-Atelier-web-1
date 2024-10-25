@@ -50,7 +50,7 @@ class ModifierPanierAction extends AbstractAction
                 FILTER_SANITIZE_FULL_SPECIAL_CHARS)!== $idSoiree ||
             filter_var($typeTarif,
                 FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $typeTarif ||
-            filter_var($qte,
+            (int) filter_var($qte,
                 FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $qte)) {
             throw new HttpBadRequestException($rq, 'data non valide : validator && sanitize');
         }

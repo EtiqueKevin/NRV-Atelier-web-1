@@ -353,6 +353,7 @@ export async function handlePaiement(){
                 const dateExpiration = document.getElementById('expiry-date').value;
                 const cvv = document.getElementById('cvv').value;
                 await users.payerCommande(codeCarte, dateExpiration, cvv);
+                ui.displayHome();
             } catch (error) {
                 showAlert('Erreur lors du paiement', 'error');
             }
