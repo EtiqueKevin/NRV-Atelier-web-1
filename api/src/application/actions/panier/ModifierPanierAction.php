@@ -7,6 +7,7 @@ use nrv\core\dto\Panier\PanierModifierDTO;
 use nrv\core\services\Panier\PanierServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 
 class ModifierPanierAction extends AbstractAction
