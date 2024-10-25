@@ -111,7 +111,12 @@ class PanierService implements PanierServiceInterface
 
     public function validerPanier(string $idUser) : PanierDTO
     {
+
         try {
+            $panierTab = $this->getPanier($idUser);
+            if(empty($panierTab)){
+                throw new PanierException('panier vide');
+            }
             $this->UtilisateursRepository->validerPanier($idUser);
             return $this->getPanier($idUser);
         }catch (\Exception $e){
