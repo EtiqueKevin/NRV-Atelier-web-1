@@ -20,7 +20,7 @@ export function isConnected() {
 }
 
 export function isAdmin(){
-    if(localStorage.getItem('role') == 2){
+    if(localStorage.getItem('role') >= 2){
         return true;
     }else{
         return false;

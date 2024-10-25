@@ -24,7 +24,6 @@ export function displaySpectacleList(data) {
 }
 
 export function displaySoiree(data, connected, backOffice) {
-    console.log(backOffice);
     const template = Handlebars.compile(templates.soireeTemplate);
     const html = template({ soiree: data, connected: connected, backoffice: backOffice});
     document.getElementById('main-content').innerHTML = html;
@@ -91,4 +90,29 @@ export function displayPaiement(){
 
     const modal = document.getElementById('myModal');
     modal.style.display = 'none';
+}
+
+export function displayBackOffice(){
+    const template = Handlebars.compile(templates.backOfficeTemplate);
+    const html = template();
+    document.getElementById('main-content').innerHTML = html;
+    eventHandler.handleBackOffice();
+
+    // Temporaire pour afficher la liste des spectacles
+    const addSpectacleButton = document.getElementById('add-spectacle');
+    addSpectacleButton.click();
+}
+
+export function displayBackOfficeAddSoiree(locations, themes){
+    const template = Handlebars.compile(templates.addSoireeTemplate);
+    const html = template({locations: locations, themes: themes });
+    document.getElementById('backoffice-content').innerHTML = html;
+    eventHandler.handleBackOfficeAddSoiree();
+}
+
+export function displayBackOfficeAddSpectacle(soirees, artists) {
+    const template = Handlebars.compile(templates.addSpectacleTemplate);
+    const html = template({ soirees: soirees.soirees, artists: artists });
+    document.getElementById('backoffice-content').innerHTML = html;
+    eventHandler.handleBackOfficeAddSpectacle();
 }

@@ -44,8 +44,9 @@ class PostSoireeAction extends AbstractAction
         try {
             $placeInputValidator->assert($data);
         } catch (NestedValidationException $e) {
-            throw new HttpBadRequestException($rq, $e->getMessages());
+            throw new HttpBadRequestException($rq, $e->getMessage());
         }
+
         if ((filter_var($data['nom'],
                 FILTER_SANITIZE_FULL_SPECIAL_CHARS)!== $data['nom'] ||
             filter_var($data['thematique'],
@@ -54,9 +55,9 @@ class PostSoireeAction extends AbstractAction
                 FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $data['lieu'] ||
             filter_var($data['date'],
                     FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $data['date'] ||
-            filter_var($data['tarif_normal'],
+            (int) filter_var($data['tarif_normal'],
                 FILTER_SANITIZE_NUMBER_INT) !== $data['tarif_normal'] ||
-            filter_var($data['tarif_reduit'],
+            (int) filter_var($data['tarif_reduit'],
                 FILTER_SANITIZE_NUMBER_INT) !== $data['tarif_reduit'])) {
             throw new HttpBadRequestException($rq, 'data non valide : validator && sanitize');
         }

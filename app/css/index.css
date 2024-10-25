@@ -136,6 +136,16 @@ body {
   font-size: 2.25rem;
   margin: 0;
 }
+@media screen and (max-width: 768px) {
+  .nav-menu ul li h1 {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .nav-menu ul {
+    gap: 3px;
+  }
+}
 .nav-menu .nav-left {
   display: flex;
   align-items: center;
@@ -146,6 +156,29 @@ body {
 }
 @media screen and (max-width: 768px) {
   .nav-menu {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+.back-office-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #221313;
+  color: white;
+  border-bottom: 2px solid #ffffff;
+}
+.back-office-nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .back-office-nav {
     flex-direction: column;
     gap: 1rem;
   }
@@ -194,7 +227,7 @@ body {
 .boutton-nav:active {
   background-color: hsl(0, 80%, -18.0392156863%);
 }
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 1000px) {
   .boutton-nav span {
     display: none;
   }
@@ -725,6 +758,33 @@ body {
   font-weight: bold;
 }
 
+.back-office-card {
+  box-sizing: border-box;
+  background-color: #221313;
+  color: #ffffff;
+  border-radius: 2rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+.back-office-card .back-office-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.back-office-card .back-office-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.back-office-card .back-office-card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .search-form {
   box-sizing: border-box;
   padding: 2rem;
@@ -908,6 +968,94 @@ body {
   background-color: #f1f1f1;
 }
 #add-to-cart-form select:focus {
+  border-color: none;
+  outline: none;
+}
+
+#add-spectacle-form, #add-soiree-form {
+  box-sizing: border-box;
+  padding: 2rem;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+  border-radius: 0.5em;
+  color: black;
+}
+#add-spectacle-form form, #add-soiree-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+#add-spectacle-form .input-container, #add-soiree-form .input-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+#add-spectacle-form .input-container > label, #add-soiree-form .input-container > label {
+  position: absolute;
+  top: -0.75rem;
+  left: 0;
+  background: #f1f1f1;
+  padding: 0 0.5rem;
+  z-index: 1;
+  border-radius: 0.25em;
+  color: black;
+}
+#add-spectacle-form .input-container #show-artists, #add-soiree-form .input-container #show-artists {
+  padding: 0.5rem;
+  max-height: 200px;
+  overflow-y: scroll;
+}
+#add-spectacle-form .input-container #show-artists .artist-item, #add-soiree-form .input-container #show-artists .artist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#add-spectacle-form .input-container #show-artists input[type=checkbox], #add-soiree-form .input-container #show-artists input[type=checkbox] {
+  margin-right: 0.5rem;
+}
+#add-spectacle-form .input-container #show-artists label, #add-soiree-form .input-container #show-artists label {
+  font-size: 1rem;
+  color: #333;
+}
+#add-spectacle-form textarea, #add-soiree-form textarea {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  background-color: white;
+}
+#add-spectacle-form textarea:focus, #add-soiree-form textarea:focus {
+  border-color: none;
+  outline: none;
+}
+#add-spectacle-form input, #add-soiree-form input {
+  padding: 0.75rem;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  background-color: #f1f1f1;
+}
+#add-spectacle-form input:focus, #add-soiree-form input:focus {
+  border-color: none;
+  outline: none;
+}
+#add-spectacle-form select, #add-soiree-form select {
+  padding: 0.75rem;
+  border: 0px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s;
+  background-color: #f1f1f1;
+}
+#add-spectacle-form select:focus, #add-soiree-form select:focus {
   border-color: none;
   outline: none;
 }

@@ -10,7 +10,7 @@ async function init(){
 
     // afficher la nav et la page d'accueil
     displayNav(isConnected(), isAdmin());
-    //displayHome();
+    displayHome();
 }
 
 window.addEventListener('load', init);

@@ -154,4 +154,29 @@
     #total-price {
       font-weight: bold;
     }
-  }
+}
+
+.back-office-card {
+    @include card(100%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+
+    .back-office-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .back-office-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .back-office-card-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

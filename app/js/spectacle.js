@@ -1,4 +1,4 @@
-import {loadData} from "./loader.js";
+import {loadData, postData} from "./loader.js";
 import { apiUrl } from "./data.js";
 
 let lieux = [];
@@ -69,6 +69,18 @@ export async function getArtiste(href) {
     }
 }
 
+export async function getArtistes() {
+    const data = await loadData('/artistes');
+    return data.artistes.map(item => {
+        return {
+            id: item.id,
+            nom: item.nom,
+            prenom: item.prenom,
+            description: item.description
+        };
+    });
+}
+
 export async function getSoiree(id) {
     const data = await loadData(`/soirees/${id}`);
     const spectacles = await Promise.all(data.links.spectacles.map(async link => await getSpectacle(link.href)));
@@ -87,6 +99,29 @@ export async function getSoiree(id) {
         tarif_normal: data.soiree.tarif_normal,
         tarif_reduit: data.soiree.tarif_reduit,
         spectacles: spectacles
+    };
+}
+
+export async function getSoirees() {
+    const data = await loadData('/soirees');
+    return {
+        soirees: data.soirees.map(item => {
+            return {
+                id: item.id,
+                nom: item.nom,
+                thematique: item.thematique,
+                date: item.date,
+                lieu: {
+                    id: item.lieu.id,
+                    nom: item.lieu.nom,
+                    adresse: item.lieu.adresse,
+                    places_assise: item.lieu.places_assise,
+                    places_debout: item.lieu.places_debout
+                },
+                tarif_normal: item.tarif_normal,
+                tarif_reduit: item.tarif_reduit
+            };
+        }),
     };
 }
 
@@ -119,4 +154,29 @@ export async function getReservations(id) {
         reserver : data.placeSoiree.nbPlaceReserve,
         total : data.placeSoiree.nbPlacett
     }
+}
+
+export async function addSoiree(nom, date, lieu, theme, tarifN, tarifR) {
+    const body = {
+        "nom": nom,
+        "date": date,
+        "lieu": lieu,
+        "tarif_normal": parseInt(tarifN),
+        "tarif_reduit": parseInt(tarifR),
+        "thematique": theme
+    };
+    await postData('/soirees', body);
+}
+
+export async function addSpectacle(nom, heure, soiree, description, urlVideo, image, artists) {
+    const formData = new FormData();
+    formData.append('titre', nom);
+    formData.append('heure', heure);
+    formData.append('idSoiree', soiree);
+    formData.append('description', description);
+    formData.append('url_video', urlVideo);
+    formData.append('images', image);
+    formData.append('artistes', JSON.stringify(artists));
+
+    await postData('/spectacles', formData, true);
 }

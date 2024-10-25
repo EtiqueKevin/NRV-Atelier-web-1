@@ -107,7 +107,7 @@ async function loadData(url) {
     }
 };
 
-async function postData(url, body) {
+async function postData(url, body, isFormData = false) {
     try {
         let accessToken = jwt.getAccessToken();
         const headers = {};
@@ -116,13 +116,16 @@ async function postData(url, body) {
             headers['Authorization'] = `Bearer ${accessToken}`;
         }
 
-        headers['Content-Type'] = 'application/json';
+        if (!isFormData) {
+            headers['Content-Type'] = 'application/json';
+            body = JSON.stringify(body);
+        }
 
         const response = await fetch(apiUrl + url, {
             method: 'POST',
             mode: 'cors',
             headers: headers,
-            body: JSON.stringify(body),
+            body: body,
         });
 
         if (!response.ok) {
@@ -132,7 +135,12 @@ async function postData(url, body) {
             }
             throw new Error(`HTTP error, status: ${response.status}, message: ${response.statusText}`);
         }
-        return await response.json();
+        const responseText = await response.text();
+        try {
+            return JSON.parse(responseText);
+        } catch (e) {
+            return responseText;
+        }
     } catch (error) {
         alert.showAlert('Erreur lors de l\'envoi des données: ' + error.message, 'error');
     }
@@ -163,7 +171,12 @@ async function putData(url, body) {
             }
             throw new Error(`HTTP error, status: ${response.status}, message: ${response.statusText}`);
         }
-        return await response.json();
+        const responseText = await response.text();
+        try {
+            return JSON.parse(responseText);
+        } catch (e) {
+            return responseText;
+        }
     } catch (error) {
         alert.showAlert('Erreur lors de l\'envoi des données: ' + error.message, 'error');
     }
