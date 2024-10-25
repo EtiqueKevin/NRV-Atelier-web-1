@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\billet;
 
+use Monolog\Level;
 use nrv\core\dto\billet\BilletDTO;
 use nrv\core\dto\billet\BilletInputDTO;
 use nrv\core\dto\billet\BilletOutputDTO;
@@ -42,6 +43,7 @@ class BilletService implements BilletServiceInterface{
             $b->setNomSoiree($soiree->nom);
             $billetsTabRes[] = $b;
         }
+        $this->logger->log(Level::Info, "BilletService - getBilletsByIdUtilisateur : id uti : ".$id." ");
         return new BilletOutputDTO($billetsTabRes);
     }
 
@@ -61,6 +63,7 @@ class BilletService implements BilletServiceInterface{
             throw new BilletException('access refused');
 
         }
+        $this->logger->log(Level::Info, "BilletService - getBilletById : id billet : ".$biInputDTO->idBillet." ");
         return $billetEntity->toDTO();
     }
 
@@ -90,5 +93,6 @@ class BilletService implements BilletServiceInterface{
         $items = substr($items, 0, -2); //je retire la dernière virgule
         $this->utilisateursRepository->addBillets($items); //j'ajoute les billets
         $this->utilisateursRepository->viderPanier($panier->idPanier);
+        $this->logger->log(Level::Info, "BilletService - payerCommande : id uti : ". $idUser." ");
     }
 }

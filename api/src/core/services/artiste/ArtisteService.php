@@ -34,7 +34,7 @@ class ArtisteService implements ArtisteServiceInterface {
             $artisteDTO[] = $a->toDTO();
         }
 
-        $this->logger->log(Level::Info, "Get Artiste : " . date('Y-m-d H:i:s'));
+        $this->logger->log(Level::Info, "ArtisteService - Get Artiste : ");
 
         return new ArtisteOutputDTO($artisteDTO);
     }

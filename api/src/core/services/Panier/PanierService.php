@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\Panier;
 
+use Monolog\Level;
 use nrv\core\dto\Panier\PanierAddDTO;
 use nrv\core\dto\Panier\PanierDTO;
 use nrv\core\dto\Panier\PanierModifierDTO;
@@ -52,8 +53,10 @@ class PanierService implements PanierServiceInterface
             }
 
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "PanierService - getPanier : id uti : ". $idUser." ");
             throw new PanierException($e->getMessage());
         }
+        $this->logger->log(Level::Info, "PanierService - getPanier : id uti : ". $idUser." ");
         return new PanierDTO($panier);
 
     }
@@ -93,12 +96,15 @@ class PanierService implements PanierServiceInterface
                 }
                 $retour = $this->getPanier($idUser); //on retourne le panier
             }else{
+                $this->logger->log(Level::Error, "PanierService - addPanier : id uti : ". $idUser." ");
                 throw new PanierException('erreur panier déjà valider');
             }
 
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "PanierService - addPanier : id uti : ". $idUser." ");
             throw new PanierException($e->getMessage());
         }
+        $this->logger->log(Level::Info, "PanierService - addPanier : id uti : ". $idUser." ");
         return $retour;
     }
 
@@ -133,11 +139,14 @@ class PanierService implements PanierServiceInterface
 
                 $retour = $this->getPanier($idUser); //on retourne le panier
             }else{
+                $this->logger->log(Level::Error, "PanierService - modifierPanier : id uti : ". $idUser." ");
                 throw new PanierException('erreur panier déjà valider');
             }
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "PanierService - modifierPanier : id uti : ". $idUser." ");
             throw new PanierException($e->getMessage());
         }
+        $this->logger->log(Level::Info, "PanierService - modifierPanier : id uti : ". $idUser." ");
         return $retour;
     }
 
@@ -160,8 +169,10 @@ class PanierService implements PanierServiceInterface
                 throw new PanierException('panier déjà validé');
             }
             $this->UtilisateursRepository->validerPanier($idUser);
+            $this->logger->log(Level::Info, "PanierService - validerPanier : id uti : ". $idUser." ");
             return $this->getPanier($idUser);
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "PanierService - validerPanier : id uti : ". $idUser." ");
             throw new PanierException($e->getMessage());
         }
     }
@@ -186,9 +197,10 @@ class PanierService implements PanierServiceInterface
                 $this->verificationDisponibilite($panierItem->qte, $panierItem->idSoiree);
             }
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "PanierService - vérifier ");
             throw new PanierException($e->getMessage());
         }
-
+        $this->logger->log(Level::Info, "PanierService - vérifier");
         return true;
     }
 
@@ -205,6 +217,7 @@ class PanierService implements PanierServiceInterface
             $nbPlacett = $this->SoireesRepository->getNbPlaceByIdSoiee($idSoiree);
             $nbBillettt = $this->UtilisateursRepository->getNbBilletByIdSoiree($idSoiree);
         }catch (\Exception){
+            $this->logger->log(Level::Error, "PanierService - verificationDisponibilite : id soiree : ". $idSoiree." ");
             throw new PanierException('erreur lors du chargement des places');
         }
 
@@ -217,7 +230,7 @@ class PanierService implements PanierServiceInterface
         if($qte > $nbPlacesRestantes){
             throw new PanierException('nombre de place incorrect : '.$qte. ' pas assez de place disponible : '.$nbPlacesRestantes);
         }
-
+        $this->logger->log(Level::Info, "PanierService - verificationDisponibilite : id soiree : ". $idSoiree." ");
         return true;
     }
 }

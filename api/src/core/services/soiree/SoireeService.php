@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\soiree;
 
+use Monolog\Level;
 use nrv\core\domain\entities\soiree\Soiree;
 use nrv\core\dto\soiree\SoireeCreerDTO;
 use nrv\core\dto\soiree\SoireeDetailBackofficeDTO;
@@ -40,8 +41,10 @@ class SoireeService implements SoireeServiceInterface{
     public function getSoireeById(string $id): SoireeDTO{
         try{
             $soiree = $this->soireeRepository->getSoireeById($id);
+            $this->logger->log(Level::Info, "SoireeService - getSoireeById : id soiree : ". $id." ");
             return new SoireeDTO($soiree);
         }catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SoireeService - getSoireeById : id soiree : ". $id." ");
             throw new SoireeException($e->getMessage());
         }
     }
@@ -56,8 +59,10 @@ class SoireeService implements SoireeServiceInterface{
     public function getSoireeDetail(string $idSoiree): SoireeDTO{
         try{
             $soiree = $this->soireeRepository->getSoireeById($idSoiree);
+            $this->logger->log(Level::Info, "SoireeService - getSoireeDetail : id soiree : ". $idSoiree);
             return new SoireeDTO($soiree);
         }catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SoireeService - getSoireeDetail : id soiree : ". $idSoiree);
             throw new SoireeException("erreur lors de la récupération de la soirée detail");
         }
     }
@@ -73,8 +78,10 @@ class SoireeService implements SoireeServiceInterface{
             $tabIdSoiree = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
 
         }catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SoireeService - getSpectacleByIdSoiree : id soiree : ". $idSoiree);
             throw new SoireeException("erreur lors de la récupération de la soirée detail");
         }
+        $this->logger->log(Level::Info, "SoireeService - getSpectacleByIdSoiree : id soiree : ". $idSoiree);
         return $tabIdSoiree;
     }
 
@@ -90,8 +97,10 @@ class SoireeService implements SoireeServiceInterface{
             foreach ($lieux as $lieu) {
                 $tabDTO[] = $lieu->toDTO();
             }
+            $this->logger->log(Level::Info, "SoireeService - getLieux");
             return $tabDTO;
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SoireeService - getLieux");
             throw new spectacleException($e->getMessage());
         }
     }
@@ -109,8 +118,10 @@ class SoireeService implements SoireeServiceInterface{
             foreach ($styles as $style) {
                 $tabStyle[] = $style;
             }
+            $this->logger->log(Level::Info, "SoireeService - getStyles");
             return $tabStyle;
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SoireeService - getStyles");
             throw new spectacleException($e->getMessage());
         }
     }
@@ -127,8 +138,10 @@ class SoireeService implements SoireeServiceInterface{
             $nbPlacett = $this->soireeRepository->getNbPlaceByIdSoiee($idSoiree);
             $nbPlaceReserve = $this->utilisateursRepository->getNbBilletByIdSoiree($idSoiree);
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "SoireeService - gestionPlaceBackOffice");
             throw new PanierException('gestionPlaceBackOffice : erreur lors du chargement des place : soiree : '. $idSoiree . " ".$e->getMessage());
         }
+        $this->logger->log(Level::Info, "SoireeService - gestionPlaceBackOffice");
         return new SoireeDetailBackofficeDTO($nbPlacett,$nbPlaceReserve);
     }
 
@@ -151,7 +164,9 @@ class SoireeService implements SoireeServiceInterface{
 
             $soiree = new Soiree($nom, $thematique, $date, $lieu, $tarif_normal, $tarif_reduit);
             $this->soireeRepository->saveSoiree($soiree);
+            $this->logger->log(Level::Info, "SoireeService - postSoiree");
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "SoireeService - postSoiree");
             throw new SoireeException("put soiree" . $e->getMessage());
         }
     }
@@ -162,7 +177,13 @@ class SoireeService implements SoireeServiceInterface{
      * @return SoireesDTO
      */
     public function getSoirees(): SoireesDTO{
-        $s = $this->soireeRepository->getSoirees();
+        try {
+            $s = $this->soireeRepository->getSoirees();
+        }catch (\Exception $e){
+            $this->logger->log(Level::Error, "SoireeService - getSoirees");
+            throw new SoireeException("SoireeService : getSoirees ".$e->getMessage());
+        }
+        $this->logger->log(Level::Info, "SoireeService - getSoirees");
         return new SoireesDTO($s);
     }
 }
