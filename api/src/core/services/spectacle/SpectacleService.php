@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\spectacle;
 
+use Monolog\Level;
 use nrv\core\domain\entities\spectacle\Spectacle;
 use nrv\core\dto\artiste\ArtisteDTO;
 use nrv\core\dto\spectacle\InputFiltresSpectaclesDTO;
@@ -40,8 +41,10 @@ class SpectacleService implements SpectacleServiceInterface{
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
             }
+            $this->logger->log(Level::Error, "SpectacleService - getAllSpectacles : " . date('Y-m-d H:i:s'));
             return $tabDTO;
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SpectacleService - getAllSpectacles : " . $e->getMessage() . ' | ' . date('Y-m-d H:i:s'));
             throw new spectacleException($e->getMessage());
         }
     }
@@ -64,8 +67,11 @@ class SpectacleService implements SpectacleServiceInterface{
             foreach ($spectacles as $spectacle) {
                 $tabDTO[] = new SpectacleDTO($spectacle);
             }
+            $this->logger->log(Level::Info, "SpectacleService - getSpectacles : "  . date('Y-m-d H:i:s'));
+
             return $tabDTO;
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SpectacleService - getSpectacles : " . $e->getMessage() . ' | ' . date('Y-m-d H:i:s'));
             throw new spectacleException($e->getMessage());
         }
     }
@@ -80,8 +86,10 @@ class SpectacleService implements SpectacleServiceInterface{
     public function getSpectacleById(string $id): SpectacleDTO{
         try {
             $spectacle = $this->soireeRepository->getSpectacleById($id);
+            $this->logger->log(Level::Info, "SpectacleService - getSpectacleById : "  . date('Y-m-d H:i:s'));
             return new SpectacleDTO($spectacle);
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SpectacleService - getSpectacleById : " . $e->getMessage() . ' | ' . date('Y-m-d H:i:s'));
             throw new spectacleException($e->getMessage());
         }
     }
@@ -95,8 +103,10 @@ class SpectacleService implements SpectacleServiceInterface{
     public function getArtistesBySpectacle(string $idSpectacle): array{
         try {
             $artistes = $this->soireeRepository->getArtisteIdByIdSpectacle($idSpectacle);
+            $this->logger->log(Level::Info, "SpectacleService - getArtistesBySpectacle : " . date('Y-m-d H:i:s'));
             return $artistes;
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SpectacleService - getArtistesBySpectacle : " . $e->getMessage() . ' | ' . date('Y-m-d H:i:s'));
             throw new spectacleException($e->getMessage());
         }
     }
@@ -111,8 +121,10 @@ class SpectacleService implements SpectacleServiceInterface{
     public function getArtisteById(string $idArtiste): ArtisteDTO{
         try {
             $artiste = $this->soireeRepository->getArtisteById($idArtiste);
+            $this->logger->log(Level::Info, "SpectacleService - getArtisteById : "  . date('Y-m-d H:i:s'));
             return $artiste->toDTO();
         } catch (\Exception $e) {
+            $this->logger->log(Level::Error, "SpectacleService - getArtisteById : " . $e->getMessage() . ' | ' . date('Y-m-d H:i:s'));
             throw new spectacleException($e->getMessage());
         }
     }
@@ -131,8 +143,9 @@ class SpectacleService implements SpectacleServiceInterface{
             $spectacleEnity->setArtistes($spectacleDTO->artistes);
 
             $this->soireeRepository->saveSpectacle($spectacleEnity);
-
+            $this->logger->log(Level::Error, "SpectacleService - putSpectacle : "  . date('Y-m-d H:i:s'));
         }catch (\Exception $e){
+            $this->logger->log(Level::Error, "SpectacleService - putSpectacle : " . $e->getMessage() . ' | ' . date('Y-m-d H:i:s'));
             throw new SoireeException("put spectacle" . $e->getMessage());
         }
     }
@@ -151,7 +164,7 @@ class SpectacleService implements SpectacleServiceInterface{
         $filename = sprintf('%s.%0.8s', $basename, $extension);
 
         $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-
+        $this->logger->log(Level::Info, "SpectacleService - moveUploadedFile : " . date('Y-m-d H:i:s'));
         return $filename;
     }
 }
