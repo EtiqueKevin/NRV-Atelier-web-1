@@ -1,10 +1,10 @@
 # LIEN VERS LE REPO GIT : [ICI](https://github.com/EtiqueKevin/NRV-Atelier-web-1)
-
+# LIEN VERS LE SITE SUR DOCKETU : [ICI](http://docketu.iutnc.univ-lorraine.fr:35611)
 # GROUPE :
 - [Paul BRUSON](https://github.com/Dr-J-Watson)
 - [Kevin Etique](https://github.com/EtiqueKevin)
 - [Amaury Quilliec](https://github.com/Aliec-AQ)
-- [Clément Nétange](https://github.com/clem-png) (nom de commit clem-png et clem.png)
+- [Clément Nétange](https://github.com/clem-png)
 
 # LISTE DES FONCTIONNALITÉS / TABLEAU DE BORD :
 
@@ -30,15 +30,12 @@
 |1| Pagination de la liste de spectacles | 🌐 🥷🏻 |  | 📷 |  |
 |2| Modification du panier : nombre de billets | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
 |3| Backoffice : ajouter des spectacles et des soirées | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
-|4| Backoffice : gérer les lieux et le nombre de places sur chaque lieu | 🌐 |  | 📷 |  |
-|5| Backoffice : vente de billets à l’entrée des soirées. L‘application est utilisée par l’organisateur du festival pour la vente de billets sur le lieu de chaque soirée | 🌐 |  | 📷 |  |
+|4| Backoffice : gérer les lieux et le nombre de places sur chaque lieu | 🌐 |  |  |  |
+|5| Backoffice : vente de billets à l’entrée des soirées. L‘application est utilisée par l’organisateur du festival pour la vente de billets sur le lieu de chaque soirée |  |  |  |  |
 |6| Panier persistant : possibilité d’ajouter des réservations qui sont conservées au-delà de la session jusqu’au paiement | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
 |7| Vérification des places disponibles dans un panier avant paiement | 🌐 | 🥷🏻 | 📷 | 🥷🏻 |
 
-| n° |Fonctionnalité supplémentaire | Paul | Kevin | Amaury | Clément |
-|----|----------------|------|-------|--------|---------|
 
 🌐 -> Base de donées
 📷 -> FrontEnd
 🥷🏻 -> BackEnd
-
