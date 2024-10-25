@@ -8,6 +8,7 @@ use nrv\core\services\billet\BilletServiceInterface;
 use nrv\core\services\utilisateur\UtilisateurServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 
 class GetBilletsById extends AbstractAction {
@@ -22,9 +23,19 @@ class GetBilletsById extends AbstractAction {
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
+
+        $idUti = $rq->getAttribute('UtiOutDTO')->id;
+        $idBillet = $args['ID-BILLET'];
+
+        if ( !(Validator::uuid()->validate($idBillet))) {
+            throw new HttpBadRequestException($rq,'id billet non valide : validator');
+        }
+
+        if (!(preg_match('/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/', $idBillet))) {
+            throw new HttpBadRequestException($rq,'id billet non valide : sanitaze');
+        }
+
         try {
-            $idUti = $rq->getAttribute('UtiOutDTO')->id;
-            $idBillet = $args['ID-BILLET'];
             $billeInputDTO = new BilletInputDTO($idBillet,$idUti);
             $billetDTO = $this->billetService->getBilletById($billeInputDTO);
 

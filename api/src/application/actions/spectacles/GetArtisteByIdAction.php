@@ -6,6 +6,7 @@ use nrv\application\actions\AbstractAction;
 use nrv\core\services\spectacle\SpectacleServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 
 class GetArtisteByIdAction extends AbstractAction
@@ -20,6 +21,13 @@ class GetArtisteByIdAction extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $id = $args['ID-ARTISTE'];
+        if ( !(Validator::uuid()->validate($id))) {
+            throw new HttpBadRequestException($rq,'id artiste non valide : validator');
+        }
+
+        if (!(preg_match('/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/', $id))) {
+            throw new HttpBadRequestException($rq,'id artiste non valide : sanitaze');
+        }
         try {
             $artisteDTO = $this->spectacleService->getArtisteById($id);
 

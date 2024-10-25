@@ -4,6 +4,7 @@ use nrv\application\actions\billets\GetBilletsById;
 use nrv\application\actions\billets\GetBilletsByIdUtilisateur;
 use nrv\application\actions\panier\AddPanierAction;
 use nrv\application\actions\panier\GetPanierAction;
+use nrv\application\actions\panier\ModifierPanierAction;
 use nrv\application\actions\panier\UpdatePanierAction;
 use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
@@ -145,8 +146,8 @@ return [
         return new GetSoireeByIdBackofficeAction($c->get(SoireeServiceInterface::class));
     },
 
-    UpdatePanierAction::class => function (ContainerInterface $c) {
-        return new UpdatePanierAction($c->get(PanierServiceInterface::class));
+    ModifierPanierAction::class => function (ContainerInterface $c) {
+        return new ModifierPanierAction($c->get(PanierServiceInterface::class));
     },
 
     PostSoireeAction::class => function (ContainerInterface $c) {
