@@ -44,4 +44,6 @@ interface SoireesRepositoryInterface{
     public function saveSpectacle(Spectacle $spectacle): Spectacle;
 
     public function getArtistes(): array;
+
+    public function getSoirees(): array;
 }

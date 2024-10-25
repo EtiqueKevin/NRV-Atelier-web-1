@@ -9,6 +9,7 @@ use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
 use nrv\application\actions\soirees\GetSoireeByIdAction;
 use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
+use nrv\application\actions\soirees\GetSoireesAction;
 use nrv\application\actions\soirees\PostSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
 use nrv\application\actions\spectacles\GetArtistesAction;
@@ -166,6 +167,10 @@ return [
 
     GetArtistesAction::class => function (ContainerInterface $c) {
         return new GetArtistesAction($c->get(ArtisteServiceInterface::class));
+    },
+
+    GetSoireesAction::class=> function (ContainerInterface $c) {
+        return new GetSoireesAction($c->get(SoireeServiceInterface::class));
     },
 
     // MIDDLEWARES

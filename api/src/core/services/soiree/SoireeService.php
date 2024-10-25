@@ -7,6 +7,7 @@ use nrv\core\dto\soiree\SoireeCreerDTO;
 use nrv\core\dto\soiree\SoireeDetailBackofficeDTO;
 use nrv\core\dto\soiree\SoireeDetailDTO;
 use nrv\core\dto\soiree\SoireeDTO;
+use nrv\core\dto\soiree\SoireesDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use nrv\core\services\Panier\PanierException;
@@ -101,5 +102,10 @@ class SoireeService implements SoireeServiceInterface{
         }catch (\Exception $e){
             throw new SoireeException("put soiree" . $e->getMessage());
         }
+    }
+
+    public function getSoirees(): SoireesDTO{
+        $s = $this->soireeRepository->getSoirees();
+        return new SoireesDTO($s);
     }
 }
