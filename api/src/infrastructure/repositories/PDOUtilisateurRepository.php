@@ -142,7 +142,6 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
     }
 
     public function saveUtilisateur(Utilisateur $uti): string{
-        $id = Uuid::uuid4()->toString();
         $nom = $uti->nom;
         $prenom = $uti->prenom;
         $email = $uti->email;
@@ -150,14 +149,14 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         $role = $uti->role;
 
         try {
-            $stmt = $this->pdo->prepare('INSERT INTO utilisateurs (id, nom, prenom, email, mdp,role) VALUES (?, ?, ?, ?, ?, ?)');
-            $stmt->bindParam(1, $id, PDO::PARAM_STR);
-            $stmt->bindParam(2, $nom, PDO::PARAM_STR);
-            $stmt->bindParam(3, $prenom, PDO::PARAM_STR);
-            $stmt->bindParam(4, $email, PDO::PARAM_STR);
-            $stmt->bindParam(5, $mdp, PDO::PARAM_STR);
-            $stmt->bindParam(6, $role, PDO::PARAM_STR);
+            $stmt = $this->pdo->prepare('INSERT INTO utilisateurs (nom, prenom, email, mdp,role) VALUES (?, ?, ?, ?, ?) RETURNING id');
+            $stmt->bindParam(1, $nom, PDO::PARAM_STR);
+            $stmt->bindParam(2, $prenom, PDO::PARAM_STR);
+            $stmt->bindParam(3, $email, PDO::PARAM_STR);
+            $stmt->bindParam(4, $mdp, PDO::PARAM_STR);
+            $stmt->bindParam(5, $role, PDO::PARAM_STR);
             $stmt->execute();
+            $id = $stmt->fetchColumn();
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion utilisateur : '.$e->getMessage());
         }
