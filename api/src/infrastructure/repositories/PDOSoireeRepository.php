@@ -464,4 +464,22 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
         return $artistesTab;
     }
+
+    public function getSoirees(): array{
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM soirees');
+            $stmt->execute();
+            $soirees = $stmt->fetchAll();
+            $soireesTab = [];
+            foreach ($soirees as $s){
+                $lieuEntity = $this->getLieuById($soirees['id_lieu']);
+                $soireeEntity = new Soiree($soirees['nom'],$soirees['thematique'], DateTime::createFromFormat('Y-m-d', $soirees['date']),$lieuEntity,$soirees['tarif_normal'],$soirees['tarif_reduit']);
+                $soireeEntity->setID($s['id']);
+                $soireesTab[] = $soireeEntity;
+            }
+        }catch (\Exception $e){
+            throw new RepositoryException('erreur lors du chargement des lieux : '. $e->getMessage());
+        }
+        return $soireesTab;
+    }
 }
