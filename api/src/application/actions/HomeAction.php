@@ -21,10 +21,12 @@ use Psr\Http\Message\ServerRequestInterface;
 
             // Artiste
             ['method' => 'GET', 'route' => '/artiste/{ID-ARTISTE}', 'action' => 'GetArtisteByIdAction'],
+            ['method' => 'GET', 'route' => '/artistes', 'action' => 'GetArtistesAction'],
 
             // Soirée
+            ['method' => 'GET', 'route' => '/soirees', 'action' => 'GetSoireesAction'],
             ['method' => 'GET', 'route' => '/soirees/{ID-SOIREE}', 'action' => 'GetSoireeByIdAction'],
-            ['method' => 'POST', 'route' => '/soiree', 'action' => 'PostSoireeAction'],
+            ['method' => 'POST', 'route' => '/soiree', 'action' => 'PostSoireeAction' => 'middleware' => ['AuthMiddleware', 'AuthorizationBackMiddleware']],
 
             // Lieux
             ['method' => 'GET', 'route' => '/lieux', 'action' => 'GetLieuxAction'],
@@ -35,21 +37,21 @@ use Psr\Http\Message\ServerRequestInterface;
             // Utilisateur
             ['method' => 'GET', 'route' => '/utilisateur/signin', 'action' => 'SignInAction'],
             ['method' => 'POST', 'route' => '/utilisateur/signup', 'action' => 'SignUpAction'],
-            ['method' => 'GET', 'route' => '/utilisateur/refresh', 'action' => 'RefreshAction', 'middleware' => ['AuthMiddleware']],
+            ['method' => 'GET', 'route' => '/utilisateur/refresh', 'action' => 'RefreshAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
 
             // Billet
-            ['method' => 'GET', 'route' => '/utilisateur/billets', 'action' => 'GetBilletsByIdUtilisateur', 'middleware' => ['AuthMiddleware']],
-            ['method' => 'GET', 'route' => '/utilisateur/billet/{ID-BILLET}', 'action' => 'GetBilletsById', 'middleware' => ['AuthMiddleware']],
+            ['method' => 'GET', 'route' => '/billet/{ID-BILLET}', 'action' => 'GetBilletByIdAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'POST', 'route' => '/billet', 'action' => 'PostBilletAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
 
             // Panier
-            ['method' => 'GET', 'route' => '/panier', 'action' => 'GetPanierAction', 'middleware' => ['AuthMiddleware']],
-            ['method' => 'POST', 'route' => '/panier', 'action' => 'AddPanierAction', 'middleware' => ['AuthMiddleware']],
-            ['method' => 'POST', 'route' => '/panier/valider', 'action' => 'ValiderPanierAction', 'middleware' => ['AuthMiddleware']],
-            ['method' => 'POST', 'route' => '/panier/update', 'action' => 'UpdatePanierAction', 'middleware' => ['AuthMiddleware']],
-            ['method' => 'POST', 'route' => '/panier/payer', 'action' => 'PostPayerCommandeAction', 'middleware' => ['AuthMiddleware']],
+            ['method' => 'GET', 'route' => '/panier', 'action' => 'GetPanierAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'POST', 'route' => '/panier', 'action' => 'AddPanierAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'POST', 'route' => '/panier/valider', 'action' => 'ValiderPanierAction', 'middleware' => ['AuthMiddleware' , 'AuthorizationLambdaMiddleware']],
+            ['method' => 'PUT', 'route' => '/panier/modifier', 'action' => 'ModifierPanierAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'POST', 'route' => '/panier/payer', 'action' => 'PostPayerCommandeAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
 
             // Backoffice
-            ['method' => 'GET', 'route' => '/backoffice/soirees/{ID-SOIREE}', 'action' => 'GetSoireeByIdBackofficeAction', 'middleware' => ['AuthMiddleware']],
+            ['method' => 'GET', 'route' => '/backoffice/soirees/{ID-SOIREE}', 'action' => 'GetSoireeByIdBackofficeAction', 'middleware' => ['AuthMiddleware', 'AuthorizationBackMiddleware']],
         ];
 
         $html = '<h1>Liste des routes NRV.API</h1>';
