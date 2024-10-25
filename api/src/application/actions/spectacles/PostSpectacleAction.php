@@ -52,8 +52,6 @@ class PostSpectacleAction extends AbstractAction{
             }
         }
 
-        $tabNomImage[] =$filename;
-
         $titre = $data['titre'];
         $description = $data['description'];
         $heure = $data['heure'];
