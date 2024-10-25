@@ -450,4 +450,21 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             throw new UtilisateurException('erreur insertion image : '.$e->getMessage());
         }
     }
+
+    public function getArtistes(): array{
+        try {
+            $stmt = $this->pdo->prepare('SELECT * FROM artistes');
+            $stmt->execute();
+            $artistes = $stmt->fetchAll();
+            $artistesTab = [];
+            foreach ($artistes as $a){
+                $artisteEntity = new Artiste($a['nom'],$a['prenom'],$a['description']);
+                $artisteEntity->setID($a['id']);
+                $artistesTab[] = $artisteEntity;
+            }
+        }catch (\Exception $e){
+            throw new RepositoryException('erreur lors du chargement des lieux : '. $e->getMessage());
+        }
+        return $artistesTab;
+    }
 }

@@ -16,6 +16,7 @@ use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
 use nrv\application\actions\soirees\GetStylesAction;
 use nrv\application\actions\soirees\PostSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
+use nrv\application\actions\spectacles\GetArtistesAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
 use nrv\application\actions\spectacles\PostSpectacleAction;
@@ -58,6 +59,9 @@ return function( App $app): App {
 
     $app->get('/artiste/{ID-ARTISTE}[/]', GetArtisteByIdAction::class)
         ->setName('get_artiste_by_id');
+
+    $app->get('/artistes[/]',GetArtistesAction::class)
+        ->setName('get_artistes');
 
     // soiree
 

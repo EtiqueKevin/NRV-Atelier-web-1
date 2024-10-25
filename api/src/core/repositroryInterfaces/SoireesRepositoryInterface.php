@@ -44,4 +44,6 @@ interface SoireesRepositoryInterface{
     public function liaisonImageSpectacle(array $imgs, string $idSpec):void;
 
     public function saveSpectacle(Spectacle $spectacle): Spectacle;
+
+    public function getArtistes(): array;
 }

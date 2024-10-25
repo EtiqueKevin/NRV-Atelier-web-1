@@ -12,6 +12,7 @@ use nrv\application\actions\soirees\GetSoireeByIdAction;
 use nrv\application\actions\soirees\GetSoireeByIdBackofficeAction;
 use nrv\application\actions\soirees\PostSoireeAction;
 use nrv\application\actions\spectacles\GetArtisteByIdAction;
+use nrv\application\actions\spectacles\GetArtistesAction;
 use nrv\application\actions\spectacles\GetSpectaclesAction;
 use nrv\application\actions\spectacles\GetSpectaclesByIdAction;
 use nrv\application\actions\spectacles\PostSpectacleAction;
@@ -25,6 +26,8 @@ use nrv\application\providers\auth\AuthProviderInterface;
 use nrv\application\providers\auth\JWTManager;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use nrv\core\services\artiste\ArtisteService;
+use nrv\core\services\artiste\ArtisteServiceInterface;
 use nrv\core\services\authorization\AuthzUtilisateurInterface;
 use nrv\core\services\billet\BilletService;
 use nrv\core\services\billet\BilletServiceInterface;
@@ -92,6 +95,10 @@ return [
         return new AuthProvider($c->get(UtilisateurServiceInterface::class),$c->get(JWTManager::class));
     },
 
+    ArtisteServiceInterface::class=> function (ContainerInterface $c) {
+        return new ArtisteService($c->get(SoireesRepositoryInterface::class));
+    },
+
     // ACTIONS
 
     GetSoireeByIdAction::class => function (ContainerInterface $c) {
@@ -156,6 +163,10 @@ return [
 
     PostSpectacleAction::class => function (ContainerInterface $c) {
         return new PostSpectacleAction($c->get(SpectacleServiceInterface::class));
+    },
+
+    GetArtistesAction::class => function (ContainerInterface $c) {
+        return new GetArtistesAction($c->get(ArtisteServiceInterface::class));
     },
 
     // MIDDLEWARES
