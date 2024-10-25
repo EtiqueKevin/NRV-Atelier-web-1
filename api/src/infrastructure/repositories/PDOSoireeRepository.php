@@ -24,7 +24,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     }
 
     /**
-     *
+     * RECUPERE TOUS LES SPECTACLES
      * @param array $date
      * @param array $style
      * @param array $lieu
@@ -78,6 +78,17 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specTab;
     }
 
+
+    /**
+     * RECUPERE LES SPECTACLES PAR RAPPORT A DES FILTRES ET UNE PAGE DONNEE, LES IL Y A PLUSIEURS DATES, PLUSIEURS STYLES,
+     * PLUSIEURS LIEUX COMME FILTRES ET ILS SONT TOUS INDEPENDANTS ET OPTIONNELS
+     * @param array $date
+     * @param array $style
+     * @param array $lieu
+     * @param int $page
+     * @return array
+     * @throws RepositoryException
+     */
     public function getSpectacles(array $date, array $style, array $lieu, int $page): array {
         $sql = 'SELECT * FROM spectacles 
                 INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 
@@ -132,6 +143,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specTab;
     }
 
+
+    /**
+     * RECUPERE UN SPECTACLE PAR RAPPORT A SON ID
+     * @param string $id
+     * @return Spectacle
+     * @throws RepositoryException
+     */
     public function getSpectacleById(string $id) : Spectacle{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles WHERE id = ?');
@@ -162,6 +180,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specEntity;
     }
 
+
+    /**
+     *RECUPERE LES SPECTACLES PAR RAPPORT A L'ID D'UNE SOIREE
+     * @param string $idSoiree
+     * @return array
+     * @throws RepositoryException
+     */
     public function getSpectacleByIdSoiree(string $idSoiree): array{
         $stmt = $this->pdo->prepare('SELECT * FROM soirees inner join soirees_spectacles ON soirees.id = soirees_spectacles.id_soiree WHERE soirees_spectacles.id_soiree = ?');
         $stmt->bindParam(1,$idSoiree, PDO::PARAM_STR);
@@ -181,6 +206,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     //soirées
 
+
+    /**
+     * RECUPERE L'ID D'UNE SOIREE PAR RAPPORT A L'ID D'UN SPECTACLE
+     * @param string $idSpec
+     * @return string
+     * @throws RepositoryException
+     */
     public function getSoireeIdByIdSpectacle(string $idSpec): string{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join soirees_spectacles ON spectacles.id = soirees_spectacles.id_spectacle WHERE soirees_spectacles.id_spectacle = ?');
@@ -197,6 +229,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UNE SOIREE PAR RAPPORT A SON ID
+     * @param string $id
+     * @return Soiree
+     * @throws RepositoryEntityNotFoundException
+     * @throws RepositoryException
+     */
     public function getSoireeById(string $id): Soiree{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM soirees WHERE id = ?');
@@ -215,6 +255,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UNE SOIREE PAR RAPPORT A SON ID AVEC LES DETAILS
+     * @param string $id
+     * @return array
+     * @throws RepositoryEntityNotFoundException
+     * @throws RepositoryException
+     */
     public function getSoireeByIdDetail(string $id): array{
         try {
             $soireeEntity = $this->getSoireeById($id);
@@ -230,6 +278,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     //artistes
 
+
+    /**
+     * RECUPERE UN ARTISTE PAR RAPPORT A SON ID
+     * @param string $id
+     * @return Artiste
+     * @throws RepositoryEntityNotFoundException
+     */
     public function getArtisteById(string $id) : Artiste{
         $stmt = $this->pdo->prepare('SELECT * FROM artistes WHERE id = ?');
         $stmt->bindParam(1, $id, \PDO::PARAM_STR);
@@ -243,6 +298,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $artisteEntity;
     }
 
+
+    /**
+     * RECUPERE LES ID DES ARTISTES PAR RAPPORT A L'ID D'UN SPECTACLE
+     * @param string $idSpec
+     * @return array
+     * @throws RepositoryException
+     */
     public function getArtisteIdByIdSpectacle(string $idSpec): array {
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM spectacles inner join artistes_spectacles ON spectacles.id = artistes_spectacles.id_spectacle WHERE artistes_spectacles.id_spectacle = ?');
@@ -268,6 +330,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
     //lieux
 
 
+    /**
+     * RECUPERE UN LIEU PAR RAPPORT A SON ID
+     * @param string $id
+     * @return Lieu
+     * @throws RepositoryException
+     */
     public function getLieuById(string $id): Lieu{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM lieux WHERE id = ?');
@@ -285,6 +353,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * RECUPERE TOUS LES LIEUX
+     * @return array
+     * @throws RepositoryException
+     */
     public function getLieux(): array{
         try {
             $sql = 'SELECT * FROM lieux';
@@ -305,6 +379,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     //images
 
+
+    /**
+     * RECUPERE LES IMAGES PAR RAPPORT A L'ID D'UN SPECTACLE
+     * @param string $specId
+     * @return array
+     * @throws RepositoryException
+     */
     public function getImageBySpectacleId(string $specId) :array{
 
         try {
@@ -327,6 +408,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $imgTab;
     }
 
+
+    /**
+     * RECUPERE TOUS LES STYLES
+     * @return array
+     * @throws RepositoryException
+     */
     public function getStyles() : array {
         try {
             $stmt = $this->pdo->prepare('SELECT DISTINCT thematique FROM soirees');
@@ -345,6 +432,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UN LIEU PAR RAPPORT A L'ID D'UNE SOIREE
+     * @param string $idSoiee
+     * @return string
+     * @throws RepositoryException
+     */
     public function getIdLieuByIdSoiree(string $idSoiee): string{
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM soirees WHERE id = ?');
@@ -360,6 +454,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $soireeRes['id_lieu'];
     }
 
+    /**
+     * RECUPERE LE NOMBRE DE PLACES PAR RAPPORT A L'ID D'UNE SOIREE
+     * @param string $idSoiee
+     * @return int
+     * @throws RepositoryException
+     */
     public function getNbPlaceByIdSoiee(string $idSoiee): int{
         try {
             $idLieu = $this->getIdLieuByIdSoiree($idSoiee);
@@ -371,6 +471,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * CREE UN SPECTACLE
+     * @param Spectacle $spectacle
+     * @return Spectacle
+     * @throws UtilisateurException
+     */
     public function saveSpectacle(Spectacle $spectacle): Spectacle{
         $titre = $spectacle->titre;
         $description = $spectacle->description;
@@ -400,6 +507,13 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $specEntity;
     }
 
+
+    /**
+     * CREE UNE SOIREE
+     * @param Soiree $soiree
+     * @return void
+     * @throws UtilisateurException
+     */
     public function saveSoiree(Soiree $soiree): void
     {
         $nom = $soiree->nom;
@@ -425,6 +539,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
     }
 
+
+    /**
+     * LIE LES IMAGES A UN SPECTACLE
+     * @param array $imgs
+     * @param string $idSpec
+     * @return void
+     * @throws UtilisateurException
+     */
     public function liaisonImageSpectacle(array $imgs, string $idSpec):void{
         try {
 
@@ -440,6 +562,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * LIE LES ARTISTES A UN SPECTACLE
+     * @param array $artistes
+     * @param string $idSpec
+     * @return void
+     * @throws UtilisateurException
+     */
     public function liaisonArtisteSpectacle(array $artistes, string $idSpec):void{
         try {
 
@@ -455,6 +585,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+
+    /**
+     * RECUPERE TOUS LES ARTISTES
+     * @return array
+     * @throws RepositoryException
+     */
     public function getArtistes(): array{
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM artistes');
@@ -472,6 +608,12 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         return $artistesTab;
     }
 
+
+    /**
+     * RECUPERE TOUTES LES SOIREES
+     * @return array
+     * @throws RepositoryException
+     */
     public function getSoirees(): array{
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM soirees');
