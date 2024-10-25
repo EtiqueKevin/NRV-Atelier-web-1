@@ -42,7 +42,7 @@ class PostPayerCommandeAction extends AbstractAction
                 throw new PanierException('Numero invalide');
             }
 
-            if($dateExpirationValidator->validate($dateExpiration) ){
+            if(!$dateExpirationValidator->validate($dateExpiration) ){
                 throw new PanierException('Date d\'expiration invalide');
             }
 
