@@ -22,10 +22,10 @@ class AuthorizationBackMiddleware{
         $routeContext = RouteContext::fromRequest($rq);
         $route = $routeContext->getRoute();
 
-        $user_id = $rq->getArgument('user_id');
-        $operation = $route->getArgument('operation');
+        $idUser = $rq->getAttribute('UtiOutDTO')->id;
+        $role = $rq->getAttribute('UtiOutDTO')->role;
 
-        if($this->authServInter->isGranted($user_id, $operation) == 2){
+        if($this->authServInter->isGranted($role) == 2){
             return $next->handle($rq);
         }else{
             throw new HttpForbiddenException($rq, 'Vous n\'avez pas les droits pour effectuer cette action');

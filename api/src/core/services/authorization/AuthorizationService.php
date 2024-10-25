@@ -10,14 +10,10 @@ class AuthorizationService implements AuthzUtilisateurInterface
 
     public function __construct( $utilisateursRepository)
     {
-        $this->utilisateursRepository = $utilisateursRepository;
     }
 
-    function isGranted(string $user_id, int $operation, string $ressource_id): int
+    function isGranted(int $role): int
     {
-        //on cherche le role de l'utilisateur
-        $role = $this->utilisateursRepository->getRole($user_id);
-
         if ($role >= 1) {
             return 2;
         } elseif ($role == 0) {
