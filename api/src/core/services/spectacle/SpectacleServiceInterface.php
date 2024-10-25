@@ -3,6 +3,7 @@
 namespace nrv\core\services\spectacle;
 
 use nrv\core\dto\artiste\ArtisteDTO;
+use nrv\core\dto\spectacle\InputFiltresSpectaclesDTO;
 use nrv\core\dto\spectacle\SpectacleCreerDTO;
 use nrv\core\dto\spectacle\SpectacleDTO;
 
@@ -10,7 +11,7 @@ interface SpectacleServiceInterface
 {
     public function getAllSpectacles(int $page): array;
 
-    public function getSpectacles(array $date,array $style,array $lieu, int $page): array;
+    public function getSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array;
 
     public function getSpectacleById(string $id): SpectacleDTO;
 

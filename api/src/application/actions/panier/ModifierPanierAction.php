@@ -3,13 +3,14 @@
 namespace nrv\application\actions\panier;
 
 use nrv\application\actions\AbstractAction;
+use nrv\core\dto\Panier\PanierModifierDTO;
 use nrv\core\services\Panier\PanierServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Exception\HttpBadRequestException;
 
-class UpdatePanierAction extends AbstractAction{
-
+class ModifierPanierAction extends AbstractAction
+{
     private PanierServiceInterface $panierService;
 
     public function __construct(PanierServiceInterface $panierService)
@@ -17,24 +18,25 @@ class UpdatePanierAction extends AbstractAction{
         $this->panierService = $panierService;
     }
 
-    public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
-        $params = $rq->getParsedBody();
-        $idSoiree = $params['idSoiree'];
-        $tarif = $params['tarif'];
-        $typeTarif = $params['typeTarif'];
-        $qte = $params['qte'];
-        $idUser = $rq->getAttribute('UtiOutDTO')->id;
+    public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
+    {
+        $data = $rq->getParsedBody();
+        $idUser = $idUser = $rq->getAttribute("UtiOutDTO")->id;
+        $idSoiree = $data['idSoiree'];
+        $typeTarif = $data['typeTarif'];
+        $qte = $data['qte'];
 
-
+        $panierModifierDTO = new PanierModifierDTO($idUser, $idSoiree, $typeTarif, $qte);
         try {
-            $panier = $this->panierService->modifierPanier($idUser, $idSoiree, $typeTarif, $qte);
-        }catch(\Exception $e){
+            $panier = $this->panierService->modifierPanier($panierModifierDTO);
+        }catch (\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
         $res = [
             'type' => 'resource',
             'panier' => $panier
         ];
+
         $rs->getBody()->write(json_encode($res));
         return $rs->withStatus(200)->withHeader('Content-Type', 'application/json');
     }

@@ -119,6 +119,10 @@ return function( App $app): App {
         ->add(AuthMiddleware::class)
         ->setName('pay_order');
 
+    $app->put('/panier/modifier[/]', UpdatePanierAction::class)
+        ->add(AuthMiddleware::class)
+        ->setName('update_panier');
+
     // backoffice
 
     $app->get('/backoffice/soirees/{ID-SOIREE}[/]', GetSoireeByIdBackofficeAction::class)

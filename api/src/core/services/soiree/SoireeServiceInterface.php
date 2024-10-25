@@ -2,6 +2,7 @@
 
 namespace nrv\core\services\soiree;
 
+use nrv\core\dto\soiree\SoireeCreerDTO;
 use nrv\core\dto\soiree\SoireeDetailBackofficeDTO;
 use nrv\core\dto\soiree\SoireeDTO;
 
@@ -16,4 +17,6 @@ interface SoireeServiceInterface{
     public function getStyles(): array;
 
     public function gestionPlaceBackOffice(string $idSoiree):SoireeDetailBackofficeDTO;
+
+    public function postSoiree(SoireeCreerDTO $soireeCreerDTO): void;
 }
