@@ -19,6 +19,14 @@ export function isConnected() {
     }
 }
 
+export function isAdmin(){
+    if(localStorage.getItem('role') == 2){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 export function getRole(){
     return localStorage.getItem('role') || null;
 }
@@ -43,8 +51,8 @@ export async function getPanier(){
 export async function addToPanier(idSoiree, qte, tarif, categorie){
     const body = {
         "idSoiree": idSoiree,
-        "qte": qte,
-        "tarif": tarif,
+        "qte": parseInt(qte),
+        "tarif": parseFloat(tarif),
         "typeTarif": categorie
     };
     const data = await loader.postData('panier', body);
@@ -54,6 +62,25 @@ export async function addToPanier(idSoiree, qte, tarif, categorie){
         total += item.tarifTotal;
     });
     alert.showAlert('Billet(s) ajouté(s) au panier', 'ok');
+    return {
+        panier: data.panier,
+        total: total
+    };
+}
+
+export async function modifyPanier(idSoiree, qte, categorie){
+    const body = {
+        "idSoiree": idSoiree,
+        "qte": parseInt(qte),
+        "typeTarif": categorie
+    };
+    const data = await loader.putData('panier/modifier', body);
+
+    let total = 0;
+    data.panier.panierItems.forEach(item => {
+        total += item.tarifTotal;
+    });
+    alert.showAlert('Panier modifié', 'ok');
     return {
         panier: data.panier,
         total: total

@@ -20,6 +20,7 @@ function getRefreshToken() {
 function wipeTokens(){
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    localStorage.removeItem('role');
 }
 
 export { storeData, getAccessToken, getRefreshToken, wipeTokens, storeTokens };

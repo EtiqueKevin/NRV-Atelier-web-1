@@ -24,6 +24,26 @@ export async function getSpectacles() {
     };
 }
 
+export async function getSpectaclesByUrl(url) {
+    const data = await loadData(url);
+    return {
+        spectacles: data.spectacles.map(item => {
+            const spectacle = item.spectacle;
+            return {
+                id: spectacle.id,
+                titre: spectacle.titre,
+                description: spectacle.description,
+                heure: spectacle.heure,
+                urlVideo: spectacle.urlVideo,
+                idSoiree: spectacle.idSoiree,
+                image: spectacle.imgs && spectacle.imgs.length > 0 ? spectacle.imgs.map(img => apiUrl + img) : null
+            };
+        }),
+        links: data.links,
+        page: data.page
+    };
+}
+
 export async function getSpectacle(href) {
     const data = await loadData(href);
     const artistes = await Promise.all(data.links.artistes.map(async link => await getArtiste(link.href)));
@@ -90,33 +110,6 @@ export async function getStyles() {
 
     const data = await loadData('/styles');
     return data.styles;
-}
-
-export async function searchSpectacles(date, style, lieu){
-    let query = "";
-    if (date) {
-        query += `dates=${date}`;
-    }
-    if (style) {
-        query += `&styles=${style}`;
-    }
-    if (lieu) {
-        query += `&lieux=${lieu}`;
-    }
-
-    const data = await loadData(`/spectacles?${query}`);
-    return data.spectacles.map(item => {
-        const spectacle = item.spectacle;
-        return {
-            id: spectacle.id,
-            titre: spectacle.titre,
-            description: spectacle.description,
-            heure: spectacle.heure,
-            urlVideo: spectacle.urlVideo,
-            idSoiree: spectacle.idSoiree,
-            image: spectacle.imgs && spectacle.imgs.length > 0 ? spectacle.imgs.map(img => apiUrl + img) : null
-        };
-    });
 }
 
 export async function getReservations(id) {

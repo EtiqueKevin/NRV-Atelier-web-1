@@ -1,5 +1,5 @@
 import {displayHome, displayNav} from './ui.js';
-import { isConnected } from './users.js';
+import { isConnected, isAdmin } from './users.js';
 import Handlebars from 'handlebars';
 
 async function init(){
@@ -9,8 +9,8 @@ async function init(){
     });
 
     // afficher la nav et la page d'accueil
-    displayNav(isConnected());
-    displayHome();
+    displayNav(isConnected(), isAdmin());
+    //displayHome();
 }
 
 window.addEventListener('load', init);

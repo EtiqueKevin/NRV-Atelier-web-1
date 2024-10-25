@@ -3,6 +3,35 @@ import * as spectacle from './spectacle.js';
 import * as users from './users.js';
 import { showAlert } from './alert.js';
 
+function getSearchParams(page) {
+    const date = document.getElementById('search-date').value;
+    const style = document.getElementById('search-style').value;
+    const lieu = document.getElementById('search-lieu').value;
+
+    let query = '';
+    if (date) {
+        query += `dates=${date}`;
+    }
+
+    if (style) {
+        query += `${query ? '&' : ''}styles=${style}`;
+    }
+
+    if (lieu) {
+        query += `${query ? '&' : ''}lieux=${lieu}`;
+    }
+
+    if (page) {
+        const pageElement = document.getElementById('nb-page');
+        const pageId = pageElement ? pageElement.getAttribute('data-id') : null;
+        if (pageId) {
+            query += `${query ? '&' : ''}page=${pageId}`;
+        }
+    }
+    return query;
+}
+
+
 export function handleNavButtons() {
     const navSpectacle = document.getElementById('nav-spectacle');
     if (navSpectacle) {
@@ -11,7 +40,8 @@ export function handleNavButtons() {
                 const data = await spectacle.getSpectacles();
                 const lieux = await spectacle.getLieux();
                 const styles = await spectacle.getStyles();
-                ui.displaySpectacleList(data, lieux, styles);
+                ui.displaySearchList(lieux, styles);
+                ui.displaySpectacleList(data);
             } catch (error) {
                 showAlert('Erreur lors de la récupération des spectacles', 'error');
             }
@@ -74,7 +104,8 @@ export function handleHomeSpectacleButton() {
                 const data = await spectacle.getSpectacles();
                 const lieux = await spectacle.getLieux();
                 const styles = await spectacle.getStyles();
-                ui.displaySpectacleList(data, lieux, styles);
+                ui.displaySearchList(lieux, styles);
+                ui.displaySpectacleList(data);
             } catch (error) {
                 showAlert('Erreur lors de la récupération des spectacles', 'error');
             }
@@ -102,6 +133,33 @@ export function handleSpectacleList(){
             }
         });
     }
+    const previousPageButton = document.getElementById('previous-page');
+    if (previousPageButton) {
+        previousPageButton.addEventListener('click', async () => {
+            try {
+                let url = previousPageButton.getAttribute('data-url');
+                url = url + '&' + getSearchParams(false);
+                const data = await spectacle.getSpectaclesByUrl(url);
+                ui.displaySpectacleList(data);
+            } catch (error) {
+                showAlert('Erreur lors de la récupération des spectacles', 'error');
+            }
+        });
+    }
+
+    const nextPageButton = document.getElementById('next-page');
+    if (nextPageButton) {
+        nextPageButton.addEventListener('click', async () => {
+            try {
+                let url = nextPageButton.getAttribute('data-url');
+                url = url + '&' + getSearchParams(false);
+                const data = await spectacle.getSpectaclesByUrl(url);
+                ui.displaySpectacleList(data);
+            } catch (error) {
+                showAlert('Erreur lors de la récupération des spectacles', 'error');
+            }
+        });
+    }
 }
 
 export function handleSearchForm() {
@@ -110,13 +168,9 @@ export function handleSearchForm() {
         searchForm.addEventListener('submit', async (event) => {
             event.preventDefault();
             try {
-                const date = document.getElementById('search-date').value;
-                const style = document.getElementById('search-style').value;
-                const lieu = document.getElementById('search-lieu').value;
-                const data = await spectacle.searchSpectacles(date, style, lieu);
-                const lieux = await spectacle.getLieux();
-                const styles = await spectacle.getStyles();
-                ui.displaySpectacleList(data, lieux, styles);
+                const url = '/spectacles?' + getSearchParams(true);
+                const data = await spectacle.getSpectaclesByUrl(url);
+                ui.displaySpectacleList(data);
             } catch (error) {
                 showAlert('Erreur lors de la recherche', 'error');
             }
@@ -211,6 +265,21 @@ export function handlePanier(){
                 ui.displayPanier(data);
             } catch (error) {
                 showAlert('Impossible de valider le panier', 'error');
+            }
+        });
+    }
+
+    const qteButtons = document.getElementsByClassName('modify-qte-button');
+    for (const qteButton of qteButtons) {
+        qteButton.addEventListener('click', async (event) => {
+            try {
+                const idSoiree = event.target.getAttribute('data-id');
+                const qte = document.getElementById(`qte-${idSoiree}`).value;
+                const categorie = event.target.getAttribute('data-categorie');
+                const data = await users.modifyPanier(idSoiree, qte, categorie);
+                ui.displayPanier(data);
+            } catch (error) {
+                showAlert('Erreur lors de la mise à jour du panier', 'error');
             }
         });
     }

@@ -9,13 +9,18 @@ export function displayHome() {
     eventHandler.handleHomeSpectacleButton();
 }
 
-export function displaySpectacleList(data, lieux, styles) {
-    const template = Handlebars.compile(templates.listeSpectacleTemplate);
-    console.log(data);
-    const html = template({ spectacles: data, lieu: lieux, styles: styles });
+export function displaySearchList(lieux, styles) {
+    const template = Handlebars.compile(templates.searchFormTemplate);
+    const html = template({ lieu: lieux, styles: styles });
     document.getElementById('main-content').innerHTML = html;
-    eventHandler.handleSpectacleList();
     eventHandler.handleSearchForm();
+}
+
+export function displaySpectacleList(data) {
+    const template = Handlebars.compile(templates.listeSpectacleTemplate);
+    const html = template({ spectacles: data});
+    document.getElementById('list-spectacle').innerHTML = html;
+    eventHandler.handleSpectacleList();
 }
 
 export function displaySoiree(data, connected, backOffice) {
@@ -40,14 +45,15 @@ export function displayInscription() {
     eventHandler.handleInscriptionForm();
 }
 
-export function displayNav(connected) {
+export function displayNav(connected, backOffice) {
     const template = Handlebars.compile(templates.navRightTemplate);
-    const html = template({ connected });
+    const html = template({ connected, backOffice });
     document.getElementsByClassName('nav-right')[0].innerHTML = html;
     eventHandler.handleNavButtons();
 }
 
 export function displayPanier(data) {
+    console.log(data);
     const template = Handlebars.compile(templates.panierTemplate);
     const html = template({ data });
     const modal = document.getElementById('myModal');

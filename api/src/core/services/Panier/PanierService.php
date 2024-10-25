@@ -114,7 +114,7 @@ class PanierService implements PanierServiceInterface
 
         try {
             $panierTab = $this->getPanier($idUser);
-            if(count($panierTab) === 0){
+            if(count($panierTab->panierItems) === 0){
                 throw new PanierException('panier vide');
             }
             $this->UtilisateursRepository->validerPanier($idUser);

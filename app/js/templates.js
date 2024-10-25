@@ -10,7 +10,7 @@ export const homeTemplate = `
   </section>
 `;
 
-export const listeSpectacleTemplate = `
+export const searchFormTemplate = `
   <section class="search-form">
     <form id="search-form">
       <div class="input-container">
@@ -21,7 +21,7 @@ export const listeSpectacleTemplate = `
       <div class="input-container">
         <label for="search-style">Style:</label>
         <select id="search-style" name="search-style">
-          <option value="" disabled selected>Choisir un Style</option>
+          <option value="">Tous les Styles</option>
           {{#each styles}}
             <option value="{{this}}">{{this}}</option>
           {{/each}}
@@ -31,7 +31,7 @@ export const listeSpectacleTemplate = `
       <div class="input-container">
         <label for="search-lieu">Lieu:</label>
         <select id="search-lieu" name="search-lieu">
-          <option value="" disabled selected>Choisir un lieu</option>
+          <option value="">Tous les lieux</option>
           {{#each lieu}}
             <option value="{{this.id}}">{{this.nom}}</option>
           {{/each}}
@@ -41,8 +41,15 @@ export const listeSpectacleTemplate = `
       <button type="submit" class="color-button">Search</button>
     </form>
   </section>
+
+  <section id="list-spectacle">
+
+  </section>
+`;
+
+export const listeSpectacleTemplate = `
   {{#if spectacles.spectacles.length}}
-    <section class="grid grid-col-4-l grid-col-3-m grid-col-2-s grid-col-1-xs gap-2" id="liste-spectacle">
+    <div class="grid grid-col-4-l grid-col-3-m grid-col-2-s grid-col-1-xs gap-2" id="liste-spectacle">
       {{#each spectacles.spectacles}}
         <div data-id="{{this.idSoiree}}" class="spectacle-card-hover spectacle">
           {{#if this.image.length}}
@@ -56,16 +63,16 @@ export const listeSpectacleTemplate = `
           </article>
         </div>
       {{/each}}
-    </section>
+    </div>
 
     <div class="pagination">
-      {{#if spectacles.links.previous}}
-        <button class="color-button" id="previous-page" data-url="spectacles.links.previous.href"><i class="fa-solid fa-arrow-right"></i></button>
-      {{/if}}
-      <p> {{spectacles.page}} </p>
-      {{#if spectacles.links.next}}
-        <button class="color-button" id="next-page" data-url="spectacles.links.next.href"><i class="fa-solid fa-arrow-right"></i></button>
-      {{/if}}
+      <button class="color-button" id="previous-page" data-url="{{spectacles.links.previous.href}}" {{#unless spectacles.links.previous}}disabled{{/unless}}>
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
+      <p id="nb-page" data-id="{{spectacles.page}}"> {{spectacles.page}} </p>
+      <button class="color-button" id="next-page" data-url="{{spectacles.links.next.href}}" {{#unless spectacles.links.next}}disabled{{/unless}}>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
     </div>
   {{else}}
     <p>Aucun spectacle trouvé pour les critères de recherche.</p>
@@ -195,6 +202,14 @@ export const navRightTemplate = `
       <span>Spectacles</span>
     </button>
   </li>
+  {{#if backOffice}}
+    <li>
+      <button class="boutton-nav" id="nav-backoffice">
+        <i class="fa-solid fa-cogs"></i>
+        <span>BackOffice</span>
+      </button>
+    </li>
+  {{/if}}
   {{#if connected}}
     <li>
      <button class="boutton-nav" id="nav-billets">
@@ -247,7 +262,7 @@ export const panierTemplate = `
           <div>{{this.soiree.nom}}</div>
           <div class="quantity-container">
             <input type="number" value="{{this.qte}}" min="1" id="qte-{{this.soiree.id}}">
-            <button class="modify-qte-button" data-id="{{this.soiree.id}}"><i class="fa-regular fa-square-check"></i> Modifier</button>
+            <button class="modify-qte-button" data-id="{{this.soiree.id}}" data-categorie="{{this.typeTarif}}"><i class="fa-regular fa-square-check"></i> Modifier</button>
           </div>
           <div>{{this.tarif}} €</div>
           <div>{{this.tarifTotal}} €</div>
@@ -328,7 +343,13 @@ export const payerTemplate = `
         <label for="cvv">Code de Validation (CVV):</label>
         <input type="text" id="cvv" name="cvv" pattern="\\d{3}" maxlength="3" required>
       </div>
-      <button class="boutton" id="paiement-boutton">Payer</button>
+      <button type="button" class="boutton" id="paiement-boutton">Payer</button>
     </form>
+  </section>
+`;
+
+export const backOfficeTemplate = `
+  <section class="backoffice-card">
+
   </section>
 `;
