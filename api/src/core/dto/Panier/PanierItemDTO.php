@@ -18,6 +18,10 @@ class PanierItemDTO extends DTO
     protected int $qte;
     protected int $tarifTotal;
 
+
+    /**
+     * @param PanierItem $panierItem
+     */
     public function __construct(PanierItem $panierItem)
     {
         $this->id = $panierItem->ID;
@@ -30,6 +34,11 @@ class PanierItemDTO extends DTO
         $this->qte = $panierItem->qte;
     }
 
+
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

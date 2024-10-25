@@ -9,10 +9,17 @@ class ArtisteService implements ArtisteServiceInterface {
 
    private SoireesRepositoryInterface $soireesRepository;
 
+    /**
+     * @param SoireesRepositoryInterface $soireesRepository
+     */
     public function __construct(SoireesRepositoryInterface$soireesRepository){
         $this->soireesRepository = $soireesRepository;
     }
 
+    /**
+     * RECUPERE TOUS LES ARTISTES
+     * @return ArtisteOutputDTO
+     */
     public function getArtistes(): ArtisteOutputDTO{
         $artistes = $this->soireesRepository->getArtistes();
 

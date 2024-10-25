@@ -12,11 +12,21 @@ class GetLieuxAction extends AbstractAction
 
     private SoireeServiceInterface $soireeService;
 
+    /**
+     * @param SoireeServiceInterface $soireeService
+     */
     public function __construct(SoireeServiceInterface $soireeService)
     {
         $this->soireeService = $soireeService;
     }
 
+    /**
+     * RECUPERE TOUS LES LIEUX DE SOIREES DISPONIBLES
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $lieux = $this->soireeService->getLieux();

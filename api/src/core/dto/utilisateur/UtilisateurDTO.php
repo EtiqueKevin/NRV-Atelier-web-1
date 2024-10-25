@@ -16,6 +16,9 @@ class UtilisateurDTO extends DTO{
     protected ?string $accessToken;
     protected ?string $refreshToken;
 
+    /**
+     * @param Utilisateur $uti
+     */
     public function __construct(Utilisateur $uti){
         $this->nom = $uti->nom;
         $this->prenom = $uti->prenom;
@@ -25,14 +28,31 @@ class UtilisateurDTO extends DTO{
         $this->id = $uti->ID;
     }
 
+
+    /**
+     * SETTER DE L'ACCESS TOKEN
+     * @param string $actoken
+     * @return void
+     */
     public function setAccessToken(string $actoken){
         $this->accessToken = $actoken;
     }
 
+
+    /**
+     * SETTER DU REFRESH TOKEN
+     * @param string $retoken
+     * @return void
+     */
     public function setRefreshToken(string $retoken){
         $this->refreshToken = $retoken;
     }
 
+
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
         return [
             'id' => $this->id,

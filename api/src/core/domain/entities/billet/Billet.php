@@ -17,6 +17,12 @@ class Billet extends Entity{
 
     protected ?string $nomSoiree ="";
 
+    /**
+     * @param string $idU
+     * @param string $idS
+     * @param DateTime $dD
+     * @param string $ct
+     */
     public function __construct(string $idU,string $idS,DateTime $dD,string $ct){
         $this->id_utilisateur = $idU;
         $this->id_soiree = $idS;
@@ -24,10 +30,19 @@ class Billet extends Entity{
         $this->categorie_tarif = $ct;
     }
 
+    /**
+     * SETTER POUR LE NOM DE LA SOIREE POUR POUVOIR LE DEFINIR PLUS TARD
+     * @param string $nom
+     * @return void
+     */
     public function setNomSoiree(string $nom){
         $this->nomSoiree = $nom;
     }
 
+    /**
+     * TRANSFORME L'ENTITY EN DTO
+     * @return BilletDTO
+     */
     public function toDTO(): BilletDTO{
         return new BilletDTO($this);
     }

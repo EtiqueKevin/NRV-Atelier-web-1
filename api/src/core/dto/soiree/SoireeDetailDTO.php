@@ -20,6 +20,10 @@ class SoireeDetailDTO extends DTO{
     private float $tarif_reduit;
     private array $spectaclesArtistes;
 
+
+    /**
+     * @param $arSoireDetail
+     */
     public function __construct($arSoireDetail){
         $soiree = $arSoireDetail['soiree'];
         $this->id = $soiree->ID;
@@ -32,6 +36,10 @@ class SoireeDetailDTO extends DTO{
         $this->spectaclesArtistes = $arSoireDetail['spectacleDetail'];
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
         $nbSpectacles = 0;
 

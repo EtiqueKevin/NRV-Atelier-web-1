@@ -11,11 +11,19 @@ class BilletInputDTO extends DTO{
     protected string $idBillet;
     protected string $id_utilisateur;
 
+    /**
+     * @param string $idB
+     * @param string $uti
+     */
     public function __construct(string $idB, string $uti){
         $this->idBillet = $idB;
         $this->id_utilisateur = $uti;
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
 
         $tab = [];

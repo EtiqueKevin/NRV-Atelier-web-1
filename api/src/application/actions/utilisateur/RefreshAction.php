@@ -14,10 +14,21 @@ class RefreshAction extends AbstractAction
 {
     private AuthProviderInterface $authProvider;
 
+
+    /**
+     * @param AuthProviderInterface $authProvider
+     */
     public function __construct(AuthProviderInterface $authProvider) {
         $this->authProvider = $authProvider;
     }
 
+    /**
+     * RECUPERE UN NOUVEAU TOKEN A PARTIR D'UN TOKEN DE REFRESH PASSER DANS LE HEADER
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
 
         try {

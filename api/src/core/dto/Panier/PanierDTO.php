@@ -15,6 +15,10 @@ class PanierDTO extends DTO
     protected array $panierItems;
     protected bool $valide;
 
+
+    /**
+     * @param Panier $panier
+     */
     public function __construct(Panier $panier)
     {
         $this->id = $panier->ID;
@@ -24,6 +28,11 @@ class PanierDTO extends DTO
         $this->valide = $panier->valide;
     }
 
+
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

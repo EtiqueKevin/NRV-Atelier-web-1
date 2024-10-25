@@ -12,11 +12,22 @@ class ValiderPanierAction extends AbstractAction
 {
     private PanierServiceInterface $panierService;
 
+    /**
+     * @param PanierServiceInterface $panierService
+     */
     public function __construct(PanierServiceInterface $panierService)
     {
         $this->panierService = $panierService;
     }
 
+
+    /**
+     * VALIDE LE PANIER DE L'UTILISATEUR UNIQUEMENT GRACE AU A L'ID DU USER DANS LE TOKEN JWT
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idUser = $rq->getAttribute('UtiOutDTO')->id;

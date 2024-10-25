@@ -14,10 +14,19 @@ class AuthorizationLambdaMiddleware{
 
     protected AuthzUtilisateurInterface $authServInter;
 
+    /**
+     * @param AuthzUtilisateurInterface $authServInter
+     */
     public function __construct( AuthzUtilisateurInterface $authServInter){
         $this->authServInter = $authServInter;
     }
 
+    /**
+     * VERIFIE LES AUTORISATIONS DE L'UTILISATEUR POUR LE FRONTEND
+     * @param ServerRequestInterface $rq
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, RequestHandlerInterface $next): ResponseInterface{
         $routeContext = RouteContext::fromRequest($rq);
         $route = $routeContext->getRoute();

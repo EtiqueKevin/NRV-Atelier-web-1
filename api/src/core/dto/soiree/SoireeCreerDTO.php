@@ -13,6 +13,15 @@ class SoireeCreerDTO extends DTO
     protected float $tarif_normal;
     protected float $tarif_reduit;
 
+
+    /**
+     * @param $nom
+     * @param $thematique
+     * @param $date
+     * @param $lieu
+     * @param $tarif_normal
+     * @param $tarif_reduit
+     */
     public function __construct($nom, $thematique, $date, $lieu, $tarif_normal, $tarif_reduit)
     {
         $this->nom = $nom;
@@ -24,6 +33,10 @@ class SoireeCreerDTO extends DTO
     }
 
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

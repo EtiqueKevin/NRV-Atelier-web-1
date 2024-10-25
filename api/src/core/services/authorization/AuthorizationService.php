@@ -6,12 +6,16 @@ use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 
 class AuthorizationService implements AuthzUtilisateurInterface
 {
-    private UtilisateursRepositoryInterface $utilisateursRepository;
 
-    public function __construct( $utilisateursRepository)
+    public function __construct()
     {
     }
 
+    /**
+     * VERIFIE LES DROITS D'UN UTILISATEUR
+     * @param int $role
+     * @return int
+     */
     function isGranted(int $role): int
     {
         if ($role >= 1) {

@@ -13,10 +13,19 @@ use nrv\core\services\soiree\SoireeException;
 class SpectacleService implements SpectacleServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
+    /**
+     * @param SoireesRepositoryInterface $soireeRepository
+     */
     public function __construct(SoireesRepositoryInterface $soireeRepository){
         $this->soireeRepository = $soireeRepository;
     }
 
+    /**
+     * RECUPERE TOUS LES SPECTACLES
+     * @param InputFiltresSpectaclesDTO $filtresSpectaclesDTO
+     * @return array
+     * @throws spectacleException
+     */
     public function getAllSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array{
         $date = $filtresSpectaclesDTO->date;
         $style = $filtresSpectaclesDTO->style;
@@ -33,6 +42,13 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+    /**
+     * RECUPERE LES SPECTACLES PAR RAPPORT A DES FILTRES ET UNE PAGE DONNEE, LES IL Y A PLUSIEURS DATES, PLUSIEURS STYLES,
+     * PLUSIEURS LIEUX COMME FILTRES ET ILS SONT TOUS INDEPENDANTS ET OPTIONNELS
+     * @param InputFiltresSpectaclesDTO $filtresSpectaclesDTO
+     * @return array
+     * @throws spectacleException
+     */
     public function getSpectacles(InputFiltresSpectaclesDTO $filtresSpectaclesDTO): array{
         $date = $filtresSpectaclesDTO->date;
         $style = $filtresSpectaclesDTO->style;
@@ -50,6 +66,13 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UN SPECTACLE PAR RAPPORT A SON ID
+     * @param string $id
+     * @return SpectacleDTO
+     * @throws spectacleException
+     */
     public function getSpectacleById(string $id): SpectacleDTO{
         try {
             $spectacle = $this->soireeRepository->getSpectacleById($id);
@@ -59,6 +82,12 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+    /**
+     * RECUPERE TOUS LES ARTISTES D'UN SPECTACLE
+     * @param string $idSpectacle
+     * @return array
+     * @throws spectacleException
+     */
     public function getArtistesBySpectacle(string $idSpectacle): array{
         try {
             $artistes = $this->soireeRepository->getArtisteIdByIdSpectacle($idSpectacle);
@@ -68,6 +97,13 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UN ARTISTE PAR RAPPORT A SON ID
+     * @param string $idArtiste
+     * @return ArtisteDTO
+     * @throws spectacleException
+     */
     public function getArtisteById(string $idArtiste): ArtisteDTO{
         try {
             $artiste = $this->soireeRepository->getArtisteById($idArtiste);
@@ -77,6 +113,13 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+
+    /**
+     * CREE UN SPECTACLE
+     * @param SpectacleCreerDTO $spectacleDTO
+     * @return void
+     * @throws SoireeException
+     */
     public function putSpectacle(SpectacleCreerDTO $spectacleDTO) : void{
         try{
             $spectacleEnity = new Spectacle($spectacleDTO->titre,$spectacleDTO->description,\DateTime::createFromFormat('H:i:s',$spectacleDTO->heure),$spectacleDTO->url_video,$spectacleDTO->imgs,$spectacleDTO->artistes);
@@ -90,6 +133,14 @@ class SpectacleService implements SpectacleServiceInterface{
         }
     }
 
+
+    /**
+     * DEPLACE UN FICHIER UPLOADER
+     * @param $directory
+     * @param $uploadedFile
+     * @return string
+     * @throws \Exception
+     */
     public function moveUploadedFile($directory, $uploadedFile) :string{
         $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
         $basename = bin2hex(random_bytes(8)); // see http://php.net/manual/en/function.random-bytes.php

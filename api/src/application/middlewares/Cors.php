@@ -15,6 +15,12 @@ class Cors{
         'http://localhost:35610',
     ];
 
+    /**
+     * GERE LES REQUETES CORS
+     * @param ServerRequestInterface $rq
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, RequestHandlerInterface $next): ResponseInterface {
         if (!$rq->hasHeader('Origin')) {
             throw new HttpUnauthorizedException($rq, "missing Origin Header (cors)");

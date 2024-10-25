@@ -23,7 +23,14 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $this->pdo = $pdo;
     }
 
-    //getSpectacles
+    /**
+     *
+     * @param array $date
+     * @param array $style
+     * @param array $lieu
+     * @return array
+     * @throws RepositoryException
+     */
     public function getAllSpectacles(array $date, array $style, array $lieu): array {
         $sql = 'SELECT * FROM spectacles 
                 INNER JOIN soirees_spectacles ON spectacles.id = id_spectacle 

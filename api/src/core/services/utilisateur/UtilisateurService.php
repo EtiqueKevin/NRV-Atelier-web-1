@@ -15,10 +15,19 @@ class UtilisateurService implements UtilisateurServiceInterface{
 
     private UtilisateursRepositoryInterface $utilisateursRepository;
 
+    /**
+     * @param UtilisateursRepositoryInterface $utilisateursRepository
+     */
     public function __construct($utilisateursRepository){
         $this->utilisateursRepository = $utilisateursRepository;
     }
 
+    /**
+     * VERIFIE LES CREDENTIELS D'UN UTILISATEUR
+     * @param UtilisateurInputDTO $utiInpuDTO
+     * @return UtilisateurDTO
+     * @throws UtilisateurException
+     */
     public function verifyCredentials(UtilisateurInputDTO $utiInpuDTO):UtilisateurDTO{
         try{
             $user = $this->utilisateursRepository->UtilisateurByEmail($utiInpuDTO->email);
@@ -32,6 +41,13 @@ class UtilisateurService implements UtilisateurServiceInterface{
         }
     }
 
+
+    /**
+     * CREE UN UTILISATEUR
+     * @param UtilisateurInputCreationDTO $utiInputCreDTO
+     * @return void
+     * @throws UtilisateurException
+     */
     public function createUtilisateur(UtilisateurInputCreationDTO $utiInputCreDTO):void{
         try{
             $this->utilisateursRepository->UtilisateurByEmail($utiInputCreDTO->email);
@@ -55,6 +71,12 @@ class UtilisateurService implements UtilisateurServiceInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UN UTILISATEUR PAR RAPPORT A SON ID
+     * @param string $id
+     * @return UtilisateurDTO
+     */
     public function getUtilisateurById(string $id):UtilisateurDTO{
         $utiEntity = $this->utilisateursRepository->UtilisateurById($id);
         return new UtilisateurDTO($utiEntity);

@@ -16,12 +16,23 @@ class PanierService implements PanierServiceInterface
     private UtilisateursRepositoryInterface $UtilisateursRepository;
     private SoireesRepositoryInterface $SoireesRepository;
 
+
+    /**
+     * @param UtilisateursRepositoryInterface $utilisateursRepository
+     * @param SoireesRepositoryInterface $soireesRepository
+     */
     public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface $soireesRepository)
     {
         $this->UtilisateursRepository = $utilisateursRepository;
         $this->SoireesRepository = $soireesRepository;
     }
 
+    /**
+     * RECUPERE LE PANIER D'UN UTILISATEUR
+     * @param string $idUser
+     * @return PanierDTO
+     * @throws PanierException
+     */
     public function getPanier(string $idUser) : PanierDTO
     {
         try {
@@ -44,6 +55,13 @@ class PanierService implements PanierServiceInterface
 
     }
 
+
+    /**
+     * AJOUTE UN ITEM DANS LE PANIER
+     * @param PanierAddDTO $panierAddDTO
+     * @return PanierDTO
+     * @throws PanierException
+     */
     public function addPanier(PanierAddDTO $panierAddDTO) :PanierDTO
     {
         $idUser = $panierAddDTO->idUser;
@@ -81,6 +99,13 @@ class PanierService implements PanierServiceInterface
         return $retour;
     }
 
+
+    /**
+     * MODIFIER UN ITEM DANS LE PANIER
+     * @param PanierModifierDTO $panierModifierDTO
+     * @return PanierDTO
+     * @throws PanierException
+     */
     public function modifierPanier(PanierModifierDTO $panierModifierDTO) : PanierDTO {
         $idUser = $panierModifierDTO->idUser;
         $idSoiree = $panierModifierDTO->idSoiree;
@@ -113,6 +138,13 @@ class PanierService implements PanierServiceInterface
         return $retour;
     }
 
+
+    /**
+     * VALIDE UN PANIER D'UN UTILISATEUR
+     * @param string $idUser
+     * @return PanierDTO
+     * @throws PanierException
+     */
     public function validerPanier(string $idUser) : PanierDTO
     {
 
@@ -121,6 +153,9 @@ class PanierService implements PanierServiceInterface
             if(count($panierTab->panierItems) === 0){
                 throw new PanierException('panier vide');
             }
+            if ($panierTab->valide){
+                throw new PanierException('panier déjà validé');
+            }
             $this->UtilisateursRepository->validerPanier($idUser);
             return $this->getPanier($idUser);
         }catch (\Exception $e){
@@ -128,6 +163,14 @@ class PanierService implements PanierServiceInterface
         }
     }
 
+
+    /**
+     * VERIFIE UN PANIER
+     * @param PanierVerifDTO $panierVerifDTO
+     * @param PanierDTO $panierDTO
+     * @return bool
+     * @throws PanierException
+     */
     public function verifier(PanierVerifDTO $panierVerifDTO, PanierDTO $panierDTO) : bool
     {
         $numero = $panierVerifDTO->numero;
@@ -146,6 +189,14 @@ class PanierService implements PanierServiceInterface
         return true;
     }
 
+
+    /**
+     * VERIFIE LA DISPONIBILITE D'UNE SOIREE (QUANTITE DE PLACES)
+     * @param int $qte
+     * @param string $idSoiree
+     * @return bool
+     * @throws PanierException
+     */
     public function verificationDisponibilite(int $qte, string $idSoiree):bool{
         try {
             $nbPlacett = $this->SoireesRepository->getNbPlaceByIdSoiee($idSoiree);

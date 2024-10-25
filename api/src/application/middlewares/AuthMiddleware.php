@@ -16,10 +16,20 @@ class AuthMiddleware{
 
     protected AuthProviderInterface $provider;
 
+    /**
+     * @param AuthProviderInterface $p
+     */
     public function __construct(AuthProviderInterface $p){
         $this->provider = $p;
     }
 
+
+    /**
+     * VERIFIE SI L'UTILISATEUR EST CONNECTE EN VERIFIANT LE TOKEN
+     * @param ServerRequestInterface $rq
+     * @param RequestHandlerInterface $next
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, RequestHandlerInterface $next ): ResponseInterface {
 
 

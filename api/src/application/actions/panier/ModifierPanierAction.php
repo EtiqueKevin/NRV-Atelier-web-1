@@ -14,11 +14,22 @@ class ModifierPanierAction extends AbstractAction
 {
     private PanierServiceInterface $panierService;
 
+    /**
+     * @param PanierServiceInterface $panierService
+     */
+
     public function __construct(PanierServiceInterface $panierService)
     {
         $this->panierService = $panierService;
     }
 
+    /**
+     * MODIFIER LE PANIER DE L'UTILISATEUR EN INDIQUANT LES INFOS DE LA SOIREE DANS LE BODY
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $data = $rq->getParsedBody();

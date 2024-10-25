@@ -11,6 +11,13 @@ class InputFiltresSpectaclesDTO extends DTO
     protected array $lieu;
     protected int $page;
 
+
+    /**
+     * @param array $date
+     * @param array $style
+     * @param array $lieu
+     * @param int $page
+     */
     public function __construct(array $date, array $style, array $lieu, int $page)
     {
         $this->date = $date;

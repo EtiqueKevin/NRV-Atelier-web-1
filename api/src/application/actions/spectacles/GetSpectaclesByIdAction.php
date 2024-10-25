@@ -13,11 +13,22 @@ class GetSpectaclesByIdAction extends AbstractAction
 {
     private SpectacleServiceInterface $spectacleService;
 
+
+    /**
+     * @param SpectacleServiceInterface $spectacleService
+     */
     public function __construct(SpectacleServiceInterface $spectacleService)
     {
         $this->spectacleService = $spectacleService;
     }
 
+    /**
+     * RECUPERE UN SPECTACLE PAR SON ID PASSER DANS LA ROUTE
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $id = $args['ID-SPECTACLE'];

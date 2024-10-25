@@ -12,6 +12,9 @@ class LieuDTO extends DTO
     private int $places_assise;
     private int $places_debout;
 
+    /**
+     * @param $lieu
+     */
     public function __construct($lieu)
     {
         $this->id = $lieu->ID;
@@ -21,6 +24,10 @@ class LieuDTO extends DTO
         $this->places_debout = $lieu->places_debout;
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

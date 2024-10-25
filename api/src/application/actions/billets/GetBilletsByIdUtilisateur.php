@@ -10,10 +10,21 @@ use Slim\Exception\HttpBadRequestException;
 class GetBilletsByIdUtilisateur{
 
     private  BilletServiceInterface $billetService;
+
+    /**
+     * @param BilletServiceInterface $billetService
+     */
     public function __construct(BilletServiceInterface $billetService){
         $this->billetService = $billetService;
     }
 
+    /**
+     * RENVOIE TOUS LES BILLETS D'UN UTILISATEUR
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idUti = $rq->getAttribute('UtiOutDTO')->id;

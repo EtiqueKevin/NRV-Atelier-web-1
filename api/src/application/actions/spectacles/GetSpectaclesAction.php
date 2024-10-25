@@ -14,11 +14,24 @@ class GetSpectaclesAction extends AbstractAction
 {
     private SpectacleServiceInterface $spectacleService;
 
+
+    /**
+     * @param SpectacleServiceInterface $spectacleService
+     */
     public function __construct(SpectacleServiceInterface $spectacleService)
     {
         $this->spectacleService = $spectacleService;
     }
 
+
+    /**
+     * RECUPERE TOUS LES SPECTACLES DISPONIBLES AVEC PAGINATION ET POSSIBILITE DE RENTRER PLUSIEURS DATES, PLUSIEURS
+     * STYLES ET PLUSIEURS LIEUX, LES FILTRES SONT INDEPENDANTS LES UNS DES AUTRES ET SONT OPTIONNELS
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
 

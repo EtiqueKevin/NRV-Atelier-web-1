@@ -7,7 +7,13 @@ use Psr\Http\Message\ServerRequestInterface;
 
  class HomeAction extends AbstractAction{
 
-
+     /**
+      * PAGE QUI DECRIT LES ROUTES DE L'API
+      * @param ServerRequestInterface $rq
+      * @param ResponseInterface $rs
+      * @param array $args
+      * @return ResponseInterface
+      */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface {
 
 

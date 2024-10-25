@@ -14,10 +14,22 @@ class SignInAction extends AbstractAction
 {
     private AuthProviderInterface $authProvider;
 
+
+    /**
+     * @param AuthProviderInterface $authProvider
+     */
     public function __construct(AuthProviderInterface $authProvider) {
         $this->authProvider = $authProvider;
     }
 
+
+    /**
+     * RECUPERE UN TOKEN A PARTIR DES IDENTIFIANTS PASSER DANS LE BODY DE LA REQUETE ET LE RETOURNE DANS LE CORPS DE LA REPONSE AVEC UN REFRESH TOKEN
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $authHeader = $rq->getHeaderLine('Authorization');

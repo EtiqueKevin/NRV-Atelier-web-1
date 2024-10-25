@@ -12,10 +12,21 @@ class GetArtistesAction extends AbstractAction{
 
     private ArtisteServiceInterface $artisteService;
 
+    /**
+     * @param ArtisteServiceInterface $artisteService
+     */
     public function __construct(ArtisteServiceInterface $artisteService){
         $this->artisteService = $artisteService;
     }
 
+
+    /**
+     * RECUPERE TOUS LES ARTISTES DISPONIBLES
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $artistes = $this->artisteService->getArtistes();

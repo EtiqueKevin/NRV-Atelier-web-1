@@ -13,11 +13,21 @@ class GetSoireeByIdAction extends AbstractAction{
 
     private SoireeServiceInterface $soireeService;
 
+    /**
+     * @param SoireeServiceInterface $soireeService
+     */
     public function __construct(SoireeServiceInterface $soireeService)
     {
         $this->soireeService = $soireeService;
     }
 
+    /**
+     * RECUPERE UNE SOIREE PAR SON ID PASSER DANS LA ROUTE
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idSoiree = $args['ID-SOIREE'];

@@ -18,12 +18,25 @@ class PostPayerCommandeAction extends AbstractAction
     private PanierServiceInterface $panierService;
     private BilletServiceInterface $billetService;
 
+
+    /**
+     * @param PanierServiceInterface $panierService
+     * @param BilletServiceInterface $billetService
+     */
     public function __construct(PanierServiceInterface $panierService, BilletServiceInterface $billetService)
     {
         $this->panierService = $panierService;
         $this->billetService = $billetService;
     }
 
+
+    /**
+     * PAYER LA COMMANDE EN VERIFIANT LA VALIDITE DE L'ACTION ET LA VALIDITE DE LA CARTE RENSEIGNEE DANS LE BODY
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idUser = $rq->getAttribute('UtiOutDTO')->id;

@@ -13,10 +13,20 @@ class GetSoireeByIdBackofficeAction extends AbstractAction{
 
     private SoireeServiceInterface $soireeService;
 
+    /**
+     * @param SoireeServiceInterface $soireeService
+     */
     public function __construct(SoireeServiceInterface $soireeService){
         $this->soireeService = $soireeService;
     }
 
+    /**
+     * RECUPERE LE NOMBRE DE PLACE TOTAL ET PRISE PAR L'ID SOIREE PASSER DANS LA ROUTE
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $idSoiree = $args['ID-SOIREE'];

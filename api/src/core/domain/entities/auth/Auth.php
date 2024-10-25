@@ -11,6 +11,12 @@ class Auth extends Entity
     protected int $role;
     protected string $password;
 
+    /**
+     * @param string $ID
+     * @param string $email
+     * @param string $password
+     * @param int $role
+     */
     public function __construct(string $ID, string $email, string $password, int $role)
     {
         $this->ID = $ID;
@@ -19,6 +25,10 @@ class Auth extends Entity
         $this->role = $role;
     }
 
+    /**
+     * TRANSFORME L'ENTITY EN DTO
+     * @return AuthDTO
+     */
     public function toDTO(): AuthDTO
     {
         return new AuthDTO($this->ID, $this->email, $this->role);
