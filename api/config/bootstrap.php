@@ -4,7 +4,6 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Exception\HttpNotFoundException;
-use Slim\Views\Twig;
 use Slim\Psr7\Response as SlimResponse;
 
 use DI\ContainerBuilder;
@@ -22,7 +21,7 @@ $app->addBodyParsingMiddleware();
 $app->add(Cors::class);
 $app->addRoutingMiddleware();
 
-//$app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
+$app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
 
 $errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler(

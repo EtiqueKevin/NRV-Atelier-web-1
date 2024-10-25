@@ -93,6 +93,7 @@ class SoireeService implements SoireeServiceInterface{
             $tarif_normal = $soireeCreerDTO->tarif_normal;
             $tarif_reduit = $soireeCreerDTO->tarif_reduit;
             $lieu = $this->soireeRepository->getLieuById($soireeCreerDTO->lieu);
+            $lieu->setID($soireeCreerDTO->lieu);
             $date = \DateTime::createFromFormat('Y-m-d', $soireeCreerDTO->date);
 
             $soiree = new Soiree($nom, $thematique, $date, $lieu, $tarif_normal, $tarif_reduit);

@@ -2,10 +2,9 @@
 
 namespace nrv\core\services\authorization;
 
-use Ramsey\Uuid\Uuid;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 
-class AuthorizationService implements AuthorizationServiceInterface
+class AuthorizationService implements AuthzUtilisateurInterface
 {
     private UtilisateursRepositoryInterface $utilisateursRepository;
 
