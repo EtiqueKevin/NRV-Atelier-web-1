@@ -32,7 +32,6 @@ class PostSpectacleAction extends AbstractAction{
             ->key('heure', Validator::stringType()->notEmpty())
             ->key('url_video', Validator::intType()->notEmpty())
             ->key('idSoiree', Validator::intType()->notEmpty())
-            ->key('imgs',Validator::arrayType()->notEmpty())
             ->key('artistes',Validator::arrayType());
         try {
             $placeInputValidator->assert($data);
@@ -40,15 +39,27 @@ class PostSpectacleAction extends AbstractAction{
             throw new HttpBadRequestException($rq, $e->getMessages());
         }
 
+        $directory = __DIR__ . '../../../../public/img';
+
+        $uploadedFiles = $rq->getUploadedFiles();
+        $uploadedFile = $uploadedFiles['images'];
+
+        $tabNomImage = [];
+
+        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+            $filename = $this->spectacleService->moveUploadedFile($directory, $uploadedFile);
+        }
+
+        $tabNomImage[] =$filename;
+
         $titre = $data['titre'];
         $description = $data['description'];
         $heure = $data['heure'];
         $url_video = $data['url_video'];
         $idSoiree = $data['idSoiree'];
-        $imgs = $data['imgs'];
         $artistes = $data['artistes'];
 
-        $spectacleCreerDTO = new SpectacleCreerDTO($titre,$description,$heure,$url_video,$idSoiree,$imgs,$artistes);
+        $spectacleCreerDTO = new SpectacleCreerDTO($titre,$description,$heure,$url_video,$idSoiree,$tabNomImage,$artistes);
         try {
             $this->spectacleService->putSpectacle($spectacleCreerDTO);
         }catch (\Exception $e){

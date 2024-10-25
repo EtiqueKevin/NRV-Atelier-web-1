@@ -49,8 +49,9 @@ return function( App $app): App {
     $app->get('/spectacle/{ID-SPECTACLE}[/]', GetSpectaclesByIdAction::class)
         ->setName('get_spectacle_by_id');
 
-    $app->post(
-        '/spectacles[/]',PostSpectacleAction::class)
+    $app->post('/spectacles[/]',PostSpectacleAction::class)
+        ->add(AuthorizationBackMiddleware::class)
+        ->add(AuthMiddleware::class)
         ->setName('post_spectacle');
 
 
@@ -68,7 +69,7 @@ return function( App $app): App {
         ->setName('get_soiree_by_id');
 
     $app->post('/soirees[/]', PostSoireeAction::class)
-        ->add(AuthorizationLambdaMiddleware::class)
+        ->add(AuthorizationBackMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('post_soirees');
 

@@ -20,4 +20,6 @@ interface SpectacleServiceInterface
     public function getArtisteById(string $idArtiste): ArtisteDTO;
 
     public function putSpectacle(SpectacleCreerDTO $spectacleDTO) : void;
+
+    public function moveUploadedFile($directory, $uploadedFile) :string;
 }
