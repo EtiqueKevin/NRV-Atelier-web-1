@@ -43,7 +43,7 @@ class BilletService implements BilletServiceInterface{
         return $billetEntity->toDTO();
     }
 
-    public function payerCommande(string $idUser) {
+    public function payerCommande(string $idUser) :void {
         $panier = $this->utilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
         $panierItemsRes = $this->utilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
         $items = "";

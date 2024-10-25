@@ -3,9 +3,11 @@
 namespace nrv\application\actions\panier;
 
 use nrv\application\actions\AbstractAction;
+use nrv\core\dto\Panier\PanierAddDTO;
 use nrv\core\services\Panier\PanierServiceInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Respect\Validation\Validator;
 use Slim\Exception\HttpBadRequestException;
 
 class AddPanierAction extends AbstractAction
@@ -27,9 +29,19 @@ class AddPanierAction extends AbstractAction
         $qte = $params['qte'];
         $idUser = $rq->getAttribute('UtiOutDTO')->id;
 
+        try {
+            Validator::stringType()->notEmpty()->assert($idSoiree);
+            Validator::intType()->notEmpty()->assert($tarif);
+            Validator::stringType()->notEmpty()->assert($typeTarif);
+            Validator::intType()->notEmpty()->assert($qte);
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
+
 
         try {
-            $panier = $this->panierService->addPanier($idUser, $idSoiree, $tarif, $typeTarif, $qte);
+            $panierAddDTO = new PanierAddDTO($idUser, $idSoiree, $tarif,$typeTarif, $qte);
+            $panier = $this->panierService->addPanier($panierAddDTO);
         }catch(\Exception $e){
             throw new HttpBadRequestException($rq, $e->getMessage());
         }

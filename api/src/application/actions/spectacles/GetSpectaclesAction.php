@@ -42,9 +42,25 @@ class GetSpectaclesAction extends AbstractAction
         }
         if (isset($params['styles'])) {
             $styles = explode(";" ,$params['styles']);
+            foreach ($styles as $s) {
+                $styleValidator = Validator::stringType()->notEmpty();
+                try {
+                    $styleValidator->assert($s);
+                } catch (\Exception $e) {
+                    throw new \HttpInvalidParamException($rq, $e->getMessage());
+                }
+            }
         }
         if (isset($params['lieux'])) {
             $lieux = explode(";", $params['lieux']);
+            foreach ($lieux as $l) {
+                $lieuValidator = Validator::stringType()->notEmpty();
+                try {
+                    $lieuValidator->assert($l);
+                } catch (\Exception $e) {
+                    throw new \HttpInvalidParamException($rq, $e->getMessage());
+                }
+            }
         }
 
         try {

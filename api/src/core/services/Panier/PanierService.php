@@ -125,26 +125,6 @@ class PanierService implements PanierServiceInterface
         $dateExpiration = $panierVerifDTO->dateExpiration;
         $code = $panierVerifDTO->code;
 
-        $date = \DateTime::createFromFormat('m/y', $dateExpiration);
-        $dateActuellle = new \DateTime();
-        $dateActuellle = $dateActuellle->format('m/y');
-
-        if (!preg_match('/^\d{16}$/', $numero)) {
-            throw new PanierException('Numero invalide');
-        }
-
-        if($date < $dateActuellle){
-            throw new PanierException('Date d\'expiration invalide');
-        }
-
-        if(!preg_match('/^\d{3}$/', $code) ){
-            throw new PanierException('Code invalide');
-        }
-
-        if (!$panierDTO->valide){
-            throw new PanierException('Panier invalidé');
-        }
-
         try {
 
             foreach ($panierDTO->panierItems as $panierItem) {

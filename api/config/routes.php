@@ -7,6 +7,7 @@ use nrv\application\actions\billets\PostPayerCommandeAction;
 use nrv\application\actions\HomeAction;
 use nrv\application\actions\panier\AddPanierAction;
 use nrv\application\actions\panier\GetPanierAction;
+use nrv\application\actions\panier\ModifierPanierAction;
 use nrv\application\actions\panier\UpdatePanierAction;
 use nrv\application\actions\panier\ValiderPanierAction;
 use nrv\application\actions\soirees\GetLieuxAction;
@@ -113,15 +114,11 @@ return function( App $app): App {
         ->add(AuthMiddleware::class)
         ->setName('validate_panier');
 
-    $app->post('/panier/update[/]', UpdatePanierAction::class)
-        ->add(AuthMiddleware::class)
-        ->setName('update_panier');
-
     $app->post('/panier/payer[/]', PostPayerCommandeAction::class)
         ->add(AuthMiddleware::class)
         ->setName('pay_order');
 
-    $app->put('/panier/modifier[/]', UpdatePanierAction::class)
+    $app->put('/panier/modifier[/]', ModifierPanierAction::class)
         ->add(AuthMiddleware::class)
         ->setName('update_panier');
 

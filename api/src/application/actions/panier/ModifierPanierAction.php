@@ -26,6 +26,14 @@ class ModifierPanierAction extends AbstractAction
         $typeTarif = $data['typeTarif'];
         $qte = $data['qte'];
 
+        try {
+            Validator::stringType()->notEmpty()->assert($idSoiree);
+            Validator::stringType()->notEmpty()->assert($typeTarif);
+            Validator::intType()->notEmpty()->assert($qte);
+        }catch (\Exception $e){
+            throw new HttpBadRequestException($rq, $e->getMessage());
+        }
+
         $panierModifierDTO = new PanierModifierDTO($idUser, $idSoiree, $typeTarif, $qte);
         try {
             $panier = $this->panierService->modifierPanier($panierModifierDTO);
