@@ -84,13 +84,14 @@ class PanierService implements PanierServiceInterface
     public function modifierPanier(PanierModifierDTO $panierModifierDTO) : PanierDTO {
         $idUser = $panierModifierDTO->idUser;
         $idSoiree = $panierModifierDTO->idSoiree;
+        $typeTarif = $panierModifierDTO->typeTarif;
         $qte = $panierModifierDTO->qte;
         try {
             $panier = $this->UtilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
             if(!$panier->valide) {
                 $panierItemsRes = $this->UtilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur
                 foreach ($panierItemsRes as $panierItem) { //on vérifie tous les items du panier
-                    if ($panierItem->idSoiree == $idSoiree) { //si la soiree est la même
+                    if ($panierItem->idSoiree == $idSoiree && $panierItem->typeTarif == $typeTarif) { //si la soiree est la même
                         $panierItem->setQte($qte); //on met à jour la quantité
                         if ($this->verificationDisponibilite($panierItem->qte, $idSoiree)) { //on vérifie si la quantité est disponible
                             $this->UtilisateursRepository->updatePanier($panierItem); //on met à jour le panier
