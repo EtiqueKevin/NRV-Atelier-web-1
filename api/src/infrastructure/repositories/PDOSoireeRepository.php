@@ -371,6 +371,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         $url_video = $spectacle->url_video;
         $imgs = $spectacle->imgs;
         $artistes = $spectacle->artistes;
+        $idSoiree = $spectacle->idSoiree;
 
         try {
             $stmt = $this->pdo->prepare('INSERT INTO spectacles (titre, description, heure,url_video) VALUES (?, ?, ?, ?) RETURNING id');
@@ -383,6 +384,7 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
 
             $this->liaisonImageSpectacle($imgs,$idSpec);
             $this->liaisonArtisteSpectacle($artistes,$idSpec);
+            $this->liaisonSoireeSpectacle($idSoiree,$idSpec);
 
         }catch (\Exception $e){
             throw new UtilisateurException('erreur insertion spectacle : '.$e->getMessage());
@@ -448,6 +450,17 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
         }
     }
 
+    public function liaisonSoireeSpectacle(string $idSoiree, string $spectacles): void {
+        try {
+            $stmt = $this->pdo->prepare('INSERT INTO soirees_spectacles (id_soiree, id_spectacle) VALUES (?, ?)');
+            $stmt->bindParam(1, $idSoiree, PDO::PARAM_STR);
+            $stmt->bindParam(2, $spectacles, PDO::PARAM_STR);
+            $stmt->execute();
+        } catch (\Exception $e) {
+            throw new UtilisateurException('erreur insertion soiree_spectacle : ' . $e->getMessage());
+        }
+    }
+
     public function getArtistes(): array{
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM artistes');
@@ -472,8 +485,8 @@ class PDOSoireeRepository implements SoireesRepositoryInterface{
             $soirees = $stmt->fetchAll();
             $soireesTab = [];
             foreach ($soirees as $s){
-                $lieuEntity = $this->getLieuById($soirees['id_lieu']);
-                $soireeEntity = new Soiree($soirees['nom'],$soirees['thematique'], DateTime::createFromFormat('Y-m-d', $soirees['date']),$lieuEntity,$soirees['tarif_normal'],$soirees['tarif_reduit']);
+                $lieuEntity = $this->getLieuById($s['id_lieu']);
+                $soireeEntity = new Soiree($s['nom'],$s['thematique'], DateTime::createFromFormat('Y-m-d', $s['date']),$lieuEntity,$s['tarif_normal'],$s['tarif_reduit']);
                 $soireeEntity->setID($s['id']);
                 $soireesTab[] = $soireeEntity;
             }

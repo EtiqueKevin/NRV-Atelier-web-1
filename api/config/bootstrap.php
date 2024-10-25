@@ -21,7 +21,7 @@ $app->addBodyParsingMiddleware();
 $app->add(Cors::class);
 $app->addRoutingMiddleware();
 
-//$app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
+$app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
 
 $errorMiddleware = $app->addErrorMiddleware(true, false, false);
 $errorMiddleware->setDefaultErrorHandler(

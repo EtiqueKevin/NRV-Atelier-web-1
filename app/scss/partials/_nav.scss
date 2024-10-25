@@ -28,7 +28,15 @@
             h1 {
                 font-size: 2.25rem;
                 margin: 0;
+
+                @media screen and (max-width: 768px) {
+                    font-size: 1.2rem;
+                }
             }
+        }
+
+        @media screen and (max-width: 768px) {
+            gap: 3px;
         }
     }
 
@@ -42,6 +50,30 @@
         align-items: center;
     }
 
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+.back-office-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: $secondary-bg-color;
+    color: white;
+
+    border-bottom: 2px solid $highlight-bg-color;
+
+    ul {
+        list-style: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        gap: 1rem;
+    }
 
     @media screen and (max-width: 768px) {
         flex-direction: column;

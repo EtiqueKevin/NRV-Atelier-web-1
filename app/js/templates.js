@@ -261,7 +261,7 @@ export const panierTemplate = `
         {{#each data.panier.panierItems}}
           <div>{{this.soiree.nom}} ({{this.typeTarif}})</div>
           <div class="quantity-container">
-            <input type="number" value="{{this.qte}}" min="1" id="qte-{{this.soiree.id}}-{{this.typeTarif}}" class="quantity-input">
+            <input type="number" value="{{this.qte}}" min="0" id="qte-{{this.soiree.id}}-{{this.typeTarif}}" class="quantity-input">
             <button class="modify-qte-button" data-id="{{this.soiree.id}}" data-categorie="{{this.typeTarif}}"><i class="fa-regular fa-square-check"></i> Modifier</button>
           </div>
           <div>{{this.tarif}} €</div>
@@ -349,7 +349,104 @@ export const payerTemplate = `
 `;
 
 export const backOfficeTemplate = `
-  <section class="backoffice-card">
+      <section class="back-office-card">
+        <nav class="back-office-nav">
+          <ul>
+            <li><button id="add-spectacle" class="boutton">Ajouter un Spectacle</button></li>
+            <li><button id="add-soiree" class="boutton">Ajouter une Soirée</button></li>
+          </ul>
+        </nav>
+        <div id="backoffice-content">
 
+        </div>
+      </section>
+`;
+
+export const addSpectacleTemplate = `
+  <section id="add-spectacle-form">
+    <h2>Ajouter un Spectacle</h2>
+    <form id="add-show-form">
+      <div class="input-container">
+        <label for="show-name">Nom du Spectacle:</label>
+        <input type="text" id="show-name" name="show-name" required>
+      </div>
+      <div class="input-container">
+        <label for="show-time">Heure:</label>
+        <input type="text" id="show-time" name="show-time" pattern="\d{2}:\d{2}:\d{2}" placeholder="HH:MM:SS" required>
+      </div>
+      <div class="input-container">
+        <label for="show-evening">Sélectionner la Soirée:</label>
+        <select id="show-evening" name="show-evening" required>
+          {{#each soirees}}
+          <option value="{{this.id}}">{{this.nom}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="input-container">
+        <label for="show-description">Description:</label>
+        <textarea id="show-description" name="show-description" required></textarea>
+      </div>
+      <div class="input-container">
+        <label for="show-urlvideo">URL Vidéo:</label>
+        <input type="url" id="show-urlvideo" name="show-urlvideo" required>
+      </div>
+      <div class="input-container">
+        <label for="show-image">Image:</label>
+        <input type="file" id="show-image" name="show-image" accept="image/*" required>
+      </div>
+      <div class="input-container">
+        <label for="show-artists">Artistes:</label>
+        <div id="show-artists" class="grid grid-col-12-l grid-col-6-m grid-col-3-s grid-col-1">
+          {{#each artists}}
+          <div class="artist-item">
+            <input type="checkbox" id="{{this.id}}" name="show-artists" value="{{this.id}}">
+            <label for="{{this.id}}">{{this.nom}} {{this.prenom}}</label>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+      <button type="button" class="color-button" id="ajouter-spectacle-boutton">Ajouter Spectacle</button>
+    </form>
   </section>
+`;
+
+export const addSoireeTemplate = `
+<section id="add-soiree-form">
+  <h2>Ajouter une Soirée</h2>
+  <form id="add-show-form">
+    <div class="input-container">
+      <label for="show-name">Nom de la Soirée:</label>
+      <input type="text" id="show-name" name="show-name" required>
+    </div>
+    <div class="input-container">
+      <label for="show-time">Date:</label>
+      <input type="date" id="show-time" name="show-time" required>
+    </div>
+    <div class="input-container">
+      <label for="show-location">Sélectionner le lieu:</label>
+      <select id="show-location" name="show-location" required>
+        {{#each locations}}
+          <option value="{{this.id}}">{{this.nom}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="input-container">
+      <label for="show-theme">Sélectionner la thématique:</label>
+      <select id="show-theme" name="show-theme" required>
+        {{#each themes}}
+          <option value="{{this}}">{{this}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="input-container">
+      <label for="show-tarifN">Tarif normal:</label>
+      <input type="number" id="show-tarifN" name="show-tarifN" required>
+    </div>
+    <div class="input-container">
+      <label for="show-tarifR">Tarif réduit:</label>
+      <input type="number" id="show-tarifR" name="show-tarifR" required>
+    </div>
+    <button type="button" class="color-button" id="add-soiree-boutton">Ajouter Soirée</button>
+  </form>
+</section>
 `;

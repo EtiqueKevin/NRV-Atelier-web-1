@@ -22,7 +22,7 @@ class GetSoireesAction extends AbstractAction
         $soirees = $this->soireeService->getSoirees();
         $res = [
             'type' => 'collection',
-            'lieux' => $soirees
+            'soirees' => $soirees
         ];
 
         $rs->getBody()->write(json_encode($res));

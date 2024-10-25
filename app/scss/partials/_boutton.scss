@@ -44,7 +44,7 @@
 .boutton-nav {
     @include button($main-bg-color);
 
-    @media screen and (max-width: 550px) {
+    @media screen and (max-width: 1000px) {
         span {
             display: none;
         }

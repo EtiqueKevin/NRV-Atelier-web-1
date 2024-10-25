@@ -94,6 +94,17 @@ export function handleNavButtons() {
             }
         });
     }
+
+    const navBackOffice = document.getElementById('nav-backoffice');
+    if (navBackOffice) {
+        navBackOffice.addEventListener('click', async () => {
+            try {
+                ui.displayBackOffice();
+            } catch (error) {
+                showAlert("Erreur lors de l'affichage du backoffice", 'error');
+            }
+        });
+    }
 }
 
 export function handleHomeSpectacleButton() {
@@ -344,6 +355,77 @@ export async function handlePaiement(){
                 await users.payerCommande(codeCarte, dateExpiration, cvv);
             } catch (error) {
                 showAlert('Erreur lors du paiement', 'error');
+            }
+        });
+    }
+}
+
+export async function handleBackOffice(){
+    const addSpectacleButton = document.getElementById('add-spectacle');
+    if (addSpectacleButton) {
+        addSpectacleButton.addEventListener('click', async () => {
+            try {
+                const soirees = await spectacle.getSoirees();
+                const artists = await spectacle.getArtistes();
+                ui.displayBackOfficeAddSpectacle(soirees, artists);
+            } catch (error) {
+                showAlert('Erreur lors de la récupération des données pour ajouter un spectacle', 'error');
+            }
+        });
+    }
+
+    const addSoireeButton = document.getElementById('add-soiree');
+    if (addSoireeButton) {
+        addSoireeButton.addEventListener('click', async () => {
+            try {
+                const locations = await spectacle.getLieux();
+                const themes = await spectacle.getStyles();
+                ui.displayBackOfficeAddSoiree(locations, themes);
+            } catch (error) {
+                showAlert('Erreur lors de la récupération des données pour ajouter une soirée', 'error');
+            }
+        });
+    }
+}
+
+export async function handleBackOfficeAddSoiree(){
+    const addbutton = document.getElementById('add-soiree-boutton');
+    if (addbutton) {
+        addbutton.addEventListener('click', async () => {
+            try {
+                const nom = document.getElementById('show-name').value;
+                const date = document.getElementById('show-time').value;
+                const theme = document.getElementById('show-theme').value;
+                const lieu = document.getElementById('show-location').value;
+                const tarifNormal = document.getElementById('show-tarifN').value;
+                const tarifReduit = document.getElementById('show-tarifR').value;
+
+                await spectacle.addSoiree(nom, date,lieu, theme, tarifNormal, tarifReduit);
+                ui.displayBackOffice();
+            } catch (error) {
+                showAlert('Erreur lors de l\'ajout de la soirée', 'error');
+            }
+        });
+    }
+}
+
+export async function handleBackOfficeAddSpectacle(){
+    const addSpectacleButton = document.getElementById('ajouter-spectacle-boutton');
+    if (addSpectacleButton) {
+        addSpectacleButton.addEventListener('click', async () => {
+            try {
+                const nom = document.getElementById('show-name').value;
+                const heure = document.getElementById('show-time').value;
+                const soiree = document.getElementById('show-evening').value;
+                const description = document.getElementById('show-description').value;
+                const urlVideo = document.getElementById('show-urlvideo').value;
+                const image = document.getElementById('show-image').files[0];
+                const artists = Array.from(document.querySelectorAll('input[name="show-artists"]:checked')).map(artist => artist.value);
+
+                await spectacle.addSpectacle(nom, heure, soiree, description, urlVideo, image, artists);
+                ui.displayBackOffice();
+            } catch (error) {
+                showAlert('Erreur lors de l\'ajout du spectacle', 'error');
             }
         });
     }

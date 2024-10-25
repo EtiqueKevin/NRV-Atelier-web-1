@@ -26,27 +26,30 @@ class PostSpectacleAction extends AbstractAction{
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
 
         $data = $rq->getParsedBody();
+        $data['artistes'] = json_decode($data['artistes'], true);
 
         $placeInputValidator = Validator::key('titre', Validator::stringType()->notEmpty())
             ->key('description', Validator::stringType()->notEmpty())
             ->key('heure', Validator::stringType()->notEmpty())
-            ->key('url_video', Validator::intType()->notEmpty())
-            ->key('idSoiree', Validator::intType()->notEmpty())
-            ->key('artistes',Validator::arrayType());
+            ->key('url_video', Validator::stringType()->notEmpty())
+            ->key('idSoiree', Validator::stringType()->notEmpty())
+            ->key('artistes', Validator::arrayType()->notEmpty());
         try {
             $placeInputValidator->assert($data);
         } catch (NestedValidationException $e) {
-            throw new HttpBadRequestException($rq, $e->getMessages());
+            throw new HttpBadRequestException($rq, $e->getMessage());
         }
 
-        $directory = __DIR__ . '../../../../public/img';
+        $directory = __DIR__ . '/../../../../public/img';
 
         $uploadedFiles = $rq->getUploadedFiles();
 
         $tabNomImage = [];
 
-        foreach ($uploadedFiles['images'] as $uploadedFile) {
+        if (!empty($uploadedFiles['images'])) {
+            $uploadedFile = $uploadedFiles['images'];
             if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                var_dump($directory);
                 $filename = $this->spectacleService->moveUploadedFile($directory, $uploadedFile);
                 $tabNomImage[] = $filename;
             }
