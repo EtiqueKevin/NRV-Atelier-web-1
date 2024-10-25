@@ -8,20 +8,23 @@ use nrv\core\dto\billet\BilletOutputDTO;
 use nrv\core\dto\Panier\PanierDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use Psr\Log\LoggerInterface;
 
 class BilletService implements BilletServiceInterface{
 
     private UtilisateursRepositoryInterface $utilisateursRepository;
     private SoireesRepositoryInterface $soireesRepository;
 
+    private LoggerInterface $logger;
 
     /**
      * @param UtilisateursRepositoryInterface $utilisateursRepository
      * @param SoireesRepositoryInterface $soireesRepository
      */
-    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface$soireesRepository){
+    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface$soireesRepository, LoggerInterface $logger){
         $this->utilisateursRepository = $utilisateursRepository;
         $this->soireesRepository = $soireesRepository;
+        $this->logger = $logger;
     }
 
 

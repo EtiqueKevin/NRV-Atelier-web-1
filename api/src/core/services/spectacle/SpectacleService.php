@@ -9,15 +9,19 @@ use nrv\core\dto\spectacle\SpectacleCreerDTO;
 use nrv\core\dto\spectacle\SpectacleDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\services\soiree\SoireeException;
+use Psr\Log\LoggerInterface;
 
 class SpectacleService implements SpectacleServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
+    private LoggerInterface $logger;
+
     /**
      * @param SoireesRepositoryInterface $soireeRepository
      */
-    public function __construct(SoireesRepositoryInterface $soireeRepository){
+    public function __construct(SoireesRepositoryInterface $soireeRepository, LoggerInterface $logger){
         $this->soireeRepository = $soireeRepository;
+        $this->logger = $logger;
     }
 
     /**

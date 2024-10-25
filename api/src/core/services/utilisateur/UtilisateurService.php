@@ -10,16 +10,20 @@ use nrv\core\dto\utilisateur\UtilisateurInputDTO;
 use nrv\core\repositoryException\RepositoryEntityNotFoundException;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use PHPUnit\Exception;
+use Psr\Log\LoggerInterface;
 
 class UtilisateurService implements UtilisateurServiceInterface{
 
     private UtilisateursRepositoryInterface $utilisateursRepository;
 
+    private LoggerInterface $logger;
+
     /**
      * @param UtilisateursRepositoryInterface $utilisateursRepository
      */
-    public function __construct($utilisateursRepository){
+    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, LoggerInterface $logger){
         $this->utilisateursRepository = $utilisateursRepository;
+        $this->logger = $logger;
     }
 
     /**

@@ -66,23 +66,23 @@ return [
     // SERVICES
 
     SoireeServiceInterface::class => function (ContainerInterface $c) {
-        return new SoireeService($c->get(SoireesRepositoryInterface::class),$c->get(UtilisateursRepositoryInterface::class));
+        return new SoireeService($c->get(SoireesRepositoryInterface::class),$c->get(UtilisateursRepositoryInterface::class),$c->get('logger'));
     },
 
     SpectacleServiceInterface::class => function (ContainerInterface $c) {
-        return new SpectacleService($c->get(SoireesRepositoryInterface::class));
+        return new SpectacleService($c->get(SoireesRepositoryInterface::class),$c->get('logger'));
     },
 
     PanierServiceInterface::class => function (ContainerInterface $c) {
-        return new PanierService($c->get(UtilisateursRepositoryInterface::class), $c->get(SoireesRepositoryInterface::class));
+        return new PanierService($c->get(UtilisateursRepositoryInterface::class), $c->get(SoireesRepositoryInterface::class),$c->get('logger'));
     },
 
     UtilisateurServiceInterface::class => function (ContainerInterface $c) {
-        return new UtilisateurService($c->get(UtilisateursRepositoryInterface::class));
+        return new UtilisateurService($c->get(UtilisateursRepositoryInterface::class),$c->get('logger'));
     },
 
     BilletServiceInterface::class => function (ContainerInterface $c) {
-    return new BilletService($c->get(UtilisateursRepositoryInterface::class),$c->get(SoireesRepositoryInterface::class));
+    return new BilletService($c->get(UtilisateursRepositoryInterface::class),$c->get(SoireesRepositoryInterface::class),$c->get('logger'));
     },
 
     AuthzUtilisateurInterface::class => function (ContainerInterface $c) {
@@ -96,7 +96,7 @@ return [
     },
 
     ArtisteServiceInterface::class=> function (ContainerInterface $c) {
-        return new ArtisteService($c->get(SoireesRepositoryInterface::class));
+        return new ArtisteService($c->get(SoireesRepositoryInterface::class),$c->get('logger'));
     },
 
     // ACTIONS

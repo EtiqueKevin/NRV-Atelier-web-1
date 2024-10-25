@@ -9,6 +9,7 @@ use nrv\core\dto\Panier\PanierVerifDTO;
 use nrv\core\repositoryException\RepositoryException;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use Psr\Log\LoggerInterface;
 
 class PanierService implements PanierServiceInterface
 {
@@ -16,15 +17,17 @@ class PanierService implements PanierServiceInterface
     private UtilisateursRepositoryInterface $UtilisateursRepository;
     private SoireesRepositoryInterface $SoireesRepository;
 
+    private LoggerInterface $logger;
 
     /**
      * @param UtilisateursRepositoryInterface $utilisateursRepository
      * @param SoireesRepositoryInterface $soireesRepository
      */
-    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface $soireesRepository)
+    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface $soireesRepository, LoggerInterface $logger)
     {
         $this->UtilisateursRepository = $utilisateursRepository;
         $this->SoireesRepository = $soireesRepository;
+        $this->logger = $logger;
     }
 
     /**

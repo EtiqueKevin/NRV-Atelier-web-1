@@ -12,20 +12,23 @@ use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use nrv\core\services\Panier\PanierException;
 use nrv\core\services\spectacle\spectacleException;
+use Psr\Log\LoggerInterface;
 
 class SoireeService implements SoireeServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
     private UtilisateursRepositoryInterface $utilisateursRepository;
 
+    private LoggerInterface $logger;
 
     /**
      * @param SoireesRepositoryInterface $soireeRepository
      * @param UtilisateursRepositoryInterface $utilisateursRepository
      */
-    public function __construct(SoireesRepositoryInterface $soireeRepository, UtilisateursRepositoryInterface $utilisateursRepository){
+    public function __construct(SoireesRepositoryInterface $soireeRepository, UtilisateursRepositoryInterface $utilisateursRepository, LoggerInterface $logger){
         $this->soireeRepository = $soireeRepository;
         $this->utilisateursRepository = $utilisateursRepository;
+        $this->logger = $logger;
     }
 
     /**
