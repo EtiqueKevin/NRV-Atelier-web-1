@@ -27,10 +27,10 @@ class PostSoireeAction extends AbstractAction
         $data = $rq->getParsedBody();
 
         $placeInputValidator = Validator::key('nom', Validator::stringType()->notEmpty())
-                                        ->key('thematique', Validator::stringType()->notEmpty())
-                                        ->key('lieu', Validator::stringType()->notEmpty())
-                                        ->key('tarif_normal', Validator::intType()->notEmpty()
-                                        ->key('tarif_reduit', Validator::intType()->notEmpty()));
+            ->key('thematique', Validator::stringType()->notEmpty())
+            ->key('lieu', Validator::stringType()->notEmpty())
+            ->key('tarif_normal', Validator::intType()->notEmpty())
+                ->key('tarif_reduit', Validator::intType()->notEmpty());
         try {
             $placeInputValidator->assert($data);
         } catch (NestedValidationException $e) {
