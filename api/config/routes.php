@@ -122,6 +122,7 @@ return function( App $app): App {
     // backoffice
 
     $app->get('/backoffice/soirees/{ID-SOIREE}[/]', GetSoireeByIdBackofficeAction::class)
+        ->add(AuthorizationBackofficeMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('get_backoffice_soiree_by_id');
 
