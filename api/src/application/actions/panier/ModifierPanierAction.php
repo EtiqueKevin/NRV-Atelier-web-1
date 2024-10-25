@@ -22,7 +22,7 @@ class ModifierPanierAction extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $data = $rq->getParsedBody();
-        $idUser = $idUser = $rq->getAttribute("UtiOutDTO")->id;
+        $idUser = $rq->getAttribute("UtiOutDTO")->id;
         $idSoiree = $data['idSoiree'];
         $typeTarif = $data['typeTarif'];
         $qte = $data['qte'];

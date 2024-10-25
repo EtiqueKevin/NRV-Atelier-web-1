@@ -269,13 +269,14 @@ export function handlePanier(){
         });
     }
 
+
     const qteButtons = document.getElementsByClassName('modify-qte-button');
     for (const qteButton of qteButtons) {
         qteButton.addEventListener('click', async (event) => {
             try {
                 const idSoiree = event.target.getAttribute('data-id');
-                const qte = document.getElementById(`qte-${idSoiree}`).value;
                 const categorie = event.target.getAttribute('data-categorie');
+                const qte = document.getElementById(`qte-${idSoiree}-${categorie}`).value;
                 const data = await users.modifyPanier(idSoiree, qte, categorie);
                 ui.displayPanier(data);
             } catch (error) {

@@ -53,7 +53,6 @@ export function displayNav(connected, backOffice) {
 }
 
 export function displayPanier(data) {
-    console.log(data);
     const template = Handlebars.compile(templates.panierTemplate);
     const html = template({ data });
     const modal = document.getElementById('myModal');

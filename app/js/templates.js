@@ -250,7 +250,7 @@ export const panierTemplate = `
       <div class="header-grid">Prix</div>
       {{#if data.panier.valide}}
         {{#each data.panier.panierItems}}
-          <div>{{this.soiree.nom}}</div>
+          <div>{{this.soiree.nom}} ({{this.typeTarif}})</div>
           <div class="quantity-container">
             {{this.qte}}
           </div>
@@ -259,9 +259,9 @@ export const panierTemplate = `
         {{/each}}
       {{else}}
         {{#each data.panier.panierItems}}
-          <div>{{this.soiree.nom}}</div>
+          <div>{{this.soiree.nom}} ({{this.typeTarif}})</div>
           <div class="quantity-container">
-            <input type="number" value="{{this.qte}}" min="1" id="qte-{{this.soiree.id}}">
+            <input type="number" value="{{this.qte}}" min="1" id="qte-{{this.soiree.id}}-{{this.typeTarif}}" class="quantity-input">
             <button class="modify-qte-button" data-id="{{this.soiree.id}}" data-categorie="{{this.typeTarif}}"><i class="fa-regular fa-square-check"></i> Modifier</button>
           </div>
           <div>{{this.tarif}} €</div>
