@@ -18,11 +18,23 @@ class PostSpectacleAction extends AbstractAction{
 
     private SpectacleServiceInterface $spectacleService;
 
+    /**
+     * @param SpectacleServiceInterface $spectacleService
+     */
+
     public function __construct(SpectacleServiceInterface $spectacleService)
     {
         $this->spectacleService = $spectacleService;
     }
 
+
+    /**
+     *CREER UN SPECTACLE SELON LES INFORMATIONS PASSSEES DANS LE BODY DE LA REQUETE
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
 
         $data = $rq->getParsedBody();

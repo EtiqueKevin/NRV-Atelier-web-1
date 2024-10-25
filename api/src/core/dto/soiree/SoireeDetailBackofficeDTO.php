@@ -11,11 +11,19 @@ class SoireeDetailBackofficeDTO extends DTO{
     private int $nbPlacett;
     private int $nbPlaceReserve;
 
+    /**
+     * @param int $nPt
+     * @param int $nPr
+     */
     public function __construct(int $nPt,int $nPr){
         $this->nbPlacett =$nPt;
         $this->nbPlaceReserve =$nPr;
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
         return [
             'nbPlacett' => $this->nbPlacett,

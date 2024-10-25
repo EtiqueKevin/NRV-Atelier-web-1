@@ -13,10 +13,22 @@ class SignUpAction extends AbstractAction
 {
     private UtilisateurServiceInterface $utilisateurService;
 
+
+    /**
+     * @param UtilisateurServiceInterface $utilisateurService
+     */
     public function __construct(UtilisateurServiceInterface $utilisateurService) {
         $this->utilisateurService = $utilisateurService;
     }
 
+
+    /**
+     * CREE UN UTILISATEUR A PARTIR DES PARAMETRES PASSE DANS LE BODY DE LA REQUETE
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
 
         $params = $rq->getParsedBody() ?? null;

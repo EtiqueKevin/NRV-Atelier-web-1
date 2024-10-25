@@ -13,12 +13,22 @@ class Artiste extends Entity {
 
     protected string $description;
 
+    /**
+     * @param string $n
+     * @param string $p
+     * @param string $desc
+     */
     public function __construct(string $n, string $p, string $desc){
         $this->nom = $n;
         $this->prenom = $p;
         $this->description = $desc;
     }
 
+
+    /**
+     * TRANSFORME L'ENTITY EN DTO
+     * @return ArtisteDTO
+     */
     public function toDTO(){
         return new ArtisteDTO($this);
     }

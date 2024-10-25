@@ -10,6 +10,10 @@ class UtilisateurInputDTO extends DTO{
     protected string $email;
     protected string $mdp;
 
+    /**
+     * @param string $email
+     * @param string $mdp
+     */
     public function __construct(string $email,string $mdp){
         $this->email = $email;
         $this->mdp = $mdp;

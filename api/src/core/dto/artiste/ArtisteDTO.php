@@ -14,6 +14,10 @@ class ArtisteDTO extends DTO {
 
     private string $description;
 
+
+    /**
+     * @param Artiste $artiste
+     */
     public function __construct(Artiste $artiste){
         $this->id = $artiste->ID;
         $this->nom = $artiste->nom;
@@ -21,6 +25,10 @@ class ArtisteDTO extends DTO {
         $this->description = $artiste->description;
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

@@ -13,11 +13,23 @@ class AuthProvider implements AuthProviderInterface{
     private UtilisateurServiceInterface $utiService;
     private JWTManager $jwtManager;
 
+
+    /**
+     * @param UtilisateurServiceInterface $utiService
+     * @param \nrv\application\providers\auth\JWTManager $jwtManager
+     */
     public function __construct(UtilisateurServiceInterface $utiService, JWTManager $jwtManager){
         $this->utiService = $utiService;
         $this->jwtManager = $jwtManager;
     }
 
+
+    /**
+     * PERMET DE CRÉER UN TOKEN A PARTIR DES IDENTIFIANTS PASSÉS EN PARAMÈTRES
+     * @param UtilisateurInputDTO $credentials
+     * @return UtilisateurDTO
+     * @throws AuthProviderException
+     */
     public function signIn(UtilisateurInputDTO $credentials): UtilisateurDTO{
         try{
             // Verifier les credentials

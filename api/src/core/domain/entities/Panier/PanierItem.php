@@ -16,6 +16,14 @@ class PanierItem extends Entity
     protected int $tarifTotal;
     protected int $qte;
 
+    /**
+     * @param string $idSoiree
+     * @param $idPanier
+     * @param int $tarif
+     * @param string $typeTarif
+     * @param int $tarifTotal
+     * @param int $qte
+     */
     public function __construct(string $idSoiree, $idPanier, int $tarif,string $typeTarif, int $tarifTotal, int $qte)
     {
         $this->idSoiree = $idSoiree;
@@ -26,14 +34,29 @@ class PanierItem extends Entity
         $this->qte = $qte;
     }
 
+    /**
+     * SETTER DE LA QUANTITE DE L'ITEM DU PANIER
+     * @param int $qte
+     * @return void
+     */
     public function setQte(int $qte) {
         $this->qte = $qte;
     }
 
+
+    /**
+     * SETTER DE LA SOIREE DE L'ITEM DU PANIER
+     * @param Soiree $soiree
+     * @return void
+     */
     public function setSoiree(Soiree $soiree) {
         $this->soiree = $soiree;
     }
 
+    /**
+     * TRANSFORME L'ENTITY EN DTO
+     * @return PanierItemDTO
+     */
     public function toDTO(): PanierItemDTO
     {
         return new PanierItemDTO($this);

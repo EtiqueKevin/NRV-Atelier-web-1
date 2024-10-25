@@ -9,10 +9,19 @@ class ArtisteOutputDTO extends DTO {
 
     protected array $artistes;
 
+
+    /**
+     * @param array $artistes
+     */
     public function __construct(array $artistes){
         $this->artistes = $artistes;
     }
 
+
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
 
         $tab = [];

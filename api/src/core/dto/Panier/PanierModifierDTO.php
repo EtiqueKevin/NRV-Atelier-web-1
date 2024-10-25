@@ -11,6 +11,13 @@ class PanierModifierDTO extends DTO
     protected string $typeTarif;
     protected int $qte;
 
+
+    /**
+     * @param string $idUser
+     * @param string $idSoiree
+     * @param string $typeTarif
+     * @param int $qte
+     */
     public function __construct(string $idUser, string $idSoiree, string $typeTarif, int $qte)
     {
         $this->idUser = $idUser;

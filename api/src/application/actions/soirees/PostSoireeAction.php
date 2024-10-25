@@ -17,11 +17,21 @@ class PostSoireeAction extends AbstractAction
 
     private SoireeServiceInterface $soireeService;
 
+    /**
+     * @param SoireeServiceInterface $soireeService
+     */
     public function __construct(SoireeServiceInterface $soireeService)
     {
         $this->soireeService = $soireeService;
     }
 
+    /**
+     * CREE UNE SOIREE A PARTIR DES PARAMETRES PASSE DANS LE BODY DE LA REQUETE
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $data = $rq->getParsedBody();

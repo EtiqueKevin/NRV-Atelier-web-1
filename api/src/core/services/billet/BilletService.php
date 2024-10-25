@@ -8,17 +8,31 @@ use nrv\core\dto\billet\BilletOutputDTO;
 use nrv\core\dto\Panier\PanierDTO;
 use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
+use Psr\Log\LoggerInterface;
 
 class BilletService implements BilletServiceInterface{
 
     private UtilisateursRepositoryInterface $utilisateursRepository;
     private SoireesRepositoryInterface $soireesRepository;
 
-    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface$soireesRepository){
+    private LoggerInterface $logger;
+
+    /**
+     * @param UtilisateursRepositoryInterface $utilisateursRepository
+     * @param SoireesRepositoryInterface $soireesRepository
+     */
+    public function __construct(UtilisateursRepositoryInterface $utilisateursRepository, SoireesRepositoryInterface$soireesRepository, LoggerInterface $logger){
         $this->utilisateursRepository = $utilisateursRepository;
         $this->soireesRepository = $soireesRepository;
+        $this->logger = $logger;
     }
 
+
+    /**
+     * RECUPERE LES BILLETS D'UN UTILISATEUR
+     * @param string $id
+     * @return BilletOutputDTO
+     */
     public function getBilletsByIdUtilisateur(string $id): BilletOutputDTO{
         $billetsTab = $this->utilisateursRepository->getBilletsByIdUtilisateur($id);
         $billetsTabRes = [];
@@ -31,6 +45,13 @@ class BilletService implements BilletServiceInterface{
         return new BilletOutputDTO($billetsTabRes);
     }
 
+
+    /**
+     * RECUPERE UN BILLET PAR RAPPORT A SON ID
+     * @param BilletInputDTO $biInputDTO
+     * @return BilletDTO
+     * @throws BilletException
+     */
     public function getBilletById(BilletInputDTO $biInputDTO): BilletDTO{
         $billetEntity = $this->utilisateursRepository->getBilletById($biInputDTO->idBillet);
         $ids = $billetEntity->id_soiree;
@@ -43,6 +64,11 @@ class BilletService implements BilletServiceInterface{
         return $billetEntity->toDTO();
     }
 
+    /**
+     * PAYE UNE COMMANDE D'UN UTILISATEUR EN CREANT LES BILLETS, LES ASSIGNANT A L'UTILISATEUR ET VIDANT LE PANIER
+     * @param string $idUser
+     * @return void
+     */
     public function payerCommande(string $idUser) :void {
         $panier = $this->utilisateursRepository->getPanier($idUser); //je récupère le panier de l'utilisateur
         $panierItemsRes = $this->utilisateursRepository->getPanierItems($panier->idPanier); //je récupère les items du panier de l'utilisateur

@@ -12,6 +12,13 @@ class AuthDTO extends DTO
     protected ?string $accessToken;
     protected ?string $refreshToken;
 
+    /**
+     * @param string $id
+     * @param string $email
+     * @param int $role
+     * @param string|null $accessToken
+     * @param string|null $refreshToken
+     */
     public function __construct(string $id, string $email, int $role, ?string $accessToken = null, ?string $refreshToken = null) {
         $this->id = $id;
         $this->email = $email;

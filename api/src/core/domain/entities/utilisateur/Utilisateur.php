@@ -17,6 +17,14 @@ class Utilisateur extends Entity{
 
     protected int $role;
 
+
+    /**
+     * @param string $n
+     * @param string $p
+     * @param string $email
+     * @param string $mdp
+     * @param int $role
+     */
     public function __construct(string $n, string $p, string $email, string $mdp, int $role){
         $this->nom = $n;
         $this->prenom = $p;
@@ -25,6 +33,11 @@ class Utilisateur extends Entity{
         $this->role = $role;
     }
 
+
+    /**
+     * TRANSFORME L'ENTITY EN DTO
+     * @return UtilisateurDTO
+     */
     public function toDTO(){
         return new UtilisateurDTO($this);
     }

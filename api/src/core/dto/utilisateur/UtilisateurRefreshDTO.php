@@ -9,6 +9,10 @@ class UtilisateurRefreshDTO extends DTO{
 
     protected string $accessToken;
 
+
+    /**
+     * @param string $at
+     */
     public function __construct(string $at){
         $this->accessToken = $at;
     }

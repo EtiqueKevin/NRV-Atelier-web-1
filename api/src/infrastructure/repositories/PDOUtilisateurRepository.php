@@ -22,6 +22,14 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         $this->pdo = $pdo;
     }
 
+
+    /**
+     * RECUPERE UN UTILISATEUR PAR SON EMAIL
+     * @param string $email
+     * @return Utilisateur
+     * @throws RepositoryEntityNotFoundException
+     * @throws RepositoryException
+     */
     public function UtilisateurByEmail(string $email): Utilisateur{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM utilisateurs WHERE email = ?');
@@ -43,6 +51,14 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $utilisateurEntity;
     }
 
+
+    /**
+     * RECUPERE UN UTILISATEUR PAR SON ID
+     * @param string $id
+     * @return Utilisateur
+     * @throws RepositoryEntityNotFoundException
+     * @throws RepositoryException
+     */
     public function UtilisateurById(string $id): Utilisateur{
         try{
             $stmt = $this->pdo->prepare('SELECT * FROM utilisateurs WHERE id = ?');
@@ -65,6 +81,12 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
     }
 
 
+    /**
+     * RECUPERE UN PANIER PAR RAPPORT A L'ID DE L'UTILISATEUR
+     * @param string $idUser
+     * @return Panier
+     * @throws RepositoryException
+     */
     public function getPanier(string $idUser) : Panier
     {
         try {
@@ -84,6 +106,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $panierEntity;
     }
 
+
+    /**
+     * RECUPERE LES ITEMS DU PANIER PAR RAPPORT A L'ID DU PANIER
+     * @param string $idPanier
+     * @return array
+     * @throws RepositoryException
+     */
     public function getPanierItems(string $idPanier) : array
     {
         $panierItemsRes = [];
@@ -109,6 +138,17 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $panierItemsRes;
     }
 
+
+    /**
+     * AJOUTE UN ITEM DANS LE PANIER
+     * @param string $idPanier
+     * @param string $idSoiree
+     * @param int $tarif
+     * @param string $typeTarif
+     * @param int $qte
+     * @return void
+     * @throws RepositoryException
+     */
     public function addPanier(string $idPanier,string $idSoiree,int $tarif, string $typeTarif, int $qte) : void
     {
         try {
@@ -124,6 +164,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
+
+    /**
+     * MET A JOUR UN ITEM DU PANIER
+     * @param PanierItem $panierItem
+     * @return void
+     * @throws RepositoryException
+     */
     public function updatePanier(PanierItem $panierItem) : void{
         try {
             $stmt = $this->pdo->prepare('UPDATE paniers SET quantite = ? WHERE id_panier = ? AND id_soiree = ? AND categorie_tarif = ?');
@@ -141,6 +188,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
+    /**
+     * CREE UN UTILISATEUR
+     * @param Utilisateur $uti
+     * @return string
+     * @throws RepositoryException
+     * @throws UtilisateurException
+     */
     public function saveUtilisateur(Utilisateur $uti): string{
         $nom = $uti->nom;
         $prenom = $uti->prenom;
@@ -166,6 +220,12 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $id;
     }
 
+
+    /**
+     * RECUPERE LES BILLETS D'UN UTILISATEUR
+     * @param string $id
+     * @return array
+     */
     public function getBilletsByIdUtilisateur(string $id):array{
 
         $stmt = $this->pdo->prepare('SELECT * FROM billets WHERE id_utilisateur = ?');
@@ -184,6 +244,12 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $billetTab;
     }
 
+    /**
+     * VALIDE UN PANIER
+     * @param string $idUser
+     * @return void
+     * @throws RepositoryException
+     */
     public function validerPanier(string $idUser): void{
         try {
             $stmt = $this->pdo->prepare('UPDATE paniers_utilisateurs SET valide = TRUE WHERE id_utilisateur = ?');
@@ -194,6 +260,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
+
+    /**
+     * AJOUTE UN PANIER A UN UTILISATEUR
+     * @param string $id
+     * @return void
+     * @throws RepositoryException
+     */
     public function ajouterPanierUtilisateur(string $id){
         try {
             $stmt = $this->pdo->prepare('INSERT INTO paniers_utilisateurs (id_utilisateur) VALUES (?)');
@@ -204,6 +277,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
+
+    /**
+     * RECUPERE UN PANIER PAR RAPPORT A SON ID
+     * @param string $id
+     * @return Billet
+     * @throws RepositoryException
+     */
     public function getBilletById(string $id): Billet{
         try {
             $stmt = $this->pdo->prepare('SELECT * FROM billets WHERE id = ?');
@@ -218,6 +298,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $billetEntity;
     }
 
+
+    /**
+     * RECUPERE LE NOMBRE DE BILLET PAR RAPPORT A L'ID DE LA SOIREE
+     * @param string $id
+     * @return int
+     * @throws RepositoryException
+     */
     public function getNbBilletByIdSoiree(string $id): int{
         try {
             $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM billets WHERE id_soiree = ?');
@@ -231,6 +318,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $nb['count'];
     }
 
+
+    /**
+     * RECUPERE LE ROLE D'UN UTILISATEUR
+     * @param string $id
+     * @return int
+     * @throws RepositoryException
+     */
     public function getRole(string $id): int{
         try {
             $stmt = $this->pdo->prepare('SELECT role FROM utilisateurs WHERE id = ?');
@@ -243,6 +337,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         return $role;
     }
 
+
+    /**
+     * AJOUTE DES BILLETS DANS LA BASE DE DONNEES ET RELIE A L'UTILISATEUR
+     * @param string $insertions
+     * @return void
+     * @throws RepositoryException
+     */
     public function addBillets(string $insertions): void
     {
         try {
@@ -253,6 +354,12 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
+    /**
+     * VIDE LE PANIER
+     * @param string $idPanier
+     * @return void
+     * @throws RepositoryException
+     */
     public function viderPanier(string $idPanier): void{
         try {
             $id = $idPanier;
@@ -268,6 +375,13 @@ class PDOUtilisateurRepository implements UtilisateursRepositoryInterface{
         }
     }
 
+
+    /**
+     * SUPPRIME UN ITEM DU PANIER
+     * @param PanierItem $panierItem
+     * @return void
+     * @throws RepositoryException
+     */
     public function deletePanierItem(PanierItem $panierItem): void{
         $id_soiree = $panierItem->idSoiree;
         $categorie_tarif = $panierItem->typeTarif;

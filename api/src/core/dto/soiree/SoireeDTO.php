@@ -16,6 +16,9 @@ class SoireeDTO extends DTO{
     private float $tarif_normal;
     private float $tarif_reduit;
 
+    /**
+     * @param Soiree $soiree
+     */
     public function __construct(Soiree $soiree){
         $this->id = $soiree->ID;
         $this->nom = $soiree->nom;
@@ -26,6 +29,11 @@ class SoireeDTO extends DTO{
         $this->tarif_reduit = $soiree->tarif_reduit;
     }
 
+
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

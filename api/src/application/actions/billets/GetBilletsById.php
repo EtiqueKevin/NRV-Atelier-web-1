@@ -17,11 +17,22 @@ class GetBilletsById extends AbstractAction {
 
     private UtilisateurServiceInterface $utilisateurService;
 
+    /**
+     * @param BilletServiceInterface $billetService
+     * @param UtilisateurServiceInterface $utilisateurService
+     */
     public function __construct(BilletServiceInterface $billetService, UtilisateurServiceInterface $utilisateurService){
         $this->billetService = $billetService;
         $this->utilisateurService = $utilisateurService;
     }
-
+    /**
+     * RECUPERE UN BILLET PAR SON ID ET REND UN JSON AVEC LES INFOS DU BILLET ET DE L'ACHETEUR
+     * @param ServerRequestInterface $rq
+     * @param ResponseInterface $rs
+     * @param array $args
+     * @return ResponseInterface
+     * @throws HttpBadRequestException
+     */
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface{
 
         $idUti = $rq->getAttribute('UtiOutDTO')->id;

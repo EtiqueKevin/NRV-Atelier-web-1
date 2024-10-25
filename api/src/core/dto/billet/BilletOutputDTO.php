@@ -10,10 +10,17 @@ class BilletOutputDTO extends DTO{
 
     protected array $billets;
 
+    /**
+     * @param array $bs
+     */
     public function __construct(array $bs){
         $this->billets = $bs;
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
 
         $tab = [];

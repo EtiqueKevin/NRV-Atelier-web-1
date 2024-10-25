@@ -17,6 +17,16 @@ class SpectacleCreerDTO extends DTO
     protected array $imgs;
     protected array $artistes;
 
+
+    /**
+     * @param string $titre
+     * @param string $description
+     * @param string $heure
+     * @param string $url_video
+     * @param string $idSoiree
+     * @param array $imgs
+     * @param array $artistes
+     */
     public function __construct(string $titre,string $description,string $heure,string $url_video,string $idSoiree,array $imgs, array $artistes){
         $this->titre =$titre;
         $this->description = $description;
@@ -27,6 +37,11 @@ class SpectacleCreerDTO extends DTO
         $this->artistes =$artistes;
     }
 
+
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
         return [
             'titre' => $this->titre,

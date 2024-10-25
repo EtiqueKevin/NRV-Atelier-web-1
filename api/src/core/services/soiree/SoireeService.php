@@ -12,17 +12,31 @@ use nrv\core\repositroryInterfaces\SoireesRepositoryInterface;
 use nrv\core\repositroryInterfaces\UtilisateursRepositoryInterface;
 use nrv\core\services\Panier\PanierException;
 use nrv\core\services\spectacle\spectacleException;
+use Psr\Log\LoggerInterface;
 
 class SoireeService implements SoireeServiceInterface{
     private SoireesRepositoryInterface $soireeRepository;
 
     private UtilisateursRepositoryInterface $utilisateursRepository;
 
-    public function __construct(SoireesRepositoryInterface $soireeRepository, UtilisateursRepositoryInterface $utilisateursRepository){
+    private LoggerInterface $logger;
+
+    /**
+     * @param SoireesRepositoryInterface $soireeRepository
+     * @param UtilisateursRepositoryInterface $utilisateursRepository
+     */
+    public function __construct(SoireesRepositoryInterface $soireeRepository, UtilisateursRepositoryInterface $utilisateursRepository, LoggerInterface $logger){
         $this->soireeRepository = $soireeRepository;
         $this->utilisateursRepository = $utilisateursRepository;
+        $this->logger = $logger;
     }
 
+    /**
+     * RECUPRE UNE SOIREE PAR RAPPORT A SON ID
+     * @param string $id
+     * @return SoireeDTO
+     * @throws SoireeException
+     */
     public function getSoireeById(string $id): SoireeDTO{
         try{
             $soiree = $this->soireeRepository->getSoireeById($id);
@@ -32,6 +46,13 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
+
+    /**
+     * RECUPRE UNE SOIREE PAR RAPPORT A SON ID AVEC LES DETAILS
+     * @param string $idSoiree
+     * @return SoireeDTO
+     * @throws SoireeException
+     */
     public function getSoireeDetail(string $idSoiree): SoireeDTO{
         try{
             $soiree = $this->soireeRepository->getSoireeById($idSoiree);
@@ -41,6 +62,12 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
+    /**
+     * RECUPERE LES ID SPECTACLES PAR RAPPORT A L'ID DE LA SOIREE
+     * @param string $idSoiree
+     * @return array
+     * @throws SoireeException
+     */
     public function getSpectacleByIdSoiree(string $idSoiree): array{
         try{
             $tabIdSoiree = $this->soireeRepository->getSpectacleByIdSoiree($idSoiree);
@@ -51,6 +78,11 @@ class SoireeService implements SoireeServiceInterface{
         return $tabIdSoiree;
     }
 
+    /**
+     * RECUPERE TOUS LES LIEUX
+     * @return array
+     * @throws spectacleException
+     */
     public function getLieux(): array{
         try {
             $lieux = $this->soireeRepository->getLieux();
@@ -64,6 +96,12 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
+
+    /**
+     * RECUPERE TOUS LES STYLES
+     * @return array
+     * @throws spectacleException
+     */
     public function getStyles(): array{
         try {
             $styles = $this->soireeRepository->getStyles();
@@ -77,6 +115,13 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
+
+    /**
+     * VA CHERCHER LE NOMBRE DE PLACE PRISES ET TOTAL D'UNE SOIREE
+     * @param string $idSoiree
+     * @return SoireeDetailBackofficeDTO
+     * @throws PanierException
+     */
     public function gestionPlaceBackOffice(string $idSoiree):SoireeDetailBackofficeDTO{
         try{
             $nbPlacett = $this->soireeRepository->getNbPlaceByIdSoiee($idSoiree);
@@ -87,6 +132,13 @@ class SoireeService implements SoireeServiceInterface{
         return new SoireeDetailBackofficeDTO($nbPlacett,$nbPlaceReserve);
     }
 
+
+    /**
+     * CREE UNE SOIREE
+     * @param SoireeCreerDTO $soireeCreerDTO
+     * @return void
+     * @throws SoireeException
+     */
     public function postSoiree(SoireeCreerDTO $soireeCreerDTO): void{
         try{
             $nom = $soireeCreerDTO->nom;
@@ -104,6 +156,11 @@ class SoireeService implements SoireeServiceInterface{
         }
     }
 
+
+    /**
+     * RECUPERE TOUTES LES SOIREES
+     * @return SoireesDTO
+     */
     public function getSoirees(): SoireesDTO{
         $s = $this->soireeRepository->getSoirees();
         return new SoireesDTO($s);

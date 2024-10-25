@@ -18,6 +18,9 @@ class SpectacleDTO extends DTO
 
     private array $imgs;
 
+    /**
+     * @param Spectacle $spectacle
+     */
     public function __construct(Spectacle $spectacle)
     {
         $this->id = $spectacle->ID;
@@ -29,12 +32,20 @@ class SpectacleDTO extends DTO
         $this->imgs = $spectacle->imgs;
     }
 
+    /**
+     * GETTER DE L'ID
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array
     {
         return [

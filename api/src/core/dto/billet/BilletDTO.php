@@ -16,6 +16,9 @@ class BilletDTO extends DTO{
 
     protected string $nomSoiree;
 
+    /**
+     * @param Billet $b
+     */
     public function __construct(Billet $b){
         $this->id_utilisateur = $b->id_utilisateur;
         $this->id_soiree = $b->id_soiree;
@@ -25,6 +28,10 @@ class BilletDTO extends DTO{
         $this->nomSoiree = $b->nomSoiree;
     }
 
+    /**
+     * TRANSFORME LE DTO EN JSON
+     * @return array
+     */
     public function jsonSerialize(): array{
         return [
             'id' => $this->id,

@@ -10,6 +10,12 @@ class PanierVerifDTO extends DTO
     protected string $date;
     protected string $code;
 
+
+    /**
+     * @param string $numero
+     * @param string $date
+     * @param string $code
+     */
     public function __construct(string $numero, string $date, string $code)
     {
         $this->numero = $numero;
