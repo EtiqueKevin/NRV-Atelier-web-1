@@ -89,13 +89,13 @@ return function( App $app): App {
 
     // utilisateur
 
-    $app->get('/utilisateur/signin[/]', SignInAction::class)
+    $app->post('/utilisateur/signin[/]', SignInAction::class)
         ->setName('sign_in');
 
     $app->post('/utilisateur/signup[/]', SignUpAction::class)
         ->setName('sign_up');
 
-    $app->get('/utilisateur/refresh[/]', RefreshAction::class)
+    $app->post('/utilisateur/refresh[/]', RefreshAction::class)
         ->add(AuthorizationLambdaMiddleware::class)
         ->add(AuthMiddleware::class)
         ->setName('refresh_token');
