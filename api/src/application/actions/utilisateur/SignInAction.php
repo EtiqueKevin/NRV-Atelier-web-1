@@ -41,8 +41,9 @@ class SignInAction extends AbstractAction
         $decodedCredentials = base64_decode($encodedCredentials);
         $credentials = explode(':', $decodedCredentials);
 
-        $email = $credentials[0];
+        $email = filter_var($credentials[0], FILTER_SANITIZE_EMAIL);
         $mdp = $credentials[1];
+
         try {
             $authRes = $this->authProvider->signIn(new UtilisateurInputDTO($email, $mdp));
         }catch (UtilisateurException $e){

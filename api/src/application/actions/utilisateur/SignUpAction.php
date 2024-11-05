@@ -37,7 +37,13 @@ class SignUpAction extends AbstractAction
             throw new HttpBadRequestException($rq, 'Paramètres manquants');
         }
 
-        $utiDTO = new UtilisateurInputCreationDTO($params['nom'],$params['prenom'],$params['email'],$params['mdp'],$params['mdp2']);
+        $nom = filter_var($params['nom'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $prenom = filter_var($params['prenom'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $email = filter_var($params['email'], FILTER_SANITIZE_EMAIL);
+
+        $utiDTO = new UtilisateurInputCreationDTO($nom, $prenom, $email, $params['mdp'], $params['mdp2']);
         $this->utilisateurService->createUtilisateur($utiDTO);
 
         return $rs->withStatus(200);
