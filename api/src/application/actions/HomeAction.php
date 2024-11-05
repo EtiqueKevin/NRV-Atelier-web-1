@@ -43,13 +43,13 @@ use Psr\Http\Message\ServerRequestInterface;
             ['method' => 'GET', 'route' => '/styles', 'action' => 'GetStylesAction'],
 
             // Utilisateur
-            ['method' => 'GET', 'route' => '/utilisateur/signin', 'action' => 'SignInAction'],
+            ['method' => 'POST', 'route' => '/utilisateur/signin', 'action' => 'SignInAction'],
             ['method' => 'POST', 'route' => '/utilisateur/signup', 'action' => 'SignUpAction'],
-            ['method' => 'GET', 'route' => '/utilisateur/refresh', 'action' => 'RefreshAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'POST', 'route' => '/utilisateur/refresh', 'action' => 'RefreshAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
 
             // Billet
-            ['method' => 'GET', 'route' => '/billet/{ID-BILLET}', 'action' => 'GetBilletByIdAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
-            ['method' => 'POST', 'route' => '/billet', 'action' => 'PostBilletAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'GET', 'route' => '/utilisateur/billet/{ID-BILLET}', 'action' => 'GetBilletByIdAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
+            ['method' => 'GET', 'route' => '/utilisateur/billets', 'action' => 'PostBilletAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
 
             // Panier
             ['method' => 'GET', 'route' => '/panier', 'action' => 'GetPanierAction', 'middleware' => ['AuthMiddleware', 'AuthorizationLambdaMiddleware']],
@@ -62,7 +62,7 @@ use Psr\Http\Message\ServerRequestInterface;
             ['method' => 'GET', 'route' => '/backoffice/soirees/{ID-SOIREE}', 'action' => 'GetSoireeByIdBackofficeAction', 'middleware' => ['AuthMiddleware', 'AuthorizationBackMiddleware']],
         ];
 
-        $html = '<h1>Liste des routes NRV.API</h1>';
+        $html = '<h1>Liste des routes NRV.API 05/11/24</h1>';
         $html .= '<style>
                 table {
                     width: 100%;
