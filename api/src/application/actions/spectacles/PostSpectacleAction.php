@@ -52,6 +52,17 @@ class PostSpectacleAction extends AbstractAction{
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
 
+        if((filter_var($data['titre'],
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS)!== $data['titre'] ||
+            filter_var($data['description'],
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $data['description'] ||
+            filter_var($data['heure'],
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $data['heure'] ||
+            filter_var($data['idSoiree'],
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $data['idSoiree'])){
+            throw new HttpBadRequestException($rq, 'data non valide : validator && sanitize');
+        }
+
         $directory = __DIR__ . '/../../../../public/img';
 
         $uploadedFiles = $rq->getUploadedFiles();

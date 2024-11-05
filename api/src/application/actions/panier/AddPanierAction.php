@@ -49,6 +49,17 @@ class AddPanierAction extends AbstractAction
             throw new HttpBadRequestException($rq, $e->getMessage());
         }
 
+        if ((filter_var($idSoiree,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS)!== $idSoiree ||
+            (int) filter_var($tarif,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $tarif ||
+            filter_var($typeTarif,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $typeTarif ||
+            (int) filter_var($qte,
+                FILTER_SANITIZE_FULL_SPECIAL_CHARS) !== $qte)) {
+            throw new HttpBadRequestException($rq, 'data non valide : validator && sanitize');
+        }
+
 
         try {
             $panierAddDTO = new PanierAddDTO($idUser, $idSoiree, $tarif,$typeTarif, $qte);
