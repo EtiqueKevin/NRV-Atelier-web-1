@@ -168,6 +168,11 @@ class PanierService implements PanierServiceInterface
             if ($panierTab->valide){
                 throw new PanierException('panier déjà validé');
             }
+
+            foreach ($panierTab->panierItems as $panierItem) {
+                $this->verificationDisponibilite($panierItem->qte, $panierItem->idSoiree);
+            }
+
             $this->UtilisateursRepository->validerPanier($idUser);
             $this->logger->log(Level::Info, "PanierService - validerPanier : id uti : ". $idUser." ");
             return $this->getPanier($idUser);
@@ -196,7 +201,10 @@ class PanierService implements PanierServiceInterface
             foreach ($panierDTO->panierItems as $panierItem) {
                 $this->verificationDisponibilite($panierItem->qte, $panierItem->idSoiree);
             }
-        }catch (\Exception $e){
+        }catch(PanierException $e){
+            throw new PanierException($e->getMessage());
+        }
+        catch (\Exception $e){
             $this->logger->log(Level::Error, "PanierService - vérifier ");
             throw new PanierException($e->getMessage());
         }

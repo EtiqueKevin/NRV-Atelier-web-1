@@ -47,7 +47,11 @@ class PostPayerCommandeAction extends AbstractAction
 
         $numeroValidator = Validator::digit()->length(16, 16);
         $codeValidator = Validator::digit()->length(3, 3);
-        $dateExpirationValidator = Validator::date('m/y')->min('now');
+        $dateExpirationValidator = Validator::callback(function($date) {
+            $currentDate = new \DateTime();
+            $expirationDate = \DateTime::createFromFormat('m/y', $date);
+            return $expirationDate && $expirationDate >= $currentDate;
+        });
 
         try {
             $panierDTO = $this->panierService->getPanier($idUser);
