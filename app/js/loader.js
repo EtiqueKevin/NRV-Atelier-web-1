@@ -1,6 +1,5 @@
 import { apiUrl } from "./data.js";
 import * as jwt from './jwt.js';
-import * as alert from './alert.js';
 
 async function refreshAccessToken() {
     const refreshToken = jwt.getRefreshToken();
@@ -9,6 +8,7 @@ async function refreshAccessToken() {
     }
 
     const response = await fetch(apiUrl + '/utilisateur/refresh', {
+        method: 'POST',
         mode: 'cors',
         headers: {
             'Authorization': `Bearer ${refreshToken}`,
@@ -27,6 +27,7 @@ async function refreshAccessToken() {
 async function connexionRequest(email, password) {
     const credentials = btoa(`${email}:${password}`);
     const response = await fetch(apiUrl + 'utilisateur/signin', {
+        method: 'POST',
         mode: 'cors',
         headers: {
             'Authorization': `Basic ${credentials}`,
@@ -103,7 +104,7 @@ async function loadData(url) {
 
         return await response.json();
     } catch (error) {
-        alert.showAlert('Erreur lors du chargement des données: ' + error.message, 'error');
+        throw new Error('Erreur lors de la récupération des données: ' + error.message);
     }
 };
 
@@ -142,7 +143,7 @@ async function postData(url, body, isFormData = false) {
             return responseText;
         }
     } catch (error) {
-        alert.showAlert('Erreur lors de l\'envoi des données: ' + error.message, 'error');
+        throw new Error('Erreur lors de l\'envoi des données: ' + error.message);
     }
 };
 
@@ -178,7 +179,7 @@ async function putData(url, body) {
             return responseText;
         }
     } catch (error) {
-        alert.showAlert('Erreur lors de l\'envoi des données: ' + error.message, 'error');
+        throw new Error('Erreur lors de l\'envoi des données: ' + error.message);
     }
 };
 

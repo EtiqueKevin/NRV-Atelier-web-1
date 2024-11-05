@@ -213,7 +213,23 @@ export function handleConnexionForm() {
         inscriptionButton.addEventListener('click', () => {
             ui.displayInscription();
         });
-    } 
+    }
+
+    const passwordInput = document.getElementById('password');
+    const togglePasswordButton = document.getElementById('toggle-password');
+    if (passwordInput && togglePasswordButton) {
+        togglePasswordButton.addEventListener('mousedown', () => {
+            passwordInput.type = 'text';
+        });
+
+        togglePasswordButton.addEventListener('mouseup', () => {
+            passwordInput.type = 'password';
+        });
+
+        togglePasswordButton.addEventListener('mouseleave', () => {
+            passwordInput.type = 'password';
+        });
+    }
 }
 
 export function handleInscriptionForm() {
@@ -242,6 +258,39 @@ export function handleInscriptionForm() {
     if (connexionButton) {
         connexionButton.addEventListener('click', () => {
             ui.displayConnexion();  
+        });
+    }
+
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById('password-confirm');
+    const togglePasswordButton = document.getElementById('toggle-password');
+    const togglePasswordConfirmButton = document.getElementById('toggle-password-confirm');
+
+    if (passwordInput && togglePasswordButton) {
+        togglePasswordButton.addEventListener('mousedown', () => {
+            passwordInput.type = 'text';
+        });
+
+        togglePasswordButton.addEventListener('mouseup', () => {
+            passwordInput.type = 'password';
+        });
+
+        togglePasswordButton.addEventListener('mouseleave', () => {
+            passwordInput.type = 'password';
+        });
+    }
+
+    if (passwordConfirmInput && togglePasswordConfirmButton) {
+        togglePasswordConfirmButton.addEventListener('mousedown', () => {
+            passwordConfirmInput.type = 'text';
+        });
+
+        togglePasswordConfirmButton.addEventListener('mouseup', () => {
+            passwordConfirmInput.type = 'password';
+        });
+
+        togglePasswordConfirmButton.addEventListener('mouseleave', () => {
+            passwordConfirmInput.type = 'password';
         });
     }
 }

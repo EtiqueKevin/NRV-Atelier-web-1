@@ -157,7 +157,12 @@ export const connexionTemplate = `
       </div>
       <div class="input-container">
         <label for="password">Mot de passe:</label>
-        <input type="password" id="password" name="password" placeholder="Mot de passe" required autocomplete="current-password">
+        <div class="password-container">
+          <input type="password" id="password" name="password" placeholder="Mot de passe" required autocomplete="current-password">
+          <button type="button" id="toggle-password" class="toggle-password-button boutton">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
       </div>
       <button type="button" id="submit-button" class="boutton">Connexion</button>
     </form>
@@ -166,7 +171,7 @@ export const connexionTemplate = `
 `;
 
 export const inscriptionTemplate = `
-  <section class="connexion-card">
+<section class="connexion-card">
     <h1>Inscription</h1>
     <form class="connexion-form">
       <div class="input-container">
@@ -183,16 +188,26 @@ export const inscriptionTemplate = `
       </div>
       <div class="input-container">
         <label for="password">Mot de passe:</label>
-        <input type="password" id="password" name="password" placeholder="Mot de passe" required autocomplete="current-password">
+        <div class="password-container">
+          <input type="password" id="password" name="password" placeholder="Mot de passe" required autocomplete="current-password">
+          <button type="button" id="toggle-password" class="toggle-password-button boutton">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
       </div>
       <div class="input-container">
         <label for="password-confirm">Confirmer mot de passe:</label>
-        <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirmer mot de passe" required autocomplete="current-password">
+        <div class="password-container">
+          <input type="password" id="password-confirm" name="password-confirm" placeholder="Confirmer mot de passe" required autocomplete="current-password">
+          <button type="button" id="toggle-password-confirm" class="toggle-password-button boutton">
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
       </div>
       <button type="button" id="submit-button" class="boutton">Inscription</button>
     </form>
     <button id="connexion-button" class="secondary-form-button">Se connecter</button>
-  </section>
+</section>
 `;
 
 export const navRightTemplate = `

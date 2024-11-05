@@ -205,3 +205,25 @@
         @include input-style(0.75rem, 0px solid #ccc, 4px, 1rem, #f1f1f1);
     }
 }
+
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    input {
+        padding-right: 2.5rem; /* Adjust this value based on the button width */
+    }
+
+    .toggle-password-button {
+        position: absolute;
+        right: 0.5rem;
+        top: 50%;
+        padding  : 0;
+        color: #333;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+}

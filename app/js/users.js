@@ -109,8 +109,17 @@ export async function getBillet(id){
 
 export async function validerPanier(){
     const data = await loader.postData('panier/valider');
+
+    let total = 0;
+    data.panier.panierItems.forEach(item => {
+        total += item.tarifTotal;
+    });
+    
     alert.showAlert('Panier validé', 'ok');
-    return data;
+    return {
+        panier: data.panier,
+        total: total
+    };
 }
 
 export async function payerCommande(codeCarte, dateExpiration, cvv){
